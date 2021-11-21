@@ -2,83 +2,93 @@
 // Engineer: Alex Mei
 
 import React from 'react';
-import Highcharts from 'highcharts';
+import * as Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
 
 function SummaryPage (props) {
-        Highcharts.chart('container', {
-            chart: {
-                zoomType: 'x'
-            },
-            renderto: "largeincomingOrders",
-            title: {
-                text: 'USD to EUR exchange rate over time'
-            },
-            subtitle: {
-                text: document.ontouchstart === undefined ?
-                    'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
-            },
-            xAxis: {
-                type: 'datetime'
-            },
-            yAxis: {
+    const options1 = {
+        title: {
+          text: 'Energy Usage Data'
+        },
+        subtitle: {
+            text: 'Context Subtitle'
+        },
+        yAxis: [
+            {
                 title: {
-                    text: 'Exchange rate'
+                    text: 'Power (KiloWatt Hours)'
                 }
-            },
-            legend: {
-                enabled: false
-            },
-            plotOptions: {
-                area: {
-                    fillColor: {
-                        linearGradient: {
-                            x1: 0,
-                            y1: 0,
-                            x2: 0,
-                            y2: 1
-                        },
-                        stops: [
-                            [0, Highcharts.getOptions().colors[0]],
-                            [1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                        ]
-                    },
-                    marker: {
-                        radius: 2
-                    },
-                    lineWidth: 1,
-                    states: {
-                        hover: {
-                            lineWidth: 1
-                        }
-                    },
-                    threshold: null
+            }
+        ],
+        xAxis: [
+            {
+                title: {
+                    text: 'Time'
                 }
+            }
+        ],
+        series: [
+            {
+                name: 'Meter 1',
+                data: [[1, 1], [2, 4], [3, 9]]
             },
+            {
+                name: 'Meter 2',
+                data: [[5, 5], [6, 6], [7, 7]]
+            }
+        ]
+    }
 
-            series: [{
-                type: 'area',
-                name: 'USD to EUR',
-                data: []
-            }]
-        });
+    const options2 = {
+        title: {
+          text: 'Second Chart'
+        },
+        subtitle: {
+            text: 'Context Subtitle'
+        },
+        yAxis: [
+            {
+                title: {
+                    text: 'Power (KiloWatt Hours)'
+                }
+            }
+        ],
+        xAxis: [
+            {
+                title: {
+                    text: 'Time'
+                }
+            }
+        ],
+        series: [
+            {
+                name: 'Meter 1',
+                data: [[1, 1], [2, 4], [3, 9]]
+            },
+            {
+                name: 'Meter 2',
+                data: [[5, 5], [6, 6], [7, 7]]
+            }
+        ]
+    }
 
     return (
         <div>
-          <figure class="highcharts-figure">
-              <div id="largeincomingOrders"></div>
-              <p class="highcharts-description">
-                  Highcharts has extensive support for time series, and will adapt
-                  intelligently to the input data. Click and drag in the chart to zoom in
-                  and inspect the data.
-              </p>
-          </figure>
+            <h1> Summary Page </h1>
 
-          <script src="https://code.highcharts.com/highcharts.js"></script>
-          <script src="https://code.highcharts.com/modules/data.js"></script>
-          <script src="https://code.highcharts.com/modules/exporting.js"></script>
-          <script src="https://code.highcharts.com/modules/export-data.js"></script>
-          <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+            <HighchartsReact
+                highcharts={Highcharts}
+                options={options1}
+            />
+
+            <h1> Separating Text </h1>
+
+            <HighchartsReact
+                highcharts={Highcharts}
+                options={options2}
+            />
         </div>
+        
     );
 };
 
