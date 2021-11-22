@@ -9,12 +9,12 @@ const divStyle = {
 
 const Navbar = () => {
     return( 
-    <nav className = "Navbar">
-        <ul className = 'nav-menu'>
-            <li ><Link to = "/"> Home </Link> </li>
-            <li ><Link to = "/about"> About </Link> </li>
-            <li ><Link to = "/explore_data"> Explore Data </Link> </li>
-            <li ><Link to = "/dashboard"> Dashboard </Link> </li>
+    <nav className="Navbar">
+        <ul className='nav-menu'>
+            <li className="nav-item"><Link className="nav-link" to="/dashboard"> Dashboard </Link> </li>
+            <li className="nav-item"><Link className="nav-link" to="/explore_data"> Explore </Link> </li>
+            <li className="nav-item"><Link className="nav-link" to="/about"> About </Link> </li>
+            <li className="nav-item"><Link className="nav-link" to="/"> Home </Link> </li>
         </ul>
     </nav>
     )
