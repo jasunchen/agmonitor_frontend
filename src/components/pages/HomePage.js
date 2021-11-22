@@ -3,13 +3,17 @@
 
 import React from 'react';
 import Navbar from "../NavBar/Navbar"
+import Footer from "../NavBar/footer"
+import './background.css'
 
 function HomePage (props) {
 
     return (
-        <div>   
+        <div className = "overlay"> 
             <Navbar /> Home Page
+            <Footer />
         </div>
+        
     );
 };
 

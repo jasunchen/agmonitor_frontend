@@ -1,0 +1,13 @@
+.overlay {
+  background: linear-gradient(
+    135deg,
+    rgba(29, 219, 105, 1) 0%,
+    rgba(35, 126, 210, 1) 100%
+  );
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  z-index: 1000;
+}

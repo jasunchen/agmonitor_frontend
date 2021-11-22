@@ -1,11 +1,14 @@
 import React from 'react';
 import Navbar from "../NavBar/Navbar"
+import './background.css'
+import Footer from "../NavBar/footer"
 
 function AboutPage (props) {
 
     return (
-        <div>   
+        <div className = "overlay">   
             <Navbar /> About Page
+            <Footer />
         </div>
 
     );
