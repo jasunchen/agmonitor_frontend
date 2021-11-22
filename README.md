@@ -1,4 +1,4 @@
-# CS148 Project: Nutriflix (Frontend)
+# UC Santa Barbara Computer Science Capstone + AgMonitor | Project Name (Frontend)
 
 ## Summary
 ### Mission
