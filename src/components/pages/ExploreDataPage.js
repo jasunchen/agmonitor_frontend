@@ -1,7 +1,7 @@
 import React from 'react';
-import Navbar from "../NavBar/Navbar"
+import Navbar from "../shared/Navbar"
 import './background.css'
-import Footer from "../NavBar/footer"
+import Footer from "../shared/Footer"
 
 function ExploreDataPage (props) {
 

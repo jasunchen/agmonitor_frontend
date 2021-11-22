@@ -2,8 +2,8 @@
 // Engineer: Alex Mei
 
 import React from 'react';
-import Navbar from "../NavBar/Navbar"
-import Footer from "../NavBar/footer"
+import Navbar from "../shared/Navbar"
+import Footer from "../shared/Footer"
 import './background.css'
 import * as Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
@@ -79,7 +79,7 @@ function HomePage (props) {
     return (
         <div className = "overlay"> 
             <Navbar /> 
-            
+
             <h1> Home Page </h1>
 
             <HighchartsReact
