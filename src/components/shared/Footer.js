@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Container } from 'react-bootstrap';
 // import {MenuItems} from "./Menuitems"
 import { Link, NavLink} from 'react-router-dom'
-import './footer.css'
+import '../../css/Footer.css'
 
 const Footer = () => {
     return( 

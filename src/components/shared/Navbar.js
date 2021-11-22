@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 // import {MenuItems} from "./Menuitems"
 import { Link, NavLink} from 'react-router-dom'
-import './Navbar.css'
+import '../../css/Navbar.css'
+
 const divStyle = {
     color: 'blue',
   };
