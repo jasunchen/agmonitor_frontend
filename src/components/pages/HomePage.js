@@ -1,12 +1,14 @@
-// SummaryPage.js
+// DefaultHomePage.js
 // Engineer: Alex Mei
 
 import React from 'react';
+import Navbar from "../NavBar/Navbar"
+import Footer from "../NavBar/footer"
+import './background.css'
 import * as Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import './background.css'
 
-function SummaryPage (props) {
+function HomePage (props) {
     const options1 = {
         title: {
           text: 'Energy Usage Data'
@@ -73,9 +75,12 @@ function SummaryPage (props) {
         ]
     }
 
+
     return (
-        <div>
-            <h1> Summary Page </h1>
+        <div className = "overlay"> 
+            <Navbar /> 
+            
+            <h1> Home Page </h1>
 
             <HighchartsReact
                 highcharts={Highcharts}
@@ -88,9 +93,11 @@ function SummaryPage (props) {
                 highcharts={Highcharts}
                 options={options2}
             />
+
+            <Footer />
         </div>
         
     );
 };
 
-export default SummaryPage;
+export default HomePage;
