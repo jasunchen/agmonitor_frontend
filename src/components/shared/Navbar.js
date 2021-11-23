@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 // import {MenuItems} from "./Menuitems"
 import { Link, NavLink} from 'react-router-dom'
+import AuthNav from './auth/auth-nav'
 import '../../css/Navbar.css'
 
 const divStyle = {
@@ -16,6 +17,8 @@ const Navbar = () => {
             <li className="nav-item"><Link className="nav-link" to="/about"> About </Link> </li>
             <li className="nav-item"><Link className="nav-link" to="/"> Home </Link> </li>
         </ul>
+        <AuthNav />
+
     </nav>
     )
 }
