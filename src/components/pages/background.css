@@ -11,3 +11,13 @@
   left: 0px;
   z-index: 1000;
 }
+
+.summary-chart{
+  float: left;
+  width: 45%;
+  margin: 0 2.5%;
+}
+
+.row{
+  height: 500px;
+}
