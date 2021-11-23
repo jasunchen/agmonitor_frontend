@@ -16,7 +16,7 @@ class Auth0ProviderWithHistory extends React.Component {
       <Auth0Provider
         domain={this.domain}
         clientId={this.clientId}
-        redirectUri={window.location.origin}
+        redirectUri={window.location.origin+'/home'}
         onRedirectCallback={this.onRedirectCallback}
         audience={this.audience}
       >
