@@ -7,18 +7,13 @@ import Chart from "../utility/Chart";
 function ExploreDataPage (props) {
 
     return (
-        <div className = "overlay">   
-            <Navbar /> 
-            
+        <div className = "overlay">               
             <h1> Explore Data Page </h1>
-
             <div className="row">
                 <div className="summary-chart">
                     <Chart />
                 </div>
             </div>
-
-            <Footer />
         </div>
 
     );

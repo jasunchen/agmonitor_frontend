@@ -8,8 +8,7 @@ function DashboardPage (props) {
 
     return (
         <div className = "overlay">   
-            <Navbar /> Dashboard Page
-            <Footer />
+            Dashboard Page
         </div>
     );
 };

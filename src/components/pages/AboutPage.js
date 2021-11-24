@@ -7,8 +7,7 @@ function AboutPage (props) {
 
     return (
         <div className = "overlay">   
-            <Navbar /> About Page
-            <Footer />
+            About Page
         </div>
 
     );
