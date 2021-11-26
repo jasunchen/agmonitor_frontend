@@ -21,7 +21,6 @@ const Navbar = () => {
             {isAuthenticated && <li className="nav-item"><Link className="nav-link" to="/home"> Home </Link> </li>}
         </ul>
         <AuthNav />
-
     </nav>
     )
 }

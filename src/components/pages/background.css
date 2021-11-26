@@ -21,3 +21,31 @@
 .row{
   height: 500px;
 }
+
+.sr {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.middle img {
+  width: 15%;
+}
+
+.middle .arrow {
+  width: 5%;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.middle-next {
+  width: 90%;
+  margin: 15px auto;
+}
+
+.form {
+  width: 30%;
+  margin: 15px auto;
+}
