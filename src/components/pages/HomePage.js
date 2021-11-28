@@ -13,11 +13,11 @@ function HomePage (props) {
 
             <div className="row">
                 <div className="summary-chart">
-                    <Chart title="Aggregate 1" data={[[1638079060000, 1], [1638079070000, 4], [1638079080000, 9]]}/>
+                    <Chart title="Aggregate 1" produced={[[1638079060000, 9], [1638079070000, 4], [1638079080000, 1]]} consumed={[[1638079060000, 1], [1638079070000, 4], [1638079080000, 9]]}/>
                 </div>
                 
                 <div className="summary-chart">
-                    <Chart title="Aggregate 2" data={[[1638077080000, 1], [1638078080000, 4], [1638079080000, 9]]}/>
+                    <Chart title="Aggregate 2" produced={[[1638077080000, 9], [1638078080000, 5], [1638079080000, 2]]} consumed={[[1638077080000, 3], [1638078080000, 6], [1638079080000, 9]]}/>
                 </div>                
             </div>
 

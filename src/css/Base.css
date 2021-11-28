@@ -52,7 +52,7 @@ a {
 }
 
 a:hover{
-    color: #FC473E;
+    color: #FFDE7D;
     text-decoration: none;
 }
 
@@ -104,6 +104,6 @@ ol li::before{
 }
 
 .overlay {
-    min-height: 700px;
+    margin: 50px 0;
     padding: 0 5%;
 }

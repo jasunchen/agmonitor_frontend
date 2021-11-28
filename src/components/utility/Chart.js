@@ -39,8 +39,14 @@ function Chart (props) {
         ],
         series: [
             {
-                name: 'Meter 1',
-                data: props.data,
+                name: 'Energy Produced',
+                data: props.produced,
+                color: "#00B8A9"
+            },
+            {
+                name: 'Energy Consumed',
+                data: props.consumed,
+                color: "#F6416C"
             }
         ]
     }

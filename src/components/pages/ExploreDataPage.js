@@ -35,7 +35,7 @@ function ExploreDataPage (props) {
             </div>
             <div className="row">
                 <div className="explore-chart">
-                <Chart title="Explore" data={[[1638077080000, 1], [1638078080000, 4], [1638079080000, 9]]}/>
+                <Chart title="Explore"  produced={[[1638077080000, 9], [1638078080000, 5], [1638079080000, 2]]} consumed={[[1638077080000, 3], [1638078080000, 6], [1638079080000, 9]]}/>
                 </div>
             </div>
         </div>
