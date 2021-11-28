@@ -15,12 +15,12 @@ const Navbar = () => {
     return( 
     <nav className="Navbar">
         <ul className='nav-menu'>
-            {isAuthenticated && <li className="nav-item"><Link className="nav-link" to="/dashboard"> Dashboard </Link> </li>}
-            {isAuthenticated && <li className="nav-item"><Link className="nav-link" to="/explore_data"> Explore </Link> </li>}
+            <AuthNav />
+            {<li className="nav-item"><Link className="nav-link" to="/dashboard"> Dashboard </Link> </li>}
+            {<li className="nav-item"><Link className="nav-link" to="/explore_data"> Explore </Link> </li>}
             <li className="nav-item"><Link className="nav-link" to="/about"> About </Link> </li>
-            {isAuthenticated && <li className="nav-item"><Link className="nav-link" to="/home"> Home </Link> </li>}
+            {<li className="nav-item"><Link className="nav-link" to="/home"> Home </Link> </li>}
         </ul>
-        <AuthNav />
     </nav>
     )
 }

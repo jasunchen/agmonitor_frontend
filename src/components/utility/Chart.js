@@ -8,33 +8,39 @@ import HighchartsReact from 'highcharts-react-official';
 function Chart (props) {
     const options = {
         title: {
-          text: 'Energy Usage Data'
-        },
-        subtitle: {
-            text: 'Context Subtitle'
+          text: props.title,
+          style: {"fontSize": "24px", "fontWeight" : "400"}
         },
         yAxis: [
             {
                 title: {
-                    text: 'Power (KiloWatt Hours)'
+                    text: 'Power Usage (kWh)',
+                    style: {"fontSize": "22px", "fontWeight" : "300"}
+                },
+                labels: {
+                    style: {"fontSize": "16px", "fontWeight" : "200"}
                 }
             }
         ],
         xAxis: [
             {
                 title: {
-                    text: 'Time'
+                    text: 'Time',
+                    style: {"fontSize": "22px", "fontWeight" : "300"}
+                },
+                type: "datetime",
+                labels: {
+                    formatter: function() {
+                        return Highcharts.dateFormat('%m/%d/%Y', this.value);
+                    },
+                    style: {"fontSize": "16px", "fontWeight" : "200"}
                 }
-            }
+            } 
         ],
         series: [
             {
                 name: 'Meter 1',
-                data: [[1, 1], [2, 4], [3, 9]]
-            },
-            {
-                name: 'Meter 2',
-                data: [[5, 5], [6, 6], [7, 7]]
+                data: props.data,
             }
         ]
     }

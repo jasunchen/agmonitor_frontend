@@ -12,16 +12,6 @@
   z-index: 1000;
 }
 
-.summary-chart{
-  float: left;
-  width: 45%;
-  margin: 0 2.5%;
-}
-
-.row{
-  height: 500px;
-}
-
 .sr {
   display: flex;
   justify-content: space-around;

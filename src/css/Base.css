@@ -102,3 +102,8 @@ ol li::before{
     width: 100%;
     justify-content: center;
 }
+
+.overlay {
+    min-height: 700px;
+    padding: 0 5%;
+}
