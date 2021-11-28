@@ -1,7 +1,7 @@
 // App.js
 // Modified by: Alex Mei
 import React, { useState, useEffect } from 'react';
-import { Switch ,Route } from 'react-router-dom';
+import { Switch , Route } from 'react-router-dom';
 import { withAuth0 } from "@auth0/auth0-react";
 import './App.css';
 import "./css/Base.css"
