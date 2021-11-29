@@ -13,7 +13,7 @@ class Collapsible extends React.Component {
   }
   render() {
   return (<div>
-      <div onClick={(e)=>this.toggglePanel(e)} className="header" >{this.props.title}</div>
+      <div onClick={(e)=>this.togglePanel(e)} className="header" >{this.props.title}</div>
       {this.state.open ? (<div className="content">{this.props.children}</div>) : null}
   </div>);
   }

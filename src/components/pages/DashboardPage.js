@@ -11,7 +11,27 @@ function DashboardPage (props) {
     return (
         
         <div className = "overlay">   
-            Dashboard Page
+        <h1>Assets</h1>
+            <div className = "battery"> 
+            </div>
+        
+        <h1>Variable Control</h1>
+        
+        <div className="App container my-2">
+ 
+            <CollapsiblePanel title="Tesla" collapse={true}>
+                <span>Settings for Tesla</span>
+            </CollapsiblePanel>
+
+            <CollapsiblePanel title="Pump" collapse={false}>
+                <span>Settings for Pump</span>
+            </CollapsiblePanel>
+
+            <CollapsiblePanel title="AC" collapse={false}>
+                <span>Settings for AC</span>
+            </CollapsiblePanel>
+</div>
+
 
         </div>
         
