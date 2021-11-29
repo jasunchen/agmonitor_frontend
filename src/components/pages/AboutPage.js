@@ -8,11 +8,7 @@ function AboutPage (props) {
     return (
         <div className = "overlay">   
            <div className="sr middle">
-             <img src="https://agmonitor.com/wp-content/uploads/2020/09/answers-agdata.png" alt=""/>
-             <img className="arrow" src="https://agmonitor.com/wp-content/uploads/2020/09/arrow.png" alt=""/>
-             <img src="https://agmonitor.com/wp-content/uploads/2020/09/answers-SaaS.png" alt=""/>
-             <img className="arrow" src="https://agmonitor.com/wp-content/uploads/2020/09/arrow.png" alt=""/>
-             <img src="https://agmonitor.com/wp-content/uploads/2020/09/answers-answers.png" alt=""/>
+           <img src="https://summitsolar.com/wp-content/uploads/2018/09/Summit-Solar-Energy-Blog-2018-09-26-What-Is-the-Difference-Between-a-Solar-Panel-Solar-Array.jpg" alt=""/>
            </div>
           <div className="middle-next">
             <span className="bold">Background</span>
