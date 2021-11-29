@@ -1,5 +1,4 @@
 .overlay {
-  
   /*background: linear-gradient(
     135deg,
     rgba(29, 219, 105, 1) 0%,
@@ -12,13 +11,13 @@
   z-index: 1000;
 }
 
-.summary-chart{
+.summary-chart {
   float: left;
   width: 45%;
   margin: 0 2.5%;
 }
 
-.row{
+.row {
   height: 500px;
 }
 
