@@ -2,15 +2,12 @@
 // Engineer: Alex Mei
 
 import React from 'react';
-import Navbar from "../shared/Navbar"
-import Footer from "../shared/Footer"
 import './background.css'
 import Chart from "../utility/Chart";
 
 function HomePage (props) {
     return (
         <div className = "overlay"> 
-            <Navbar /> 
 
             <h1> Home Page </h1>
 
@@ -29,7 +26,6 @@ function HomePage (props) {
             <div>
                 Content
             </div>
-            <Footer />
         </div>
         
     );
