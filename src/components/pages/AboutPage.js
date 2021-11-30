@@ -7,16 +7,12 @@ function AboutPage (props) {
     return (
         <div className = "overlay">   
            <div className="sr middle">
-             <img src="https://agmonitor.com/wp-content/uploads/2020/09/answers-agdata.png" alt=""/>
-             <img className="arrow" src="https://agmonitor.com/wp-content/uploads/2020/09/arrow.png" alt=""/>
-             <img src="https://agmonitor.com/wp-content/uploads/2020/09/answers-SaaS.png" alt=""/>
-             <img className="arrow" src="https://agmonitor.com/wp-content/uploads/2020/09/arrow.png" alt=""/>
-             <img src="https://agmonitor.com/wp-content/uploads/2020/09/answers-answers.png" alt=""/>
+           <img src="https://summitsolar.com/wp-content/uploads/2018/09/Summit-Solar-Energy-Blog-2018-09-26-What-Is-the-Difference-Between-a-Solar-Panel-Solar-Array.jpg" alt=""/>
            </div>
           <div className="middle-next">
             <span className="bold">Background</span>
             <br/> <br/>
-            Solar energy can only generate power during the day, which introduces fluctuation into the grid. Energy usage during the day can be cheaper because of excess solar generation, whereas usage during the night can be more expensive because of higher demand. Microgrid owners face the problem of having to decide when to activate their variable load, or perhaps don’t want to decide at all. This can lead to inefficiencies in energy usage, waste money, and contribute to unnecessary greenhouse gas emissions depending on when power is used. Optimizing usage requires operators to have the relevant knowledge and foresight to smartly manage their resources.
+            Installing solar and battery assets creates microgrids that can be managed independently. Solar energy can only generate power during the day, which often means that energy usage during the day is cheaper. Certain energy assets do not have to be activated all the time, so shifting their load is one strategy to optimize cost, reduce inefficiencies, and even avoid unnecessarily contributing to greenhouse gas emissions. However, knowing when to move usage can be difficult or an excessive burden, This can lead to inefficiencies in energy usage, waste money, and contribute to unnecessary greenhouse gas emissions depending on when power is used. . Thus, our project Optimizing usage requires operators to have the seeks to provide microgrid operators the relevant knowledge and foresight to smartly manage their resources.
             <br/> <br/>
             <span className="bold">Existing Solutions</span>
             <br/> <br/>

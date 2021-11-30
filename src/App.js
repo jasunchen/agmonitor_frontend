@@ -26,10 +26,10 @@ class App extends React.Component {
           <Switch> 
             <Route path="/" exact component = {AboutPage}/> 
             <Route path="/about" exact component = {AboutPage}/>   
-            <Route path="/home" exact component = {HomePage}/> 
-            <Route path="/profile" exact component = {ProfilePage}/> 
-            <Route path="/dashboard" exact component = {DashboardPage}/> 
-            <Route path="/explore_data" exact component = {ExploreDataPage}/>  
+            <ProtectedRoute path="/home" exact component = {HomePage}/> 
+            <ProtectedRoute path="/profile" exact component = {ProfilePage}/> 
+            <ProtectedRoute path="/dashboard" exact component = {DashboardPage}/> 
+            <ProtectedRoute path="/explore_data" exact component = {ExploreDataPage}/>  
             <Route path="/error" exact component = {ErrorPage}/>
           </Switch>
           <Footer /> 
