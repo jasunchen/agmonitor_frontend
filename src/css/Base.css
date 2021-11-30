@@ -52,7 +52,7 @@ a {
 }
 
 a:hover{
-    color: #FC473E;
+    color: #FFDE7D;
     text-decoration: none;
 }
 
@@ -101,4 +101,9 @@ ol li::before{
 .row-center {
     width: 100%;
     justify-content: center;
+}
+
+.overlay {
+    margin: 50px 0;
+    padding: 0 5%;
 }

@@ -1,8 +1,8 @@
-// SummaryHomePage.js
+// HomePage.js
 // Engineer: Alex Mei
 
 import React from 'react';
-import './background.css'
+import "../../css/Home.css"
 import Chart from "../utility/Chart";
 
 function HomePage (props) {
@@ -13,18 +13,21 @@ function HomePage (props) {
 
             <div className="row">
                 <div className="summary-chart">
-                    <Chart />
+                    <Chart title="Aggregate 1" produced={[[1638079060000, 9], [1638079070000, 4], [1638079080000, 1]]} consumed={[[1638079060000, 1], [1638079070000, 4], [1638079080000, 9]]}/>
                 </div>
                 
                 <div className="summary-chart">
-                    <Chart />
+                    <Chart title="Aggregate 2" produced={[[1638077080000, 9], [1638078080000, 5], [1638079080000, 2]]} consumed={[[1638077080000, 3], [1638078080000, 6], [1638079080000, 9]]}/>
                 </div>                
             </div>
 
             <h1> Recommendations </h1>
 
             <div>
-                Content
+                <ul>
+                    <li> Increase usage during the following hours: 12 - 2 PM. </li>
+                    <li> Reduce usage during the following hours: 5 - 9 PM. </li>   
+                </ul>
             </div>
         </div>
         

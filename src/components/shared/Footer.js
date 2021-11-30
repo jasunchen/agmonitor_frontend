@@ -7,7 +7,7 @@ import '../../css/Footer.css'
 const Footer = () => {
     return( 
     <footer className = "footer">
-        UC Santa Barbara Computer Science Capstone + AgMonitor | &copy; 2021 - 2022. All Rights Reserved.
+        UC Santa Barbara Computer Science Capstone x AgMonitor | &copy; 2021 - 2022. All Rights Reserved.
     </footer>
     )
 }
