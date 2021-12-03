@@ -14,7 +14,7 @@ function Chart (props) {
         yAxis: [
             {
                 title: {
-                    text: 'Power Usage (kWh)',
+                    text: 'Energy Usage (kWH)',
                     style: {"fontSize": "22px", "fontWeight" : "300"}
                 },
                 labels: {
@@ -34,7 +34,8 @@ function Chart (props) {
                         return Highcharts.dateFormat('%m/%d/%Y', this.value);
                     },
                     style: {"fontSize": "16px", "fontWeight" : "200"}
-                }
+                },
+                plotBands: props.plotBands
             } 
         ],
         series: [
