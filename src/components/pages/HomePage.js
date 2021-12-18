@@ -34,6 +34,12 @@ function HomePage (props) {
                 </div>                
             </div>
 
+            <h1> Energy Schedule </h1>
+            
+            <div>
+                Placeholder
+            </div>
+
             <h1> Recommendations </h1>
 
             <div>

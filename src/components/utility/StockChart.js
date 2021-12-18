@@ -1,12 +1,11 @@
-// Chart.js
+// StockChart.js
 // Engineer: Alex Mei
 
 import React from 'react';
-import * as Highcharts from 'highcharts';
+import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official';
 
-function Chart (props) {
-
+function StockChart (props) {
     const options = {
         title: {
           text: props.title,
@@ -20,7 +19,8 @@ function Chart (props) {
                 },
                 labels: {
                     style: {"fontSize": "16px", "fontWeight" : "200"}
-                }
+                },
+                opposite: false
             }
         ],
         xAxis: [
@@ -32,7 +32,7 @@ function Chart (props) {
                 type: "datetime",
                 labels: {
                     formatter: function() {
-                        return Highcharts.dateFormat('%b %d %H:%M', this.value);
+                        return Highcharts.dateFormat('%m/%d/%Y', this.value);
                     },
                     style: {"fontSize": "16px", "fontWeight" : "200"}
                 },
@@ -56,10 +56,11 @@ function Chart (props) {
     return (
             <HighchartsReact
                 highcharts={Highcharts}
+                constructorType={'stockChart'}
                 options={options}
                 containerProps={{ style: { width: "100%", height: "100%" } }}
             />
     );
 };
 
-export default Chart;
+export default StockChart;
