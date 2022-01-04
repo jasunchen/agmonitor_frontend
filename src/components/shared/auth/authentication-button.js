@@ -6,10 +6,22 @@ import  {withRouter } from "react-router-dom";
 
 import { withAuth0 } from "@auth0/auth0-react";
 import {Menu, Dropdown} from 'antd'
+import axios from "axios";
 
 class AuthenticationButton extends React.Component {
+  componentDidMount() {
+    const { user } = this.props.auth0;
+    if (user) {
+      axios.post('/registerUser', {email: user.email})
+        .then(res => {
+          console.log(res.data.detail)
+        })
+    }
+  }
+
   render() {
     const { isAuthenticated, logout, user } = this.props.auth0;
+    console.log(user)
     const menu = (
       <Menu>
         <Menu.Item><span onClick={() => {
@@ -20,7 +32,7 @@ class AuthenticationButton extends React.Component {
             returnTo: window.location.origin,
           })
         }>Log out</span></Menu.Item>
-      </Menu>  
+      </Menu>
     )
     return <>{!isAuthenticated ? <LoginButton /> :(<div>
       <Dropdown overlay={menu}>
