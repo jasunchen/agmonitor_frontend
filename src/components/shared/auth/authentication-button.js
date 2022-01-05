@@ -12,10 +12,28 @@ class AuthenticationButton extends React.Component {
   componentDidMount() {
     const { user } = this.props.auth0;
     if (user) {
-      axios.post('/registerUser', {email: user.email})
-        .then(res => {
-          console.log(res.data.detail)
-        })
+      let server = "http://0.0.0.0:8000"
+      if (process.env.REACT_APP_REMOTE === "1") { 
+          server = "https://agmonitor-pina-colada-back.herokuapp.com"
+      }
+
+      let requestUrl = `${server}/registerUser`
+
+      fetch(requestUrl, {
+          method: 'POST',
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+          },              
+          body: JSON.stringify({
+            "email": user.email
+          })
+      })
+      .then(response => response.json()) 
+      .then(data => {
+          console.log(data);
+      })
+      .catch((error) => console.log("Error: " + error))
     }
   }
 
