@@ -10,6 +10,7 @@ const DashboardPage = () => {
    const [assetName, setAssetName] = useState('');
    const [assetDescription, setAssetDescription] = useState('');
    
+   let email = "alexmei@ucsb.edu"
 
    // configure server URL
    let server = "http://0.0.0.0:8000"
@@ -18,7 +19,7 @@ const DashboardPage = () => {
    }
    
    useEffect(() => {     
-       let requestUrl = `${server}/getUserAsset?email=alexmei@ucsb.edu`
+       let requestUrl = `${server}/getUserAsset?email=${email}`
  
        fetch(requestUrl, {
            method: 'GET',
