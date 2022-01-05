@@ -7,7 +7,10 @@ const DashboardPage = () => {
 
    const [data, setData] = useState({});
    const [loading, setLoading] = useState(true);
+   const [assetName, setAssetName] = useState('');
+   const [assetDescription, setAssetDescription] = useState('');
    
+
    // configure server URL
    let server = "http://0.0.0.0:8000"
    if (process.env.REACT_APP_REMOTE === "1") { 
@@ -35,16 +38,10 @@ const DashboardPage = () => {
        .catch((error) => console.log("Error: " + error))
    }, [])
 
-    const email = 'jiawei_yu@ucsb.edu'
-    const [assetName, setAssetName] = useState('');
-    const [assetDescription, setAssetDescription] = useState('');
-    
-  
     const handleSubmit = (e) => {
       e.preventDefault();
-      const asset = { email, assetName, assetDescription };
   
-      let requestUrl = `${server}/addUserAsset?email=alexmei@ucsb.edu`
+      let requestUrl = `${server}/addUserAsset`
  
       fetch(requestUrl, {
            method: 'POST',
@@ -52,15 +49,15 @@ const DashboardPage = () => {
                'Accept': 'application/json',
                'Content-Type': 'application/json'
            },              
-           body: JSON.stringify(asset)
+           body: JSON.stringify({
+             "email" : "alexmei@ucsb.edu",
+             "name" : assetName,
+             "description" : assetDescription
+           })
       })
       .then(response => response.json()) 
       .then(data => {
-          setData(data);
-          console.log(data);
-
-          setLoading(false);
-
+          console.log("WORKED!")
       })
       .catch((error) => console.log("Error: " + error)) 
     }
