@@ -11,19 +11,6 @@
   z-index: 1000;
 }
 
-<<<<<<< HEAD
-=======
-.summary-chart {
-  float: left;
-  width: 45%;
-  margin: 0 2.5%;
-}
-
-.row {
-  height: 500px;
-}
-
->>>>>>> e0e661b7ead9d09cd6f5e3217430fd02adda0c6f
 .sr {
   display: flex;
   justify-content: space-around;
