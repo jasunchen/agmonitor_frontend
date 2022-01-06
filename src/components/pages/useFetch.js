@@ -9,8 +9,7 @@ const useFetch = (url) => {
    
 
     setTimeout(() => {
-      fetch(url,
-        )
+
       .then(res => {
         if (!res.ok) {
           throw Error('could not fetch the data for that resource');

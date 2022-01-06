@@ -1,27 +1,71 @@
 import AssetsList from "./AssetsList";
 import useFetch from "./useFetch";
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 
 const DashboardPage = () => {
-  const {data: assets } = useFetch('http://localhost:8000/getUserAsset')
+   //const {data: assets } = useFetch('http://localhost:8000/getUserAsset')
 
-    const email = 'jiawei_yu@ucsb.edu'
-    const [assetName, setAssetName] = useState('');
-    const [assetDescription, setAssetDescription] = useState('');
-    
-  
+   const [data, setData] = useState({});
+   const [loading, setLoading] = useState(true);
+   const [assetName, setAssetName] = useState('');
+   const [assetDescription, setAssetDescription] = useState('');
+   
+   let email = "alexmei@ucsb.edu"
+
+   // configure server URL
+   let server = "http://0.0.0.0:8000"
+   if (process.env.REACT_APP_REMOTE === "1") { 
+       server = "https://agmonitor-pina-colada-back.herokuapp.com"
+   }
+   
+   useEffect(() => {     
+       let requestUrl = `${server}/getUserAsset?email=${email}`
+ 
+       fetch(requestUrl, {
+           method: 'GET',
+           headers: {
+               'Accept': 'application/json',
+               'Content-Type': 'application/json'
+           },              
+       })
+       .then(response => response.json()) 
+       .then(data => {
+           setData(data);
+           console.log(data);
+ 
+           setLoading(false);
+ 
+       })
+       .catch((error) => console.log("Error: " + error))
+   }, [])
+
     const handleSubmit = (e) => {
       e.preventDefault();
-      const asset = { email, assetName, assetDescription };
   
-      fetch('http://localhost:8000/addUserAsset', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'},
-      body: JSON.stringify(asset)
-    })
+      let requestUrl = `${server}/addUserAsset`
+ 
+      fetch(requestUrl, {
+           method: 'POST',
+           headers: {
+               'Accept': 'application/json',
+               'Content-Type': 'application/json'
+           },              
+           body: JSON.stringify({
+             "email" : "alexmei@ucsb.edu",
+             "name" : assetName,
+             "description" : assetDescription
+           })
+      })
+      .then(response => response.json()) 
+      .then(data => {
+          console.log("WORKED!")
+      })
+      .catch((error) => console.log("Error: " + error)) 
     }
+
+  if(loading){
+      return <div> Loading... </div>
+  }
 
   return (
     <><div>
@@ -35,7 +79,7 @@ const DashboardPage = () => {
                   onChange={(e) => setAssetName(e.target.value)} />
               <label>Asset Description:</label>
               <textarea
-                  requi red
+                  required
                   value={assetDescription}
                   onChange={(e) => setAssetDescription(e.target.value)}
               ></textarea>
@@ -45,7 +89,7 @@ const DashboardPage = () => {
       </div><div>
               {/* { error && <div>{ error }</div> }
     { isPending && <div>Loading...</div> } */}
-              {assets && <AssetsList assets={assets} />}
+               <AssetsList assets={data} />
           </div></>
   );
 }
