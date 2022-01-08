@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../../css/Explore.css';
 import StockChart from "../utility/StockChart";
+import Chart from "../utility/Chart";
 import DataGrid, {Row } from 'react-data-grid';
 
 function ExploreDataPage (props) {
@@ -32,14 +33,17 @@ function ExploreDataPage (props) {
         return row.id;
     }
 
-    const [state, setState] = useState({});
+    const [state, setState] = useState({
+        "produced": [],
+        "consumed": []
+    });
     const [loading, setLoading] = useState(true);
     
     // TODO: determine userId
-    const userId = 3;
+    const assetId = 1;
 
     // TODO: configure time
-    const currentTime = 1609578000;
+    const currentTime = 1635724800;
     
     // configure server URL
     let server = "http://0.0.0.0:8000"
@@ -49,7 +53,7 @@ function ExploreDataPage (props) {
     
     useEffect(() => {     
         // DAILY VIEW
-        let requestUrl = `${server}/getAssetData?id=${userId}&start=0&end=${currentTime}`
+        let requestUrl = `${server}/getAssetData?id=${assetId}&start=0&end=${currentTime}&page=1`
 
         fetch(requestUrl, {
             method: 'GET',
@@ -63,7 +67,7 @@ function ExploreDataPage (props) {
             let produced = [];
             let consumed = [];
 
-            data.forEach(element => {
+            data["data"].forEach(element => {
                 produced.push([element["start_time"] * 1000, element["produced_energy"]])
                 consumed.push([element["start_time"] * 1000, element["consumed_energy"]])
             })
@@ -98,7 +102,7 @@ function ExploreDataPage (props) {
             </div>
             <div className="row">
                 <div className="explore-chart">
-                <StockChart title="Explore" produced={state["produced"]} consumed={state["consumed"]}/>
+                <Chart title="Explore" produced={state["produced"]} consumed={state["consumed"]}/>
                 </div>
             </div>
         </div>
