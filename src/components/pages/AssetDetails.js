@@ -2,7 +2,7 @@ import { useHistory, useParams } from "react-router-dom";
 import useFetch from "./useFetch";
 
 function AssetDetails(props) {
-  //   const { id } = useParams();
+    const { id } = useParams();
   // const { data: asset } = useFetch('http://localhost:8000/getUserAsset');
   // const history = useHistory();
 
@@ -10,13 +10,13 @@ function AssetDetails(props) {
   const [loading, setLoading] = useEffect(true);
   
   // configure server URL
-  let server = "http://0.0.0.0:8000"
+  let server = "http://localhost:8000"
   if (process.env.REACT_APP_REMOTE === "1") { 
       server = "https://agmonitor-pina-colada-back.herokuapp.com"
   }
   
   useEffect(() => {     
-      let requestUrl = `${server}/getUserAsset?email=alexmei@ucsb.edu`
+      let requestUrl = `${server}/getUserAsset?email=jiawei_yu@ucsb.edu`
 
       fetch(requestUrl, {
           method: 'GET',
@@ -36,13 +36,7 @@ function AssetDetails(props) {
       .catch((error) => console.log("Error: " + error))
   }, [])
 
-//   const handleClick = () => {
-//     fetch('http://localhost:8000/blogs/' + blog.id, {
-//       method: 'DELETE'
-//     }).then(() => {
-//       history.push('/');
-//     }) 
-//   }
+
   if(loading){
     return <div> Loading... </div>
   }
@@ -54,7 +48,7 @@ function AssetDetails(props) {
       { asset && (
         <article>
           <h2>{ asset.assetName }</h2>
-          <div>{ asset.assetDescription }</div>
+          <div>{ asset.assetDescription } </div>
         
         </article>
       )}

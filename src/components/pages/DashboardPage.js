@@ -10,16 +10,16 @@ const DashboardPage = () => {
    const [assetName, setAssetName] = useState('');
    const [assetDescription, setAssetDescription] = useState('');
    
-   let email = "alexmei@ucsb.edu"
+   let email = "jiawei_yu@ucsb.edu"
 
    // configure server URL
-   let server = "http://0.0.0.0:8000"
+   let server = "http://localhost:8000"
    if (process.env.REACT_APP_REMOTE === "1") { 
        server = "https://agmonitor-pina-colada-back.herokuapp.com"
    }
    
    useEffect(() => {     
-       let requestUrl = `${server}/getUserAsset?email=${email}`
+       let requestUrl = `${server}/getAllAssets?email=${email}`
  
        fetch(requestUrl, {
            method: 'GET',
@@ -51,7 +51,7 @@ const DashboardPage = () => {
                'Content-Type': 'application/json'
            },              
            body: JSON.stringify({
-             "email" : "alexmei@ucsb.edu",
+             "email" : "jiawei_yu@ucsb.edu",
              "name" : assetName,
              "description" : assetDescription
            })

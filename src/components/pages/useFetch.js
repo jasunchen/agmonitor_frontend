@@ -9,17 +9,23 @@ const useFetch = (url) => {
    
 
     setTimeout(() => {
-
+      fetch(url, {
+          method: 'GET',
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+          },              
+      })
       .then(res => {
-        if (!res.ok) {
+        if (!res.ok) { // error coming back from server
           throw Error('could not fetch the data for that resource');
         } 
         return res.json();
       })
       .then(data => {
-        setIsPending(false);
-        setData(data);
-        setError(null);
+        // setIsPending(false);
+        // setData(data);
+        // setError(null);
         console.log(data)
       })
       .catch(err => {
