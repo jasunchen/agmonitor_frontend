@@ -19,7 +19,7 @@ const DashboardPage = () => {
    }
    
    useEffect(() => {     
-       let requestUrl = `${server}/getUserAsset?email=${email}`
+       let requestUrl = `${server}/getAllAssets?email=${email}`
  
        fetch(requestUrl, {
            method: 'GET',
