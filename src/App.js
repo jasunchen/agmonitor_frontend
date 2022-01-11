@@ -30,7 +30,9 @@ class App extends React.Component {
             <ProtectedRoute path="/profile" exact component = {ProfilePage}/> 
             <ProtectedRoute path="/dashboard" exact component = {DashboardPage}/> 
             <ProtectedRoute path="/explore_data" exact component = {ExploreDataPage}/>  
-            <ProtectedRoute path="/dashboard/:assetName" component={SpecificAssetPage} />
+            <Route path="/dashboard/:id"  component = {SpecificAssetPage} />
+    
+           
             <Route path="/error" exact component = {ErrorPage}/>
           </Switch>
           <Footer /> 

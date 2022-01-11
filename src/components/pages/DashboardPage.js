@@ -1,5 +1,7 @@
 import AssetsList from "./AssetsList";
-import useFetch from "./useFetch";
+import {useHistory } from 'react-router-dom';
+
+
 import React, {useState, useEffect} from "react";
 
 const DashboardPage = () => {
@@ -9,11 +11,12 @@ const DashboardPage = () => {
    const [loading, setLoading] = useState(true);
    const [assetName, setAssetName] = useState('');
    const [assetDescription, setAssetDescription] = useState('');
+   let history = useHistory();
    
-   let email = "alexmei@ucsb.edu"
+   let email = "jiawei_yu@ucsb.edu"
 
    // configure server URL
-   let server = "http://0.0.0.0:8000"
+   let server = "http://localhost:8000"
    if (process.env.REACT_APP_REMOTE === "1") { 
        server = "https://agmonitor-pina-colada-back.herokuapp.com"
    }
@@ -37,7 +40,10 @@ const DashboardPage = () => {
  
        })
        .catch((error) => console.log("Error: " + error))
-   }, [])
+   }, []
+   
+   
+   )
 
     const handleSubmit = (e) => {
       e.preventDefault();
@@ -51,7 +57,7 @@ const DashboardPage = () => {
                'Content-Type': 'application/json'
            },              
            body: JSON.stringify({
-             "email" : "alexmei@ucsb.edu",
+             "email" : "jiawei_yu@ucsb.edu",
              "name" : assetName,
              "description" : assetDescription
            })
@@ -61,6 +67,9 @@ const DashboardPage = () => {
           console.log("WORKED!")
       })
       .catch((error) => console.log("Error: " + error)) 
+
+      
+      history.go(0)
     }
 
   if(loading){
