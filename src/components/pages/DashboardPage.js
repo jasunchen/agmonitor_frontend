@@ -1,5 +1,7 @@
 import AssetsList from "./AssetsList";
-import useFetch from "./useFetch";
+import {useHistory } from 'react-router-dom';
+
+
 import React, {useState, useEffect} from "react";
 
 const DashboardPage = () => {
@@ -9,6 +11,7 @@ const DashboardPage = () => {
    const [loading, setLoading] = useState(true);
    const [assetName, setAssetName] = useState('');
    const [assetDescription, setAssetDescription] = useState('');
+   let history = useHistory();
    
    let email = "jiawei_yu@ucsb.edu"
 
@@ -37,7 +40,10 @@ const DashboardPage = () => {
  
        })
        .catch((error) => console.log("Error: " + error))
-   }, [])
+   }, []
+   
+   
+   )
 
     const handleSubmit = (e) => {
       e.preventDefault();
@@ -61,6 +67,9 @@ const DashboardPage = () => {
           console.log("WORKED!")
       })
       .catch((error) => console.log("Error: " + error)) 
+
+      
+      history.go(0)
     }
 
   if(loading){
