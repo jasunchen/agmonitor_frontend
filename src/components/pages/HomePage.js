@@ -28,11 +28,11 @@ function HomePage (props) {
 
     // configure server URL
     let server = "http://0.0.0.0:8000"
-    if (process.env.REACT_APP_REMOTE === "1") { 
+    if (process.env.REACT_APP_REMOTE === "1") {
         server = "https://agmonitor-pina-colada-back.herokuapp.com"
     }
 
-    useEffect(() => {     
+    useEffect(() => {
         // DAILY VIEW
         let requestUrl = `${server}/getAssetData?id=${assetId}&start=${currentTime - dayDelta}&end=${currentTime}&page=1`
 
@@ -41,9 +41,9 @@ function HomePage (props) {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
-            },              
+            },
         })
-        .then(response => response.json()) 
+        .then(response => response.json())
         .then(data => {
             let dayProduced = state["dayProduced"];
             let dayConsumed = state["dayConsumed"];
@@ -65,24 +65,24 @@ function HomePage (props) {
         let hasNext = true;
         for(let page = 1; page <= 8; page += 1){
             requestUrl = `${server}/getAssetData?id=${assetId}&start=${currentTime - 7 * dayDelta}&end=${currentTime}&page=${page}`
-        
+
             fetch(requestUrl, {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
-                },              
+                },
             })
-            .then(response => response.json()) 
+            .then(response => response.json())
             .then(data => {
                 let weekProduced = state["weekProduced"];
                 let weekConsumed = state["weekConsumed"];
-    
+
                 data["data"].forEach(element => {
                     weekProduced.push([element["start_time"] * 1000, element["produced_energy"]])
                     weekConsumed.push([element["start_time"] * 1000, element["consumed_energy"]])
                 })
-    
+
                 weekProduced = weekProduced.sort(function(a, b) {
                     if (a[0] == b[0]) {
                       return a[1] - b[1];
@@ -93,7 +93,7 @@ function HomePage (props) {
                 weekConsumed = weekConsumed.sort(function(a, b) {
                     return a[0] - b[0];
                 });
-                
+
                 setState({
                     ...state,
                     "weekProduced" : weekProduced,
@@ -103,7 +103,7 @@ function HomePage (props) {
                 if(data["has_next"] == false){
                     hasNext = false;
                     setLoading(false);
-                }                
+                }
             })
             .catch((error) => console.log("Error: " + error))
         }
@@ -111,20 +111,20 @@ function HomePage (props) {
     }, [])
 
     if(loading){
-        return <div> Loading... {props.email} </div>
+        return <div>{props.auth0.user.email} </div>
     }
-    
+
     return (
-        <div className = "overlay"> 
+        <div className = "overlay">
 
             <h1> Home Page </h1>
 
             <div className="row">
                 <div className="summary-chart">
-                    <Chart 
-                        title="Daily Snapshot" 
-                        produced={state["dayProduced"]} 
-                        consumed={state["dayConsumed"]} 
+                    <Chart
+                        title="Daily Snapshot"
+                        produced={state["dayProduced"]}
+                        consumed={state["dayConsumed"]}
                         plotBands={{
                             from: state["peakStart"],
                             to: state["peakEnd"],
@@ -132,17 +132,17 @@ function HomePage (props) {
                             label: "Peak Hours"
                         }}/>
                 </div>
-                
+
                 <div className="summary-chart">
                     <Chart
-                        title="Weekly Snapshot" 
-                        produced={state["weekProduced"]} 
+                        title="Weekly Snapshot"
+                        produced={state["weekProduced"]}
                         consumed={state["weekConsumed"]} />
-                </div>                
+                </div>
             </div>
 
             <h1> Energy Schedule </h1>
-            
+
             <div>
                 Placeholder
             </div>
@@ -152,12 +152,12 @@ function HomePage (props) {
             <div>
                 <ul>
                     <li> Increase usage during the following hours: 12 - 2 PM. </li>
-                    <li> Reduce usage during the following hours: 5 - 9 PM. </li>   
+                    <li> Reduce usage during the following hours: 5 - 9 PM. </li>
                 </ul>
             </div>
         </div>
-        
+
     );
 };
 
-export default HomePage;
+export default withAuth0(HomePage);
