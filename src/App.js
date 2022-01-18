@@ -6,7 +6,7 @@ import { withAuth0 } from "@auth0/auth0-react";
 import './App.css';
 import "./css/Base.css";
 import axios from 'axios';
-import {HomePage, ErrorPage, AboutPage, ExploreDataPage, ProfilePage, DashboardPage, SpecificAssetPage} from './components/pages';
+import {HomePage, ErrorPage, AboutPage, ExploreDataPage, ProfilePage, DashboardPage, SpecificAssetPage, UserPreference} from './components/pages';
 import ProtectedRoute from './auth/protected-route';
 import Navbar from './components/shared/Navbar';
 import Footer from './components/shared/Footer';
@@ -31,6 +31,7 @@ class App extends React.Component {
             <ProtectedRoute path="/dashboard" exact component = {DashboardPage}/> 
             <ProtectedRoute path="/explore_data" exact component = {ExploreDataPage}/>  
             <Route path="/dashboard/:id"  component = {SpecificAssetPage} />
+            <Route path="/userPreference" component = {UserPreference} />
     
            
             <Route path="/error" exact component = {ErrorPage}/>
