@@ -12,7 +12,9 @@ function AssetsList(props){
             <h2>{ asset["asset_name"]}</h2>
             <p> id: { asset["id"] }</p>
             <p> Description: { asset["description"] }</p>
-
+            <p> { asset['declination'] && <div> declination: { asset['declination'] }</div> } </p>
+            <p> { asset['azimuth'] && <div> azimuth: { asset['azimuth'] }</div> } </p>
+            <p> { asset['modules_power'] && <div> modules_power: { asset['modules_power'] }</div> } </p>
             
         
           </Link>
