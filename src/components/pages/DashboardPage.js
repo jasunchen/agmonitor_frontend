@@ -1,10 +1,10 @@
 import AssetsList from "./AssetsList";
 import {useHistory, Link } from 'react-router-dom';
-
+import { withAuth0 } from '@auth0/auth0-react';
 
 import React, {useState, useEffect} from "react";
 
-const DashboardPage = () => {
+function DashboardPage(props) {
    //const {data: assets } = useFetch('http://localhost:8000/getUserAsset')
 
    const [data, setData] = useState({});
@@ -19,7 +19,7 @@ const DashboardPage = () => {
 
    let history = useHistory();
    
-   let email = "jiawei_yu@ucsb.edu"
+   let email = props.auth0.user.email
 
    // configure server URL
    let server = "http://localhost:8000"
@@ -64,7 +64,7 @@ const DashboardPage = () => {
                'Content-Type': 'application/json'
            },              
            body: JSON.stringify({
-             "email" : "jiawei_yu@ucsb.edu",
+             "email" : email,
              "name" : assetName,
              "description" : assetDescription,
              "is_generation": false
@@ -205,4 +205,4 @@ const DashboardPage = () => {
   );
 }
  
-export default DashboardPage;
+export default  withAuth0(DashboardPage);
