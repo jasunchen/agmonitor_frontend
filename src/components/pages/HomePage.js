@@ -48,8 +48,8 @@ function HomePage (props) {
         })
         .then(response => response.json())
         .then(data => {
-            if(data["assets"].length !== 0){
-                const assetId = data["assets"][0]["id"];
+            if(data["generation"].length !== 0){
+                const assetId = data["generation"][0]["id"];
                  // DAILY VIEW
                 requestUrl = `${server}/getAssetData?id=${assetId}&start=${currentTime - dayDelta}&end=${currentTime}&page=1`
 

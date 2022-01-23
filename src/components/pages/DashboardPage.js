@@ -40,8 +40,6 @@ function DashboardPage(props) {
        .then(response => response.json()) 
        .then(data => {
            setData(data);
-           console.log(data['assets']);
-           console.log(data['generations'])
            setLoading(false);
  
        })
@@ -67,7 +65,7 @@ function DashboardPage(props) {
              "email" : email,
              "name" : assetName,
              "description" : assetDescription,
-             "is_generation": false
+             "type_of_asset": false
            })
       })
       .then(response => response.json()) 
@@ -96,7 +94,7 @@ function DashboardPage(props) {
              "email" : email,
              "name" : assetName,
              "description" : assetDescription,
-             "is_generation": true,
+             "type_of_asset": "generation",
              "declination": declination,
              "azimuth" : azimuth,
              "modules_power": modules_power
@@ -195,12 +193,17 @@ function DashboardPage(props) {
       </div><div>
               {/* { error && <div>{ error }</div> }
     { isPending && <div>Loading...</div> } */}
-                <h2>Non-generation assets:</h2>
-                <AssetsList assets={data['assets']} /> 
+                <h2>Base assets:</h2>
+                <AssetsList assets={data['base']} /> 
+                <br></br>
+                <br></br>
+                <h2>Flexible assets:</h2>
+                <AssetsList assets={data['flexible']} /> 
                 <br></br>
                 <br></br>
                 <h2>Generation assets:</h2>
-                <AssetsList assets={data['generations']} />
+                <AssetsList assets={data['generation']} />
+
           </div></>
   );
 }
