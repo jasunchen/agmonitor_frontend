@@ -12,6 +12,8 @@ function SpecificAssetPage() {
   const [declination, setDeclination] = useState();
   const [azimuth, setAzimuth] = useState();
   const [modules_power, setModulesPower] = useState();
+  const [start_charge_time, setStartChargeTime] = useState();
+  const [end_charge_time, setEndChargeTime] = useState();
 
  
    // configure server URL
@@ -57,16 +59,16 @@ function SpecificAssetPage() {
            "id" : int_id,
            "name" : assetName,
            "description" : assetDescription,
-           "is_generation": false
+           "type_of_asset": false
 
          })
     })
     .then(response => response.json()) 
       .then(data1 => {
-          console.log(data1)
+          console.log('successfuly changed base')
       })
       .catch((error) => console.log("Error: " + error)) 
-    history.push("/dashboard")  
+    
     history.go(0)
     }
 
@@ -85,7 +87,7 @@ function SpecificAssetPage() {
              "id" : int_id,
              "name" : assetName,
              "description" : assetDescription,
-             "is_generation": 1,
+             "type_of_asset": 'generation',
              "declination": declination,
              "azimuth" : azimuth,
              "modules_power": modules_power
@@ -97,10 +99,41 @@ function SpecificAssetPage() {
             console.log(data1)
         })
         .catch((error) => console.log("Error: " + error)) 
-      history.push("/dashboard")  
+      
       history.go(0)
       }
 
+    
+      const handleFlexibleChangeSubmit = (e) => {
+        e.preventDefault();
+    
+        let requestUrl = `${server}/updateUserAsset`
+    
+        fetch(requestUrl, {
+             method: 'POST',
+             headers: {
+                 'Accept': 'application/json',
+                 'Content-Type': 'application/json'
+             },              
+             body: JSON.stringify({
+              "id" : int_id,
+               "name" : assetName,
+               "description" : assetDescription,
+               "type_of_asset": "flexible",
+               "start_charge_time": start_charge_time,
+               "end_charge_time" : end_charge_time
+               
+               
+             })
+        })
+        .then(response => response.json()) 
+          .then(data1 => {
+              console.log(data1)
+          })
+          .catch((error) => console.log("Error: " + error)) 
+        
+        history.go(0)
+        }
 
 
     const handleDelete = (e) => {
@@ -128,8 +161,7 @@ function SpecificAssetPage() {
         history.go(0)
       }
 
-      console.log('kek')
-      console.log(typeof(data['is_generation']))
+      
   return (
     <div>
     
@@ -140,12 +172,14 @@ function SpecificAssetPage() {
 
     <p> Asset description: {data["description"]} 
     </p>
-    <p> { data['is_generation'] && <div> declination: { data['declination'] }</div> } </p>
-            <p> { data['is_generation'] && <div> azimuth: { data['azimuth'] }</div> } </p>
-            <p> { data['is_generation'] && <div> modules_power: { data['modules_power'] }</div> } </p>
+    <p> { data['type_of_asset'] == 'generation' && <div> declination: { data['declination'] }</div> } </p>
+            <p> { data['type_of_asset'] == 'generation' && <div> azimuth: { data['azimuth'] }</div> } </p>
+            <p> { data['type_of_asset'] == 'generation' && <div> modules_power: { data['modules_power'] }</div> } </p>
+            <p> { data['type_of_asset'] == 'flexible' && <div> start charge time: { data['start_charge_time'] }</div> } </p>
+            <p> { data['type_of_asset'] == 'flexible' && <div> end charge time: { data['end_charge_time'] }</div> } </p>
 
-    <form onSubmit={ data['is_generation'] && handleGenerationChangeSubmit || (!data['is_generation']) && handleNotGenerationChangeSubmit}>
-              <label>Change this Asset Name:</label>
+            <form onSubmit={ ((data['type_of_asset'] == 'base') && handleNotGenerationChangeSubmit) || (data['type_of_asset'] == 'generation' && handleGenerationChangeSubmit) || (data['type_of_asset'] == 'flexible' && handleFlexibleChangeSubmit)}>
+            <label>Change this Asset Name:</label>
               <input
                   type="text"
                   required
@@ -162,29 +196,42 @@ function SpecificAssetPage() {
 
 
 
- { data['is_generation'] && <label> Change declination: </label> }
- { data['is_generation'] && 
+ { data['type_of_asset'] == 'generation' && <label> Change declination: </label> }
+ { data['type_of_asset'] == 'generation' && 
  <input
  type="number"
- required
  value={declination}
  onChange={(e) => setDeclination(e.target.value)} />}
  <br></br>
- { data['is_generation'] && <label> Change azimuth: </label> }
- { data['is_generation'] && 
+ { data['type_of_asset'] == 'generation' && <label> Change azimuth: </label> }
+ { data['type_of_asset'] == 'generation' && 
  <input
  type="number"
- required
  value={azimuth}
  onChange={(e) => setAzimuth(e.target.value)} />}
  <br></br>
- { data['is_generation'] && <label> Change modules_power: </label> }
- { data['is_generation'] && 
+ { data['type_of_asset'] == 'generation' && <label> Change modules_power: </label> }
+ { data['type_of_asset'] == 'generation' && 
  <input
  type="number"
- required
  value={modules_power}
  onChange={(e) => setModulesPower(e.target.value)} />}
+
+ <br></br>
+
+ { data['type_of_asset'] == 'flexible' && <label> Change start charge time: </label> }
+ { data['type_of_asset'] == 'flexible' && 
+ <input
+ type="number"
+ value={start_charge_time}
+ onChange={(e) => setStartChargeTime(e.target.value)} />}
+ <br></br>
+ { data['type_of_asset'] == 'flexible' && <label> Change end charge time: </label> }
+ { data['type_of_asset'] == 'flexible' && 
+ <input
+ type="number"
+ value={end_charge_time}
+ onChange={(e) => setEndChargeTime(e.target.value)} />}
 
               
               <button>Submit</button>
