@@ -179,7 +179,7 @@ function SpecificAssetPage() {
             <p> { data['type_of_asset'] == 'flexible' && <div> end charge time: { data['end_charge_time'] }</div> } </p>
 
             <form onSubmit={ ((data['type_of_asset'] == 'base') && handleNotGenerationChangeSubmit) || (data['type_of_asset'] == 'generation' && handleGenerationChangeSubmit) || (data['type_of_asset'] == 'flexible' && handleFlexibleChangeSubmit)}>
-            <label>Change this Asset Name:</label>
+            <label>Change this Asset Name:</label> 
               <input
                   type="text"
                   required
