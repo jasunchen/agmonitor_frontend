@@ -8,12 +8,16 @@ import "../../css/Home.css";
 import { withAuth0 } from '@auth0/auth0-react';
 
 function HomePage (props) {
+    let email = props.auth0.user.email;
+
     // TODO: configure time
     const currentTime = 1635724800;
     const dayDelta = 86400;
     const hourDelta = 3600;
 
     const [state, setState] = useState({
+        "hasAsset": false,
+        "loading": true,
         "dayProduced" : [],
         "dayConsumed" : [],
         "weekProduced" : [],
@@ -21,9 +25,8 @@ function HomePage (props) {
         "peakStart" : 1000 * (currentTime - 8 * hourDelta),
         "peakEnd" : 1000 * (currentTime - 3 * hourDelta)
     });
-    const [loading, setLoading] = useState(true);
 
-    // TODO: determine userId
+    // TODO: determine assetId
     const assetId = 1;
 
     // configure server URL
@@ -33,8 +36,8 @@ function HomePage (props) {
     }
 
     useEffect(() => {
-        // DAILY VIEW
-        let requestUrl = `${server}/getAssetData?id=${assetId}&start=${currentTime - dayDelta}&end=${currentTime}&page=1`
+        // GET GENERATION ASSET
+        let requestUrl = `${server}/getAllAssets?email=${email}`
 
         fetch(requestUrl, {
             method: 'GET',
@@ -45,77 +48,122 @@ function HomePage (props) {
         })
         .then(response => response.json())
         .then(data => {
-            let dayProduced = state["dayProduced"];
-            let dayConsumed = state["dayConsumed"];
+            if(data["generation"].length !== 0){
+                const assetId = data["generation"][0]["id"];
+                 // DAILY VIEW
+                requestUrl = `${server}/getAssetData?id=${assetId}&start=${currentTime - dayDelta}&end=${currentTime}&page=1`
 
-            data["data"].forEach(element => {
-                dayProduced.push([element["start_time"] * 1000, element["produced_energy"]])
-                dayConsumed.push([element["start_time"] * 1000, element["consumed_energy"]])
-            })
-
-            setState({
-                ...state,
-                "dayProduced" : dayProduced,
-                "dayConsumed" : dayConsumed
-            })
-        })
-        .catch((error) => console.log("Error: " + error))
-
-        // WEEKLY VIEW
-        let hasNext = true;
-        for(let page = 1; page <= 8; page += 1){
-            requestUrl = `${server}/getAssetData?id=${assetId}&start=${currentTime - 7 * dayDelta}&end=${currentTime}&page=${page}`
-
-            fetch(requestUrl, {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-            })
-            .then(response => response.json())
-            .then(data => {
-                let weekProduced = state["weekProduced"];
-                let weekConsumed = state["weekConsumed"];
-
-                data["data"].forEach(element => {
-                    weekProduced.push([element["start_time"] * 1000, element["produced_energy"]])
-                    weekConsumed.push([element["start_time"] * 1000, element["consumed_energy"]])
+                fetch(requestUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
                 })
+                .then(response => response.json())
+                .then(data => {
+                    let dayProduced = state["dayProduced"];
+                    let dayConsumed = state["dayConsumed"];
 
-                weekProduced = weekProduced.sort(function(a, b) {
-                    if (a[0] == b[0]) {
-                      return a[1] - b[1];
-                    }
-                    return b[0] - a[0];
-                });
+                    data["data"].forEach(element => {
+                        dayProduced.push([element["start_time"] * 1000, element["produced_energy"]])
+                        dayConsumed.push([element["start_time"] * 1000, element["consumed_energy"]])
+                    })
 
-                weekConsumed = weekConsumed.sort(function(a, b) {
-                    return a[0] - b[0];
-                });
+                    setState({
+                        ...state,
+                        "dayProduced" : dayProduced,
+                        "dayConsumed" : dayConsumed
+                    })
+                })
+                
 
+                // WEEKLY VIEW
+                let hasNext = true;
+                for(let page = 1; page <= 8; page += 1){
+                    requestUrl = `${server}/getAssetData?id=${assetId}&start=${currentTime - 7 * dayDelta}&end=${currentTime}&page=${page}`
+
+                    fetch(requestUrl, {
+                        method: 'GET',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        let weekProduced = state["weekProduced"];
+                        let weekConsumed = state["weekConsumed"];
+
+                        data["data"].forEach(element => {
+                            weekProduced.push([element["start_time"] * 1000, element["produced_energy"]])
+                            weekConsumed.push([element["start_time"] * 1000, element["consumed_energy"]])
+                        })
+
+                        weekProduced = weekProduced.sort(function(a, b) {
+                            if (a[0] == b[0]) {
+                            return a[1] - b[1];
+                            }
+                            return b[0] - a[0];
+                        });
+
+                        weekConsumed = weekConsumed.sort(function(a, b) {
+                            return a[0] - b[0];
+                        });
+
+                        setState({
+                            ...state,
+                            "weekProduced" : weekProduced,
+                            "weekConsumed" : weekConsumed,
+                        })
+
+                        if(data["has_next"] == false){
+                            hasNext = false;
+                            setState({
+                                ...state,
+                                "loading" : false,
+                                "hasAsset" : true
+                            })
+                        }
+                    })
+                    .catch((error) => {
+                        setState({
+                            ...state,
+                            "loading" : false
+                        })
+                        console.log("Error: " + error)
+                    })
+                }
+            }
+            else{
                 setState({
                     ...state,
-                    "weekProduced" : weekProduced,
-                    "weekConsumed" : weekConsumed,
+                    "loading": false
                 })
-
-                if(data["has_next"] == false){
-                    hasNext = false;
-                    setLoading(false);
-                }
-            })
-            .catch((error) => console.log("Error: " + error))
-        }
-
+            }
+        })
+        .catch((error) => console.log("Error: " + error))
     }, [])
 
-    if(loading){
-        return <div>{props.auth0.user.email} </div>
+    if(state["loading"]){
+        return (
+            <div className="overlay"> 
+                <h1> Loading... </h1>
+                <p> This might take a few minutes... </p>
+            </div>
+        )
+    }
+
+    if(!state["hasAsset"]){
+        return (
+            <div className="overlay"> 
+                <h1> An error has occurred! Did you create an asset yet? </h1>
+            </div>
+        )
     }
 
     return (
-        <div className = "overlay">
+        <div className="overlay">
 
             <h1> Home Page </h1>
 
