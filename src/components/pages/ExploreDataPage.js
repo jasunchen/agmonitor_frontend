@@ -6,12 +6,8 @@ import DataGrid, {Row } from 'react-data-grid';
 import { withAuth0 } from '@auth0/auth0-react';
 
 function ExploreDataPage (props) {
-    let email = props.auth0.user.email;
-
-    // TODO: configure time
-    const currentTime = 1635724800;
+    const email = props.auth0.user.email;
     const dayDelta = 86400;
-    const hourDelta = 3600;
 
     const [state, setState] = useState({
         "loading": true,
@@ -19,8 +15,10 @@ function ExploreDataPage (props) {
         "produced": [],
         "consumed": [],
         "rows" : [],
-        "page": 1,
     });
+
+    const [currentTime, setTime] = useState(1635638400);
+    const [searchValue, setSearchValue] = useState(null);
 
     const columns = [
         { key: 'time', name: 'Time' },
@@ -32,6 +30,21 @@ function ExploreDataPage (props) {
         return row.id;
     }
     
+    function onSearchChange(e) {
+        setSearchValue(e.target.value);
+    }
+
+    function handleSubmit(e){
+        e.preventDefault();
+        
+        let t = new Date(searchValue).getTime();
+        if (isNaN(t)) {
+            alert("Invalid input!")
+        }
+        else {
+            setTime(t / 1000);
+        }
+    }
     // configure server URL
     let server = "http://0.0.0.0:8000"
     if (process.env.REACT_APP_REMOTE === "1") { 
@@ -54,7 +67,7 @@ function ExploreDataPage (props) {
             if(data["generation"].length !== 0){
                 const assetId = data["generation"][0]["id"];
                 // DAILY VIEW
-                requestUrl = `${server}/getAssetData?id=${assetId}&start=0&end=${currentTime}&page=1`
+                requestUrl = `${server}/getAssetData?id=${assetId}&start=${currentTime}&end=${currentTime + dayDelta}&page=1`
 
                 fetch(requestUrl, {
                     method: 'GET',
@@ -98,7 +111,7 @@ function ExploreDataPage (props) {
             }
         })
         .catch((error) => console.log("Error: " + error))
-    }, [])
+    }, [currentTime])
 
     if(state["loading"]){
         return (
@@ -120,6 +133,14 @@ function ExploreDataPage (props) {
     return (
         <div className = "overlay">               
             <h1> Explore Data Page </h1>
+
+            <div className="date-block">
+                <div className="date-title"> Enter Date: </div>
+                <form className="date-choice" onSubmit={handleSubmit}>
+                <input placeholder="mm/dd/yyyy" value={searchValue} onChange={onSearchChange}/>
+                </form>
+            </div>
+
             <div className="row">
                 <div className="explore-datagrid">
                     <DataGrid 
@@ -129,6 +150,7 @@ function ExploreDataPage (props) {
                     />
                 </div>
             </div>
+
             <div className="row">
                 <div className="explore-chart">
                 <Chart title="Explore" produced={state["produced"]} consumed={state["consumed"]}/>
