@@ -30,7 +30,7 @@ function HomePage (props) {
     const assetId = 1;
 
     // configure server URL
-    let server = "http://0.0.0.0:8000"
+    let server = "http://localhost:8000"
     if (process.env.REACT_APP_REMOTE === "1") {
         server = "https://agmonitor-pina-colada-back.herokuapp.com"
     }

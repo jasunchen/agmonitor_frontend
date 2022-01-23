@@ -13,9 +13,12 @@ function DashboardPage(props) {
    const [assetName, setAssetName] = useState('');
    const [assetDescription, setAssetDescription] = useState('');
    const [checked, setChecked] = useState(false);
+   const [checked2, setChecked2] = useState(false);
    const [declination, setDeclination] = useState();
    const [azimuth, setAzimuth] = useState();
    const [modules_power, setModulesPower] = useState();
+   const [start_charge_time, setStartChargeTime] = useState();
+   const [end_charge_time, setEndChargeTime] = useState();
 
    let history = useHistory();
    
@@ -79,7 +82,7 @@ function DashboardPage(props) {
     }
 
 
-    const handleGenerationSubmit = (e) => {
+    const handleFlexibleSubmit = (e) => {
       e.preventDefault();
   
       let requestUrl = `${server}/addUserAsset`
@@ -94,10 +97,10 @@ function DashboardPage(props) {
              "email" : email,
              "name" : assetName,
              "description" : assetDescription,
-             "type_of_asset": "generation",
-             "declination": declination,
-             "azimuth" : azimuth,
-             "modules_power": modules_power
+             "type_of_asset": "flexible",
+             "start_charge_time": start_charge_time,
+             "end_charge_time" : end_charge_time
+             
              
            })
       })
@@ -109,10 +112,45 @@ function DashboardPage(props) {
       
       history.go(0)
       }
+      const handleGenerationSubmit = (e) => {
+        e.preventDefault();
+    
+        let requestUrl = `${server}/addUserAsset`
+    
+        fetch(requestUrl, {
+             method: 'POST',
+             headers: {
+                 'Accept': 'application/json',
+                 'Content-Type': 'application/json'
+             },              
+             body: JSON.stringify({
+               "email" : email,
+               "name" : assetName,
+               "description" : assetDescription,
+               "type_of_asset": "generation",
+               "declination": declination,
+               "azimuth" : azimuth,
+               "modules_power": modules_power
+               
+             })
+        })
+        .then(response => response.json()) 
+          .then(data1 => {
+              console.log(data1)
+          })
+          .catch((error) => console.log("Error: " + error)) 
+        
+        history.go(0)
+        }
 
 
     const handleCheckboxChange = () => {
       setChecked(!checked);
+      setChecked2(false);
+    };
+    const handleCheckboxChange2 = () => {
+      setChecked2(!checked2);
+      setChecked(false);
     };
 
   if(loading){
@@ -136,7 +174,7 @@ function DashboardPage(props) {
 
 
           <h2>Add a New Asset</h2>
-          <form onSubmit={ (checked && handleGenerationSubmit) || (!checked && handleNotGenerationSubmit)}>
+          <form onSubmit={ (checked && handleGenerationSubmit) || (checked2 && handleFlexibleSubmit) || ((!checked && !checked2) && handleNotGenerationSubmit)}>
               <label>Asset Name:</label>
               <input
                   type="text"
@@ -151,12 +189,34 @@ function DashboardPage(props) {
               ></textarea>
               <br></br>
               <label>is Generation?:</label>
-
               <input
                   type="checkbox"
                   checked={checked}
                   onChange={handleCheckboxChange} />
               <br></br>
+
+              <label>is Flexible?:</label>
+              <input
+                  type="checkbox"
+                  checked={checked2}
+                  onChange={handleCheckboxChange2} />
+              <br></br>
+
+              {checked2 && <label>Start charge time:</label>}
+              {checked2 && <input
+                  type="number"
+                  required
+                  value={start_charge_time}
+                  onChange={(e) => setStartChargeTime(e.target.value)} />}
+                <br></br>
+
+                {checked2 && <label>End charge time:</label>}
+              {checked2 && <input
+                  type="number"
+                  required
+                  value={end_charge_time}
+                  onChange={(e) => setEndChargeTime(e.target.value)} />}
+                <br></br>
 
               {checked && <label>Declination:</label>}
               {checked && <input
