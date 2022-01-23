@@ -3,47 +3,34 @@ import '../../css/Explore.css';
 import StockChart from "../utility/StockChart";
 import Chart from "../utility/Chart";
 import DataGrid, {Row } from 'react-data-grid';
+import { withAuth0 } from '@auth0/auth0-react';
 
 function ExploreDataPage (props) {
+    let email = props.auth0.user.email;
+
+    // TODO: configure time
+    const currentTime = 1635724800;
+    const dayDelta = 86400;
+    const hourDelta = 3600;
+
+    const [state, setState] = useState({
+        "loading": true,
+        "hasAsset": false,
+        "produced": [],
+        "consumed": [],
+        "rows" : [],
+        "page": 1,
+    });
+
     const columns = [
         { key: 'time', name: 'Time' },
         { key: 'produced', name: 'Produced (kWH)' },
         { key: 'consumed', name: 'Consumed (kWH)' }
     ];
-      
-    const initialRows = [
-        { time: "05/22/2021 00:00", produced: 0, consumed: 0.12},
-        { time: "05/22/2021 01:00", produced: 0, consumed: 0.11},
-        { time: "05/22/2021 02:00", produced: 0, consumed: 0.12},
-        { time: "05/22/2021 03:00", produced: 0.08, consumed: 0},
-        { time: "05/22/2021 04:00", produced: 0.47, consumed: 0},
-        { time: "05/22/2021 05:00", produced: 0.82, consumed: 0},
-        { time: "05/22/2021 06:00", produced: 0, consumed: 0.12},
-        { time: "05/22/2021 07:00", produced: 0, consumed: 0.11},
-        { time: "05/22/2021 08:00", produced: 0, consumed: 0.12},
-        { time: "05/22/2021 09:00", produced: 0.08, consumed: 0},
-        { time: "05/22/2021 10:00", produced: 0.47, consumed: 0},
-        { time: "05/22/2021 11:00", produced: 0.82, consumed: 0},
-    ];
-
-    const [rows, setRows] = useState(initialRows);
-
 
     function rowKeyGetter(row) {
         return row.id;
     }
-
-    const [state, setState] = useState({
-        "produced": [],
-        "consumed": []
-    });
-    const [loading, setLoading] = useState(true);
-    
-    // TODO: determine userId
-    const assetId = 1;
-
-    // TODO: configure time
-    const currentTime = 1635724800;
     
     // configure server URL
     let server = "http://0.0.0.0:8000"
@@ -52,39 +39,82 @@ function ExploreDataPage (props) {
     }
     
     useEffect(() => {     
-        // DAILY VIEW
-        let requestUrl = `${server}/getAssetData?id=${assetId}&start=0&end=${currentTime}&page=1`
+        // GET GENERATION ASSET
+        let requestUrl = `${server}/getAllAssets?email=${email}`
 
         fetch(requestUrl, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
-            },              
+            },
         })
-        .then(response => response.json()) 
+        .then(response => response.json())
         .then(data => {
-            let produced = [];
-            let consumed = [];
+            if(data["generation"].length !== 0){
+                const assetId = data["generation"][0]["id"];
+                // DAILY VIEW
+                requestUrl = `${server}/getAssetData?id=${assetId}&start=0&end=${currentTime}&page=1`
 
-            data["data"].forEach(element => {
-                produced.push([element["start_time"] * 1000, element["produced_energy"]])
-                consumed.push([element["start_time"] * 1000, element["consumed_energy"]])
-            })
+                fetch(requestUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },              
+                })
+                .then(response => response.json()) 
+                .then(data => {
+                    let produced = [];
+                    let consumed = [];
+                    let rows = [];
 
-            setState({
-                ...state,
-                "produced" : produced,
-                "consumed" : consumed,
-            })
-            setLoading(false)
+                    data["data"].forEach(element => {
+                        produced.push([element["start_time"] * 1000, element["produced_energy"]])
+                        consumed.push([element["start_time"] * 1000, element["consumed_energy"]])
+                        rows.push({
+                            "time": new Date(element["start_time"] * 1000).toUTCString().replace("GMT", ""),
+                            "produced": element["produced_energy"], 
+                            "consumed": element["consumed_energy"]
+                        })
+                    })
 
+                    setState({
+                        ...state,
+                        "produced" : produced,
+                        "consumed" : consumed,
+                        "rows": rows,
+                        "loading" : false,
+                        "hasAsset": true,
+                    })
+                })
+                .catch((error) => console.log("Error: " + error))
+            }
+            else{
+                setState({
+                    ...state,
+                    "loading": false
+                })
+            }
         })
         .catch((error) => console.log("Error: " + error))
     }, [])
-    
-    if(loading){
-        return <div> Loading... </div>
+
+    if(state["loading"]){
+        return (
+            <div className="overlay"> 
+                <h1> Loading... </h1>
+                <p> This might take a few minutes... </p>
+            </div>
+        )
+    }
+
+    if(!state["hasAsset"]){
+        return (
+            <div className="overlay"> 
+                <h1> An error has occurred! Did you create an asset yet? </h1>
+            </div>
+        )
     }
 
     return (
@@ -94,9 +124,8 @@ function ExploreDataPage (props) {
                 <div className="explore-datagrid">
                     <DataGrid 
                         columns={columns} 
-                        rows={rows} 
+                        rows={state["rows"]} 
                         rowKeyGetter={rowKeyGetter}
-                        onRowsChange={setRows}
                     />
                 </div>
             </div>
@@ -110,4 +139,4 @@ function ExploreDataPage (props) {
     );
 };
 
-export default ExploreDataPage;
+export default withAuth0(ExploreDataPage);
