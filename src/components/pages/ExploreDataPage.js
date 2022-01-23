@@ -141,6 +141,8 @@ function ExploreDataPage (props) {
                 </form>
             </div>
 
+            <h1> Raw Data </h1>
+
             <div className="row">
                 <div className="explore-datagrid">
                     <DataGrid 
@@ -153,7 +155,7 @@ function ExploreDataPage (props) {
 
             <div className="row">
                 <div className="explore-chart">
-                <Chart title="Explore" produced={state["produced"]} consumed={state["consumed"]}/>
+                <Chart title="Visualization" produced={state["produced"]} consumed={state["consumed"]}/>
                 </div>
             </div>
         </div>

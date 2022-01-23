@@ -39,7 +39,7 @@ class AuthenticationButton extends React.Component {
 
   render() {
     const { isAuthenticated, logout, user } = this.props.auth0;
-    console.log(user)
+
     const menu = (
       <Menu>
         <Menu.Item><span onClick={() => {
@@ -53,8 +53,8 @@ class AuthenticationButton extends React.Component {
       </Menu>
     )
     return <>{!isAuthenticated ? <LoginButton /> :(<div>
-      <Dropdown overlay={menu}>
-        <span>{user.nickname}</span>
+      <Dropdown  overlay={menu}>
+        <span className="dropdown-content">{user.nickname}</span>
       </Dropdown>
     </div>)}</> ;
   }
