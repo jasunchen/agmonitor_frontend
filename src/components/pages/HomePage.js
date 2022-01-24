@@ -6,6 +6,7 @@ import React, { useState, useEffect } from 'react';
 import Chart from "../utility/Chart";
 import "../../css/Home.css";
 import { withAuth0 } from '@auth0/auth0-react';
+import DataGrid, {Row } from 'react-data-grid';
 
 function HomePage (props) {
     let email = props.auth0.user.email;
@@ -25,6 +26,10 @@ function HomePage (props) {
         "peakStart" : 1000 * (currentTime - 8 * hourDelta),
         "peakEnd" : 1000 * (currentTime - 3 * hourDelta)
     });
+    const [pred_solar_generation, setPredSolarGeneration] = useState();
+    const [pred_opt_threshold, setPredOptThreshold] = useState();
+    const [pred_should_charge, setPredShouldCharge] = useState();
+
 
     // TODO: determine assetId
     const assetId = 1;
@@ -145,6 +150,31 @@ function HomePage (props) {
         .catch((error) => console.log("Error: " + error))
     }, [])
 
+
+
+
+    useEffect(() => {     
+        let requestUrl = `${server}/getUser?email=${email}`
+  
+        fetch(requestUrl, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },              
+        })
+        .then(response => response.json()) 
+        .then(data4 => {
+            console.log(data4)
+            setPredOptThreshold(data4['pred_opt_threshold']);
+            setPredSolarGeneration(data4['pred_solar_generation']);
+            setPredShouldCharge(data4['should_charge']);
+            console.log(data4['should_charge'].toString())
+        })
+        .catch((error) => console.log("Error: " + error))
+    }, [] 
+    )
+
     if(state["loading"]){
         return (
             <div className="overlay"> 
@@ -161,6 +191,12 @@ function HomePage (props) {
             </div>
         )
     }
+
+    const columns = [
+        { key: 'pred_solar_generation', name: 'Predicted Solar Generation' },
+        { key: 'pred_opt_threshold', name: 'Predicted Optimal Threshold' },
+        { key: 'pred_should_charge', name: 'Should Charge?' }
+    ];
 
     return (
         <div className="overlay">
@@ -202,6 +238,22 @@ function HomePage (props) {
                     <li> Increase usage during the following hours: 12 - 2 PM. </li>
                     <li> Reduce usage during the following hours: 5 - 9 PM. </li>
                 </ul>
+            </div>
+
+
+
+            <div>
+                <h1> Algorithm results</h1>
+            <div className="row">
+                <div className="explore-datagrid">
+                    <DataGrid 
+                        columns={columns} 
+                        rows = {[{ 'pred_solar_generation': pred_solar_generation, 'pred_opt_threshold': pred_opt_threshold, 'pred_should_charge':pred_should_charge.toString()}
+                        ]}
+                        // rowKeyGetter={rowKeyGetter}
+                    />
+                </div>
+            </div>
             </div>
         </div>
 
