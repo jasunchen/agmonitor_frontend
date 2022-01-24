@@ -129,6 +129,7 @@ function ExploreDataPage (props) {
             </div>
         )
     }
+    
 
     return (
         <div className = "overlay">               
