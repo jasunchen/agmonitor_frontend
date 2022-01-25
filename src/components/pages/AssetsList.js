@@ -15,6 +15,9 @@ function AssetsList(props){
             <p> { asset['declination'] && <div> declination: { asset['declination'] }</div> } </p>
             <p> { asset['azimuth'] && <div> azimuth: { asset['azimuth'] }</div> } </p>
             <p> { asset['modules_power'] && <div> modules_power: { asset['modules_power'] }</div> } </p>
+            <p> { asset['start_charge_time'] && <div> start charge time: { asset['start_charge_time'] }</div> } </p>
+            <p> { asset['end_charge_time'] && <div> end charge time: { asset['end_charge_time'] }</div> } </p>
+            
             
         
           </Link>
