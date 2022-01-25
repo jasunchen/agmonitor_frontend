@@ -105,15 +105,6 @@ function UserPreference(){
 
   return (
     <div >
-        <h2>Current Setting:</h2>
-        <p>low limit: {low_limit} </p>
-
-        <p>max limit: {max_limit}</p>
-        <p>battery size: {battery_size}</p>
-        <p>hours of power: {hours_of_power}</p>
-        <p>cost or shutoff: {cost_or_shutoff}</p>
-        
-
         <form onSubmit={handleUserPreferenceChange}>
               <label>Set low limit to: </label>
                 <input
