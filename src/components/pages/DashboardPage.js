@@ -118,6 +118,9 @@ function DashboardPage(props) {
       
       history.go(0)
       }
+
+
+      
       const handleGenerationSubmit = (e) => {
         e.preventDefault();
     
