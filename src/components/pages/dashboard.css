@@ -54,3 +54,16 @@
   font-size: 30px;
   padding-bottom: 50px;
 }
+
+.sa {
+  display: flex;
+  justify-content: space-around;
+}
+.ant-tabs {
+  width: 80vw;
+  margin: 0 auto;
+}
+form {
+  display: flex;
+  flex-direction: column;
+}
