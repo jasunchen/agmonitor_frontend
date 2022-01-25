@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 
 import {Tabs} from 'antd'
 import AssetsList from "./AssetsList";
+import AssetComponent from "./AssetComponent";
 import {useHistory, Link } from 'react-router-dom';
 import { withAuth0 } from '@auth0/auth0-react';
 import './dashboard.css'
@@ -13,8 +14,12 @@ const {TabPane} = Tabs
 function DashboardPage(props) {
    //const {data: assets } = useFetch('http://localhost:8000/getUserAsset')
 
-   const [data, setData] = useState({});
-  
+   const [data, setData] = useState({
+     "base" : [],
+     "flexible" : [],
+     "generation" : []
+   });
+
    const [loading, setLoading] = useState(true);
    const [assetName, setAssetName] = useState('');
    const [assetDescription, setAssetDescription] = useState('');
@@ -48,7 +53,12 @@ function DashboardPage(props) {
        })
        .then(response => response.json()) 
        .then(data => {
-           setData(data);
+          setData({
+            ...data,
+            "base": data["base"],
+            "generation": data["generation"],
+            "flexible": data["flexible"]
+           });
            setLoading(false);
  
        })
@@ -184,8 +194,21 @@ function DashboardPage(props) {
     <br></br>
 
 
+
     <Tabs defaultActive={1}>
-      <TabPane className="block" tab="Add a New Asset" key={1}>
+      <TabPane key={1} tab="Display Assets">
+        {data['base'].map(asset => (
+          <AssetComponent asset={asset} type="Base"/>
+          ))}
+        {data['flexible'].map(asset => ( 
+          <AssetComponent asset={asset} type="Flexible"/>
+        ))}
+        {data['generation'].map(asset => (
+          <AssetComponent asset={asset} type="Generation"/>
+        ))}   
+      </TabPane>
+
+      <TabPane className="block" tab="Add a New Asset" key={2}>
           <form onSubmit={ (checked && handleGenerationSubmit) || (checked2 && handleFlexibleSubmit) || ((!checked && !checked2) && handleNotGenerationSubmit)}>
               <label>Asset Name:</label>
               <input
@@ -268,19 +291,8 @@ function DashboardPage(props) {
       </TabPane>
               {/* { error && <div>{ error }</div> }
     { isPending && <div>Loading...</div> } */}
-    <TabPane key={2} tab="View assets:">
-      <h2>Base Assets</h2>
-                <AssetsList assets={data['base']} /> 
-                <br></br>
-                <br></br>
-               <h2>Flexible assets:</h2>
-                <AssetsList assets={data['flexible']} /> 
-                <br></br>
-                <br></br>
-              <h2>Generation assets:</h2>
-                <AssetsList assets={data['generation']} />
-                </TabPane>
-                </Tabs>
+    
+      </Tabs>
           </div></>
   );
 }
