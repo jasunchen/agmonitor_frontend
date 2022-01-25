@@ -54,3 +54,73 @@
   font-size: 30px;
   padding-bottom: 50px;
 }
+
+.sa {
+  display: flex;
+  justify-content: space-around;
+}
+.ant-tabs {
+  width: 80vw;
+  margin: 0 auto;
+}
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.asset-component {
+  display: inline-block;
+  vertical-align: top;   
+  margin: 20px 2.5%;
+  padding: 10px;
+  width: 45%;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+}
+
+.asset-name {
+  margin: 0 0 0 0;
+}
+
+.name-left{
+  display: inline-block;
+  width: calc(100% - 120px);
+  text-align: left;
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.name-right{
+  display: inline-block;
+  width: 120px;
+  text-align: right;
+  font-size: 24px;
+  font-weight: 400;
+  font-variant: all-small-caps;
+}
+
+.asset-description {
+  text-align: justify;
+  margin: 5px 10px 10px 10px;
+  font-size: 16px;
+}
+
+.asset-property {
+  margin: 0px 10px 0 10px;
+}
+
+.property-left {
+  display: inline-block;
+  width: calc(100% - 80px);
+  text-align: left;
+  font-weight: 200;
+  font-size: 18px;
+}
+
+.property-right {
+  display: inline-block;
+  width: 80px;
+  text-align: right;
+  font-weight: 300;
+  font-size: 18px;
+}

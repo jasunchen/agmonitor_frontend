@@ -1,14 +1,25 @@
+import React, {useState, useEffect} from "react";
+
+import {Tabs} from 'antd'
 import AssetsList from "./AssetsList";
+import AssetComponent from "./AssetComponent";
 import {useHistory, Link } from 'react-router-dom';
 import { withAuth0 } from '@auth0/auth0-react';
+import './dashboard.css'
+import 'antd/dist/antd.css'
+const {TabPane} = Tabs
 
-import React, {useState, useEffect} from "react";
+
 
 function DashboardPage(props) {
    //const {data: assets } = useFetch('http://localhost:8000/getUserAsset')
 
-   const [data, setData] = useState({});
-  
+   const [data, setData] = useState({
+     "base" : [],
+     "flexible" : [],
+     "generation" : []
+   });
+
    const [loading, setLoading] = useState(true);
    const [assetName, setAssetName] = useState('');
    const [assetDescription, setAssetDescription] = useState('');
@@ -42,7 +53,12 @@ function DashboardPage(props) {
        })
        .then(response => response.json()) 
        .then(data => {
-           setData(data);
+          setData({
+            ...data,
+            "base": data["base"],
+            "generation": data["generation"],
+            "flexible": data["flexible"]
+           });
            setLoading(false);
  
        })
@@ -162,6 +178,8 @@ function DashboardPage(props) {
 
   return (
     <><div>
+      <div className="sa">
+        <div>
       <button>
           <Link to={`/userPreference`}>
             
@@ -169,14 +187,28 @@ function DashboardPage(props) {
         
           </Link>
         </button>
-
+        </div>
+        <div> </div> <div> </div>
+        <div> </div>
+        </div>
     <br></br>
 
 
 
+    <Tabs defaultActive={1}>
+      <TabPane key={1} tab="Display Assets">
+        {data['base'].map(asset => (
+          <AssetComponent asset={asset} type="Base"/>
+          ))}
+        {data['flexible'].map(asset => ( 
+          <AssetComponent asset={asset} type="Flexible"/>
+        ))}
+        {data['generation'].map(asset => (
+          <AssetComponent asset={asset} type="Generation"/>
+        ))}   
+      </TabPane>
 
-
-          <h2>Add a New Asset</h2>
+      <TabPane className="block" tab="Add a New Asset" key={2}>
           <form onSubmit={ (checked && handleGenerationSubmit) || (checked2 && handleFlexibleSubmit) || ((!checked && !checked2) && handleNotGenerationSubmit)}>
               <label>Asset Name:</label>
               <input
@@ -191,18 +223,21 @@ function DashboardPage(props) {
                   onChange={(e) => setAssetDescription(e.target.value)}
               ></textarea>
               <br></br>
+              <div>
               <label>is Generation?:</label>
               <input
                   type="checkbox"
                   checked={checked}
                   onChange={handleCheckboxChange} />
+                  </div>
               <br></br>
-
+              <div>
               <label>is Flexible?:</label>
               <input
                   type="checkbox"
                   checked={checked2}
                   onChange={handleCheckboxChange2} />
+                  </div>
               <br></br>
 
               {checked2 && <label>Start charge time:</label>}
@@ -253,20 +288,11 @@ function DashboardPage(props) {
           </form>
         <br></br>
         <br></br>
-      </div><div>
+      </TabPane>
               {/* { error && <div>{ error }</div> }
     { isPending && <div>Loading...</div> } */}
-                <h2>Base assets:</h2>
-                <AssetsList assets={data['base']} /> 
-                <br></br>
-                <br></br>
-                <h2>Flexible assets:</h2>
-                <AssetsList assets={data['flexible']} /> 
-                <br></br>
-                <br></br>
-                <h2>Generation assets:</h2>
-                <AssetsList assets={data['generation']} />
-
+    
+      </Tabs>
           </div></>
   );
 }
