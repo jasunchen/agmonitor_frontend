@@ -2,10 +2,17 @@ import {useHistory, Link } from 'react-router-dom';
 import React, {useState, useEffect} from "react";
 import PlacesAutocomplete,{geocodeByAddress, geocodeByPlaceId, getLatLng} from 'react-places-autocomplete';
 import { withAuth0 } from '@auth0/auth0-react';
+<<<<<<< HEAD
 
 
 function UserPreference(props){
     
+=======
+
+function UserPreference(props){
+    const email = props.auth0.user.email;
+
+>>>>>>> d0b8c68f7287b533175b1aa00df944e793b40eac
     const [data, setData] = useState({});
     let history = useHistory();
     const [loading, setLoading] = useState(true);
@@ -27,7 +34,7 @@ function UserPreference(props){
     }
 
     useEffect(() => {     
-            let requestUrl = `${server}/getUser?email=${email}`
+            let requestUrl = `${server}/getUser?email=${email}`;
         
             fetch(requestUrl, {
                 method: 'GET',
@@ -45,14 +52,10 @@ function UserPreference(props){
                 setHoursOfPower(data['hours_of_power']);
                 setLat(data['latitude']);
                 setLong(data['longitude']);
-                
-                // console.log(data);
                 setLoading(false);
-        
             })
-            .catch((error) => console.log("Error: " + error))
-        }, [] 
-        )
+            .catch((error) => console.log("Error: " + error));
+        }, [])
 
     const handleUserPreferenceChange = (e) => {
         e.preventDefault();
@@ -100,10 +103,13 @@ function UserPreference(props){
   if(lat && long){
     fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=AIzaSyAgWxooTzXCVXgF8O6J5czgHRwIopQxpVs`)
   .then(response => response.json())
-  .then(data => setCurrentAddress(data['results'][0]['formatted_address']));
+  .then(data => {
+    console.log("Hello World");
+    console.log(data);
+    setCurrentAddress(data['results'][0]['formatted_address']);
+  })
+  .catch((error) => console.log("Error: " + error));
   }
-
-//   .then(data => console.log(data['results'][0].formatted_address));
 
   return (
     <div >
@@ -202,4 +208,4 @@ function UserPreference(props){
   );
 }
   
-export default UserPreference;
+export default withAuth0(UserPreference);

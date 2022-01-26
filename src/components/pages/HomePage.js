@@ -24,15 +24,14 @@ function HomePage (props) {
         "weekProduced" : [],
         "weekConsumed" : [],
         "peakStart" : 1000 * (currentTime - 8 * hourDelta),
-        "peakEnd" : 1000 * (currentTime - 3 * hourDelta)
+        "peakEnd" : 1000 * (currentTime - 3 * hourDelta),
     });
-    const [pred_solar_generation, setPredSolarGeneration] = useState();
-    const [pred_opt_threshold, setPredOptThreshold] = useState();
-    const [pred_should_charge, setPredShouldCharge] = useState();
 
-
-    // TODO: determine assetId
-    const assetId = 1;
+    const [userInfo, setUserInfo] = useState({
+        "pred_solar_generation" : 100,
+        "pred_opt_threshold" : 100,
+        "pred_should_charge" : false
+    })
 
     // configure server URL
     let server = "http://localhost:8000"
@@ -41,8 +40,31 @@ function HomePage (props) {
     }
 
     useEffect(() => {
+        // AI OUTPUT
+        let requestUrl = `${server}/getUser?email=${email}`
+  
+        fetch(requestUrl, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },              
+        })
+        .then(response => response.json()) 
+        .then(data => {
+            console.log(data);
+            setUserInfo({
+                ...userInfo,
+                "pred_solar_generation" : data["pred_opt_threshold"],
+                "pred_opt_threshold" : data["pred_solar_generation"],
+                "pred_should_charge" : data["should_charge"],
+            })
+        })
+        .catch((error) => console.log("Error: " + error))
+
+
         // GET GENERATION ASSET
-        let requestUrl = `${server}/getAllAssets?email=${email}`
+        requestUrl = `${server}/getAllAssets?email=${email}`
 
         fetch(requestUrl, {
             method: 'GET',
@@ -148,32 +170,16 @@ function HomePage (props) {
             }
         })
         .catch((error) => console.log("Error: " + error))
-    }, [])
+    }, []);
+    
+    function calculateColor(x){
+        if(x === true){
+            return "#00B8A9";
+        }
 
-
-
-
-    useEffect(() => {     
-        let requestUrl = `${server}/getUser?email=${email}`
-  
-        fetch(requestUrl, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },              
-        })
-        .then(response => response.json()) 
-        .then(data4 => {
-            console.log(data4)
-            setPredOptThreshold(data4['pred_opt_threshold']);
-            setPredSolarGeneration(data4['pred_solar_generation']);
-            setPredShouldCharge(data4['should_charge']);
-            console.log(data4['should_charge'].toString())
-        })
-        .catch((error) => console.log("Error: " + error))
-    }, [] 
-    )
+        return "#F6416C";
+    }
+    
 
     if(state["loading"]){
         return (
@@ -194,14 +200,29 @@ function HomePage (props) {
 
     const columns = [
         { key: 'pred_solar_generation', name: 'Predicted Solar Generation' },
-        { key: 'pred_opt_threshold', name: 'Predicted Optimal Threshold' },
-        { key: 'pred_should_charge', name: 'Should Charge?' }
     ];
 
     return (
         <div className="overlay">
+            <h1> Recommendations </h1>
+            
+            <h2> Today, you <span className="snapshot-head" style={{color: calculateColor(userInfo["pred_should_charge"])}}> {userInfo["pred_should_charge"] ? "Should" : "Should Not"} </span> charge your flexible assets. </h2>
 
-            <h1> Home Page </h1>
+            <h2> Today, you should set your Tesla Battery Threshold to <span className="snapshot-head" style={{color: '#00B8A9'}}> {userInfo["pred_opt_threshold"]}%</span>. </h2>
+
+            <div className="row">
+                <div className="explore-datagrid">
+                    <DataGrid 
+                        columns={columns} 
+                        rows = {[{
+                             'pred_solar_generation': userInfo["pred_solar_generation"], 
+                            }]}
+                        // rowKeyGetter={rowKeyGetter}
+                    />
+                </div>
+            </div>
+
+            <h1> Energy Snapshot </h1>
 
             <div className="row">
                 <div className="summary-chart">
@@ -223,37 +244,6 @@ function HomePage (props) {
                         produced={state["weekProduced"]}
                         consumed={state["weekConsumed"]} />
                 </div>
-            </div>
-
-            <h1> Energy Schedule </h1>
-
-            <div>
-                Placeholder
-            </div>
-
-            <h1> Recommendations </h1>
-
-            <div>
-                <ul>
-                    <li> Increase usage during the following hours: 12 - 2 PM. </li>
-                    <li> Reduce usage during the following hours: 5 - 9 PM. </li>
-                </ul>
-            </div>
-
-
-
-            <div>
-                <h1> Algorithm results</h1>
-            <div className="row">
-                <div className="explore-datagrid">
-                    <DataGrid 
-                        columns={columns} 
-                        rows = {[{ 'pred_solar_generation': pred_solar_generation, 'pred_opt_threshold': pred_opt_threshold, 'pred_should_charge':pred_should_charge.toString()}
-                        ]}
-                        // rowKeyGetter={rowKeyGetter}
-                    />
-                </div>
-            </div>
             </div>
         </div>
 
