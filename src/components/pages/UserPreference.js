@@ -1,9 +1,11 @@
 import {useHistory, Link } from 'react-router-dom';
 import React, {useState, useEffect} from "react";
 import PlacesAutocomplete,{geocodeByAddress, geocodeByPlaceId, getLatLng} from 'react-places-autocomplete';
+import { withAuth0 } from '@auth0/auth0-react';
 
-function UserPreference(){
-    let email = "jiawei_yu@ucsb.edu"
+
+function UserPreference(props){
+    
     const [data, setData] = useState({});
     let history = useHistory();
     const [loading, setLoading] = useState(true);
@@ -17,7 +19,7 @@ function UserPreference(){
     const [lat, setLat] = useState();
     const [long, setLong] = useState();
 
-
+    let email = props.auth0.user.email;
     // configure server URL
     let server = "http://localhost:8000"
     if (process.env.REACT_APP_REMOTE === "1") { 
