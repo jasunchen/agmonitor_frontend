@@ -15,7 +15,7 @@ function Chart (props) {
         yAxis: [
             {
                 title: {
-                    text: 'Energy Usage (kWH)',
+                    text: 'Energy (kWH)',
                     style: {"fontSize": "22px", "fontWeight" : "300"}
                 },
                 labels: {
@@ -39,18 +39,7 @@ function Chart (props) {
                 plotBands: props.plotBands
             } 
         ],
-        series: [
-            {
-                name: 'Energy Produced',
-                data: props.produced,
-                color: "#00B8A9"
-            },
-            {
-                name: 'Energy Consumed',
-                data: props.consumed,
-                color: "#F6416C"
-            }
-        ]
+        series: props.series
     }
 
     return (

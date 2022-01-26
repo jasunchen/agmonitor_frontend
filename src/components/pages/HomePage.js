@@ -9,6 +9,26 @@ import { withAuth0 } from '@auth0/auth0-react';
 import DataGrid, {Row } from 'react-data-grid';
 
 function HomePage (props) {
+    const [explanationState, setExplanationState] = useState({
+        "charge" : false,
+        "threshold" : false,
+    });
+
+    function chargeExplanationClick(){
+        setExplanationState({
+            ...explanationState,
+            "charge" : !explanationState["charge"]
+        });
+    }
+    
+    function thresholdExplanationClick(){
+        setExplanationState({
+            ...explanationState,
+            "threshold" : !explanationState["threshold"]
+        });
+    }
+    
+
     let email = props.auth0.user.email;
 
     // TODO: configure time
@@ -27,10 +47,12 @@ function HomePage (props) {
         "peakEnd" : 1000 * (currentTime - 3 * hourDelta),
     });
 
+    // TODO
     const [userInfo, setUserInfo] = useState({
         "pred_solar_generation" : 100,
         "pred_opt_threshold" : 100,
-        "pred_should_charge" : false
+        "pred_should_charge" : false,
+        "alerts" : [['Advisory', 'High Surf Advisory issued January 26 at 11:45AM PST until January 26 at 8:00PM PST by NWS Los Angeles/Oxnard CA'], ['Advisory', 'High Surf Advisory issued January 26 at 2:58AM PST until January 26 at 8:00PM PST by NWS Los Angeles/Oxnard CA'], ['Advisory', 'High Surf Advisory issued January 24 at 8:04PM PST until January 26 at 8:00PM PST by NWS Los Angeles/Oxnard CA']]
     })
 
     // configure server URL
@@ -204,22 +226,77 @@ function HomePage (props) {
 
     return (
         <div className="overlay">
-            <h1> Recommendations </h1>
+            <div className="recommendations">
+
             
-            <h2> Today, you <span className="snapshot-head" style={{color: calculateColor(userInfo["pred_should_charge"])}}> {userInfo["pred_should_charge"] ? "Should" : "Should Not"} </span> charge your flexible assets. </h2>
-
-            <h2> Today, you should set your Tesla Battery Threshold to <span className="snapshot-head" style={{color: '#00B8A9'}}> {userInfo["pred_opt_threshold"]}%</span>. </h2>
-
-            <div className="row">
-                <div className="explore-datagrid">
-                    <DataGrid 
-                        columns={columns} 
-                        rows = {[{
-                             'pred_solar_generation': userInfo["pred_solar_generation"], 
-                            }]}
-                        // rowKeyGetter={rowKeyGetter}
-                    />
+                <h1> Recommendations </h1>
+                
+                <div className="snapshot-headers"> 
+                    Today, you 
+                    <span className="snapshot-head" style={{color: calculateColor(userInfo["pred_should_charge"])}}> 
+                        {userInfo["pred_should_charge"] ? " Should " : " Should Not "} 
+                    </span> 
+                    charge your flexible assets. 
+                    <span className="snapshot-explanation" onClick={chargeExplanationClick}>
+                        { explanationState["charge"] ? " (Click to Hide Explanation)" : " (Click to See Explanation)" }
+                    </span>
                 </div>
+
+                { explanationState["charge"] &&
+                    <div className="row">
+                        <div className="summary-chart">
+                            <Chart
+                                title="Energy Predictions"
+                                series={[
+                                    {
+                                        name: 'Solar Generation',
+                                        data: state["dayProduced"],
+                                        color: "#00B8A9"
+                                    },
+                                    {
+                                        name: 'Base Load Usage',
+                                        data: state["dayConsumed"],
+                                        color: "#F6416C"
+                                    },
+                                    {
+                                        name: 'Utility Usage',
+                                        data: state["dayProduced"],
+                                        color: "#FFDE7D"
+                                    },
+                                ]}
+                            />
+                        </div>
+                    </div>
+                }
+
+                <div className="snapshot-headers"> 
+                    Today, you should set your Tesla Battery Threshold to
+                    <span className="snapshot-head" style={{color: '#00B8A9'}}> 
+                        &nbsp;{userInfo["pred_opt_threshold"]}%
+                    </span> 
+                    .
+                    <span className="snapshot-explanation" onClick={thresholdExplanationClick}>
+                        { explanationState["threshold"] ? " (Click to Hide Explanation)" : " (Click to See Explanation)" }
+                    </span>
+                </div>
+
+                { explanationState["threshold"] &&
+                    <div>
+                        {userInfo["alerts"].length == 0 ? 
+                            <div>
+                                The threshold above was recommended because there were no weather alerts. 
+                            </div>
+                        : 
+                            <div>
+                                The threshold above was recommended due to the following alerts: 
+                                { userInfo["alerts"].map(alert => (
+                                    <li> <span className="alert-type"> {alert[0]}:</span> {alert[1]} </li>
+                                ))
+                                }
+                            </div>
+                        }
+                    </div>
+                }
             </div>
 
             <h1> Energy Snapshot </h1>
@@ -228,8 +305,18 @@ function HomePage (props) {
                 <div className="summary-chart">
                     <Chart
                         title="Daily Snapshot"
-                        produced={state["dayProduced"]}
-                        consumed={state["dayConsumed"]}
+                        series={[
+                            {
+                                name: 'Energy Produced',
+                                data: state["dayProduced"],
+                                color: "#00B8A9"
+                            },
+                            {
+                                name: 'Energy Consumed',
+                                data: state["dayConsumed"],
+                                color: "#F6416C"
+                            }
+                        ]}
                         plotBands={{
                             from: state["peakStart"],
                             to: state["peakEnd"],
@@ -241,8 +328,19 @@ function HomePage (props) {
                 <div className="summary-chart">
                     <Chart
                         title="Weekly Snapshot"
-                        produced={state["weekProduced"]}
-                        consumed={state["weekConsumed"]} />
+                        series={[
+                            {
+                                name: 'Energy Produced',
+                                data: state["weekProduced"],
+                                color: "#00B8A9"
+                            },
+                            {
+                                name: 'Energy Consumed',
+                                data: state["weekConsumed"],
+                                color: "#F6416C"
+                            }
+                        ]}
+                    />
                 </div>
             </div>
         </div>
