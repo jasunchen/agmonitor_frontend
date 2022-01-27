@@ -284,11 +284,11 @@ function HomePage (props) {
                     <div>
                         {userInfo["alerts"].length == 0 ? 
                             <div>
-                                The threshold above was recommended because there were no weather alerts. 
+                                We recommend the threshold above because we forecast a low risk of a power shutoff since there are no weather alerts. 
                             </div>
                         : 
                             <div>
-                                The threshold above was recommended due to the following alerts: 
+                                We recommend the threshold above because we forecast the risk of a power shutoff based on these weather alerts:
                                 { userInfo["alerts"].map(alert => (
                                     <li> <span className="alert-type"> {alert[0]}:</span> {alert[1]} </li>
                                 ))
