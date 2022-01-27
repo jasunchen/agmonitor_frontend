@@ -32,26 +32,26 @@ function DashboardPage(props) {
    const [end_charge_time, setEndChargeTime] = useState();
 
    let history = useHistory();
-   
+
    let email = props.auth0.user.email
 
    // configure server URL
    let server = "http://localhost:8000"
-   if (process.env.REACT_APP_REMOTE === "1") { 
+   if (process.env.REACT_APP_REMOTE === "1") {
        server = "https://agmonitor-pina-colada-back.herokuapp.com"
    }
-   
-   useEffect(() => {     
+
+   useEffect(() => {
        let requestUrl = `${server}/getAllAssets?email=${email}`
- 
+
        fetch(requestUrl, {
            method: 'GET',
            headers: {
                'Accept': 'application/json',
                'Content-Type': 'application/json'
-           },              
+           },
        })
-       .then(response => response.json()) 
+       .then(response => response.json())
        .then(data => {
           setData({
             ...data,
@@ -60,26 +60,26 @@ function DashboardPage(props) {
             "flexible": data["flexible"]
            });
            setLoading(false);
- 
+
        })
        .catch((error) => console.log("Error: " + error))
-   }, [] 
+   }, []
    )
 
 
- 
+
 
     const handleNotGenerationSubmit = (e) => {
       e.preventDefault();
-  
+
       let requestUrl = `${server}/addUserAsset`
- 
+
       fetch(requestUrl, {
            method: 'POST',
            headers: {
                'Accept': 'application/json',
                'Content-Type': 'application/json'
-           },              
+           },
            body: JSON.stringify({
              "email" : email,
              "name" : assetName,
@@ -87,28 +87,28 @@ function DashboardPage(props) {
              "type_of_asset": false
            })
       })
-      .then(response => response.json()) 
+      .then(response => response.json())
       .then(data => {
           console.log("WORKED!")
       })
-      .catch((error) => console.log("Error: " + error)) 
+      .catch((error) => console.log("Error: " + error))
 
-      
+
       history.go(0)
     }
 
 
     const handleFlexibleSubmit = (e) => {
       e.preventDefault();
-  
+
       let requestUrl = `${server}/addUserAsset`
-  
+
       fetch(requestUrl, {
            method: 'POST',
            headers: {
                'Accept': 'application/json',
                'Content-Type': 'application/json'
-           },              
+           },
            body: JSON.stringify({
              "email" : email,
              "name" : assetName,
@@ -116,32 +116,32 @@ function DashboardPage(props) {
              "type_of_asset": "flexible",
              "start_charge_time": start_charge_time,
              "end_charge_time" : end_charge_time
-             
-             
+
+
            })
       })
-      .then(response => response.json()) 
+      .then(response => response.json())
         .then(data1 => {
             console.log(data1)
         })
-        .catch((error) => console.log("Error: " + error)) 
-      
+        .catch((error) => console.log("Error: " + error))
+
       history.go(0)
       }
 
 
-      
+
       const handleGenerationSubmit = (e) => {
         e.preventDefault();
-    
+
         let requestUrl = `${server}/addUserAsset`
-    
+
         fetch(requestUrl, {
              method: 'POST',
              headers: {
                  'Accept': 'application/json',
                  'Content-Type': 'application/json'
-             },              
+             },
              body: JSON.stringify({
                "email" : email,
                "name" : assetName,
@@ -150,15 +150,15 @@ function DashboardPage(props) {
                "declination": declination,
                "azimuth" : azimuth,
                "modules_power": modules_power
-               
+
              })
         })
-        .then(response => response.json()) 
+        .then(response => response.json())
           .then(data1 => {
               console.log(data1)
           })
-          .catch((error) => console.log("Error: " + error)) 
-        
+          .catch((error) => console.log("Error: " + error))
+
         history.go(0)
         }
 
@@ -171,44 +171,31 @@ function DashboardPage(props) {
       setChecked2(!checked2);
       setChecked(false);
     };
-
+  const onTabClick = (key) => {
+    if (key == 3) {
+      props.history.push('/userPreference')
+    }
+  }
   if(loading){
       return <div> Loading... </div>
   }
 
   return (
     <><div>
-      <div className="sa">
-        <div>
-      <button>
-          <Link to={`/userPreference`}>
-            
-            User Preference
-        
-          </Link>
-        </button>
-        </div>
-        <div> </div> <div> </div>
-        <div> </div>
-        </div>
-    <br></br>
-
-
-
-    <Tabs defaultActive={1}>
-      <TabPane key={1} tab="Display Assets">
+    <Tabs defaultActive="2" onTabClick={(key) => onTabClick(key)}>
+      <TabPane key="1" tab="Display Assets">
         {data['base'].map(asset => (
           <AssetComponent asset={asset} type="Base"/>
           ))}
-        {data['flexible'].map(asset => ( 
+        {data['flexible'].map(asset => (
           <AssetComponent asset={asset} type="Flexible"/>
         ))}
         {data['generation'].map(asset => (
           <AssetComponent asset={asset} type="Generation"/>
-        ))}   
+        ))}
       </TabPane>
 
-      <TabPane className="block" tab="Add a New Asset" key={2}>
+      <TabPane className="block" tab="Add a New Asset" key="2">
           <form onSubmit={ (checked && handleGenerationSubmit) || (checked2 && handleFlexibleSubmit) || ((!checked && !checked2) && handleNotGenerationSubmit)}>
               <label>Asset Name:</label>
               <input
@@ -263,7 +250,7 @@ function DashboardPage(props) {
                   value={declination}
                   onChange={(e) => setDeclination(e.target.value)} />}
                 <br></br>
-                
+
               {checked && <label>Azimuth:</label>}
               {checked && <input
                   type="number"
@@ -289,12 +276,13 @@ function DashboardPage(props) {
         <br></br>
         <br></br>
       </TabPane>
+      <TabPane className="block" tab="User Preference" key="3">
               {/* { error && <div>{ error }</div> }
     { isPending && <div>Loading...</div> } */}
-    
+      </TabPane>
       </Tabs>
           </div></>
   );
 }
- 
+
 export default  withAuth0(DashboardPage);
