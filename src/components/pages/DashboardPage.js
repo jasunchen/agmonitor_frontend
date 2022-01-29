@@ -178,13 +178,46 @@ function DashboardPage(props) {
   //   }
   // }
   if(loading){
-      return <div> Loading... </div>
+      return (
+        <div className="overlay"> 
+          <h1> Loading... </h1>
+          <p> This might take a few moments... </p>
+        </div>
+      )
   }
 
   return (
+<<<<<<< HEAD
     <><div>
     <Tabs defaultActive="2">
       <TabPane key="1" tab="Display Assets">
+=======
+    <div className="overlay">
+      <div className="sa">
+        <div>
+      <button>
+          <Link to={`/userPreference`}>
+            
+            User Preference
+        
+          </Link>
+        </button>
+        </div>
+        <div> </div> <div> </div>
+        <div> </div>
+        </div>
+    <br></br>
+
+
+
+    <Tabs defaultActive={1}>
+      <TabPane key={1} tab="View Assets">
+        { data['base'].length + data['flexible'].length + data['generation'].length == 0 &&
+          <div>
+            You have not created any assets yet!
+          </div>
+        }
+>>>>>>> fd4c4c3e8039d9978f6e27646335bc2fec9881eb
         {data['base'].map(asset => (
           <AssetComponent asset={asset} type="Base"/>
           ))}
@@ -196,7 +229,11 @@ function DashboardPage(props) {
         ))}
       </TabPane>
 
+<<<<<<< HEAD
       <TabPane className="block" tab="Add a New Asset" key="2">
+=======
+      <TabPane className="block" tab="Create Asset" key={2}>
+>>>>>>> fd4c4c3e8039d9978f6e27646335bc2fec9881eb
           <form onSubmit={ (checked && handleGenerationSubmit) || (checked2 && handleFlexibleSubmit) || ((!checked && !checked2) && handleNotGenerationSubmit)}>
               <label>Asset Name:</label>
               <input
@@ -283,7 +320,7 @@ function DashboardPage(props) {
         <UserPreference />
       </TabPane>
       </Tabs>
-          </div></>
+          </div>
   );
 }
 
