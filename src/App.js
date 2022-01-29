@@ -31,7 +31,7 @@ class App extends React.Component {
             <ProtectedRoute path="/dashboard" exact component = {DashboardPage}/> 
             <ProtectedRoute path="/explore_data" exact component = {ExploreDataPage}/>  
             <Route path="/dashboard/:id"  component = {SpecificAssetPage} />
-            {/* <Route path="/userPreference" component = {UserPreference} /> */}
+            <Route path="/userPreference" component = {UserPreference} />
             
     
            
