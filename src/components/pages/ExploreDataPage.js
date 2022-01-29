@@ -117,7 +117,7 @@ function ExploreDataPage (props) {
         return (
             <div className="overlay"> 
                 <h1> Loading... </h1>
-                <p> This might take a few minutes... </p>
+                <p> This might take a few moments... </p>
             </div>
         )
     }
