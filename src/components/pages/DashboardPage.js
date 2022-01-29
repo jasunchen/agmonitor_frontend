@@ -173,11 +173,16 @@ function DashboardPage(props) {
     };
 
   if(loading){
-      return <div> Loading... </div>
+      return (
+        <div className="overlay"> 
+          <h1> Loading... </h1>
+          <p> This might take a few moments... </p>
+        </div>
+      )
   }
 
   return (
-    <><div>
+    <div className="overlay">
       <div className="sa">
         <div>
       <button>
@@ -196,7 +201,12 @@ function DashboardPage(props) {
 
 
     <Tabs defaultActive={1}>
-      <TabPane key={1} tab="Display Assets">
+      <TabPane key={1} tab="View Assets">
+        { data['base'].length + data['flexible'].length + data['generation'].length == 0 &&
+          <div>
+            You have not created any assets yet!
+          </div>
+        }
         {data['base'].map(asset => (
           <AssetComponent asset={asset} type="Base"/>
           ))}
@@ -208,7 +218,7 @@ function DashboardPage(props) {
         ))}   
       </TabPane>
 
-      <TabPane className="block" tab="Add a New Asset" key={2}>
+      <TabPane className="block" tab="Create Asset" key={2}>
           <form onSubmit={ (checked && handleGenerationSubmit) || (checked2 && handleFlexibleSubmit) || ((!checked && !checked2) && handleNotGenerationSubmit)}>
               <label>Asset Name:</label>
               <input
@@ -293,7 +303,7 @@ function DashboardPage(props) {
     { isPending && <div>Loading...</div> } */}
     
       </Tabs>
-          </div></>
+          </div>
   );
 }
  
