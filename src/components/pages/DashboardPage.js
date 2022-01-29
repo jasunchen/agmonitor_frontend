@@ -190,18 +190,13 @@ function DashboardPage(props) {
     <div className="overlay">
     <div className="sa">
       <div>
-    <button>
-        <Link to={`/userPreference`}>
-          
-          User Preference
       
-        </Link>
-      </button>
       </div>
       <div> </div> <div> </div>
       <div> </div>
       </div>
   <br></br>
+    
 
 
     
