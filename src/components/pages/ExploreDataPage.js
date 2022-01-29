@@ -117,7 +117,7 @@ function ExploreDataPage (props) {
         return (
             <div className="overlay"> 
                 <h1> Loading... </h1>
-                <p> This might take a few minutes... </p>
+                <p> This might take a few moments... </p>
             </div>
         )
     }
@@ -156,7 +156,21 @@ function ExploreDataPage (props) {
 
             <div className="row">
                 <div className="explore-chart">
-                <Chart title="Visualization" produced={state["produced"]} consumed={state["consumed"]}/>
+                <Chart 
+                    title="Visualization" 
+                    series={[
+                        {
+                            name: 'Energy Produced',
+                            data: state["produced"],
+                            color: "#00B8A9"
+                        },
+                        {
+                            name: 'Energy Consumed',
+                            data: state["consumed"],
+                            color: "#F6416C"
+                        }
+                    ]}
+                />
                 </div>
             </div>
         </div>

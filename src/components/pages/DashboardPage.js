@@ -4,6 +4,7 @@ import {Tabs,Form, Dropdown, Button, Slider, TimePicker, Select} from 'antd';
 
 import AssetsList from "./AssetsList";
 import AssetComponent from "./AssetComponent";
+import UserPreference from "./UserPreference";
 import {useHistory, Link } from 'react-router-dom';
 import { withAuth0 } from '@auth0/auth0-react';
 import './dashboard.css'
@@ -48,26 +49,26 @@ function DashboardPage(props) {
 
 
    let history = useHistory();
-   
+
    let email = props.auth0.user.email
 
    // configure server URL
    let server = "http://localhost:8000"
-   if (process.env.REACT_APP_REMOTE === "1") { 
+   if (process.env.REACT_APP_REMOTE === "1") {
        server = "https://agmonitor-pina-colada-back.herokuapp.com"
    }
-   
-   useEffect(() => {     
+
+   useEffect(() => {
        let requestUrl = `${server}/getAllAssets?email=${email}`
- 
+
        fetch(requestUrl, {
            method: 'GET',
            headers: {
                'Accept': 'application/json',
                'Content-Type': 'application/json'
-           },              
+           },
        })
-       .then(response => response.json()) 
+       .then(response => response.json())
        .then(data => {
           setData({
             ...data,
@@ -76,26 +77,26 @@ function DashboardPage(props) {
             "flexible": data["flexible"]
            });
            setLoading(false);
- 
+
        })
        .catch((error) => console.log("Error: " + error))
-   }, [] 
+   }, []
    )
 
 
- 
+
 
     const handleBaseSubmit = (e) => {
       e.preventDefault();
-  
+
       let requestUrl = `${server}/addUserAsset`
- 
+
       fetch(requestUrl, {
            method: 'POST',
            headers: {
                'Accept': 'application/json',
                'Content-Type': 'application/json'
-           },              
+           },
            body: JSON.stringify({
              "email" : email,
              "name" : assetName,
@@ -103,28 +104,28 @@ function DashboardPage(props) {
              "type_of_asset": false
            })
       })
-      .then(response => response.json()) 
+      .then(response => response.json())
       .then(data => {
           console.log("WORKED!")
       })
-      .catch((error) => console.log("Error: " + error)) 
+      .catch((error) => console.log("Error: " + error))
 
-      
+
       history.go(0)
     }
 
 
     const handleFlexibleSubmit = (e) => {
       e.preventDefault();
-  
+
       let requestUrl = `${server}/addUserAsset`
-  
+
       fetch(requestUrl, {
            method: 'POST',
            headers: {
                'Accept': 'application/json',
                'Content-Type': 'application/json'
-           },              
+           },
            body: JSON.stringify({
              "email" : email,
              "name" : assetName,
@@ -132,32 +133,32 @@ function DashboardPage(props) {
              "type_of_asset": "flexible",
              "start_charge_time": start_charge_time,
              "end_charge_time" : end_charge_time
-             
-             
+
+
            })
       })
-      .then(response => response.json()) 
+      .then(response => response.json())
         .then(data1 => {
             console.log(data1)
         })
-        .catch((error) => console.log("Error: " + error)) 
-      
+        .catch((error) => console.log("Error: " + error))
+
       history.go(0)
       }
 
 
-      
+
       const handleGenerationSubmit = (e) => {
         e.preventDefault();
-    
+
         let requestUrl = `${server}/addUserAsset`
-    
+
         fetch(requestUrl, {
              method: 'POST',
              headers: {
                  'Accept': 'application/json',
                  'Content-Type': 'application/json'
-             },              
+             },
              body: JSON.stringify({
                "email" : email,
                "name" : assetName,
@@ -166,15 +167,15 @@ function DashboardPage(props) {
                "declination": declination,
                "azimuth" : azimuth,
                "modules_power": modules_power
-               
+
              })
         })
-        .then(response => response.json()) 
+        .then(response => response.json())
           .then(data1 => {
               console.log(data1)
           })
-          .catch((error) => console.log("Error: " + error)) 
-        
+          .catch((error) => console.log("Error: " + error))
+
         history.go(0)
         }
 
@@ -187,9 +188,18 @@ function DashboardPage(props) {
       setChecked2(!checked2);
       setChecked(false);
     };
-
+  // const onTabClick = (key) => {
+  //   if (key == 3) {
+  //     props.history.push('/userPreference')
+  //   }
+  // }
   if(loading){
-      return <div> Loading... </div>
+      return (
+        <div className="overlay"> 
+          <h1> Loading... </h1>
+          <p> This might take a few moments... </p>
+        </div>
+      )
   }
   //////////////////////////////////
 
@@ -225,6 +235,7 @@ function DashboardPage(props) {
 
 
   return (
+<<<<<<< HEAD
     <><div className="overlay">
       <div>
         <div>
@@ -241,21 +252,36 @@ function DashboardPage(props) {
         </div>
     <br></br>
 
+=======
+    <div className="overlay">
+    <div className="sa">
+      <div>
+      
+      </div>
+      <div> </div> <div> </div>
+      <div> </div>
+      </div>
+  <br></br>
+    
+>>>>>>> 6a1d7e10522689bc7e78246f2302c1c6b917bfa5
 
 
-    <Tabs defaultActive={1}>
-      <TabPane key={1} tab="Display Assets">
+    
+   <Tabs defaultActive="2">
+      <TabPane key="1" tab="Display Assets">
         {data['base'].map(asset => (
           <AssetComponent asset={asset} type="Base"/>
           ))}
-        {data['flexible'].map(asset => ( 
+        {data['flexible'].map(asset => (
           <AssetComponent asset={asset} type="Flexible"/>
         ))}
         {data['generation'].map(asset => (
           <AssetComponent asset={asset} type="Generation"/>
-        ))}   
+        ))}
       </TabPane>
+       
 
+<<<<<<< HEAD
       <TabPane className="block" tab="Add a New Asset" key={2}>
         <div >
         <Tabs defaultActive={1}>
@@ -264,6 +290,11 @@ function DashboardPage(props) {
         
         <form onSubmit={handleBaseSubmit}>
               <label style={{fontSize: 30, fontWeight: "normal"}}>Asset Name:</label>
+=======
+      <TabPane className="block" tab="Add a New Asset" key="2">
+          <form onSubmit={ (checked && handleGenerationSubmit) || (checked2 && handleFlexibleSubmit) || ((!checked && !checked2) && handleNotGenerationSubmit)}>
+              <label>Asset Name:</label>
+>>>>>>> 6a1d7e10522689bc7e78246f2302c1c6b917bfa5
               <input
                   type="text"
                   style={{ width: 300, fontWeight:"normal"}}
@@ -285,6 +316,7 @@ function DashboardPage(props) {
       </div>
           </TabPane>
 
+<<<<<<< HEAD
           <TabPane key={2} tab="Add Generation Asset">
           <div>
     
@@ -295,6 +327,19 @@ function DashboardPage(props) {
                   style={{ width: 300, fontWeight:"normal"}}
                   type="text"
                   value={assetName}
+=======
+              {checked && <label>Declination:</label>}
+              {checked && <input
+                  type="number"
+                  required
+                  value={declination}
+                  onChange={(e) => setDeclination(e.target.value)} />}
+                <br></br>
+
+              {checked && <label>Azimuth:</label>}
+              {checked && <input
+                  type="number"
+>>>>>>> 6a1d7e10522689bc7e78246f2302c1c6b917bfa5
                   required
                   onChange={(e) => setAssetName(e.target.value)} />
                   <br></br>
@@ -600,12 +645,14 @@ function DashboardPage(props) {
           
         
       </TabPane>
+      <TabPane className="block" tab="User Preference" key="3">
               {/* { error && <div>{ error }</div> }
     { isPending && <div>Loading...</div> } */}
-    
+        <UserPreference />
+      </TabPane>
       </Tabs>
-          </div></>
+          </div>
   );
 }
- 
+
 export default  withAuth0(DashboardPage);

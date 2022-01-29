@@ -11,6 +11,7 @@ ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json ./
 COPY package-lock.json ./
 RUN npm config set unsafe-perm true
+RUN npm install -g npm@8.4.0
 RUN npm install --silent
 RUN npm install react-scripts@3.4.1 -g --silent
 RUN mkdir -p node_modules/.cache && chmod -R 777 node_modules/.cache
