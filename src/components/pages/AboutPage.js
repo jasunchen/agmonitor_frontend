@@ -4,8 +4,6 @@ import Footer from "../shared/Footer"
 import "../../css/About.css"
 
 
-
-
 function AboutPage (props) {
 
     return (
