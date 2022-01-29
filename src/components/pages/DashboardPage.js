@@ -235,24 +235,6 @@ function DashboardPage(props) {
 
 
   return (
-<<<<<<< HEAD
-    <><div className="overlay">
-      <div>
-        <div>
-      <button>
-          <Link to={`/userPreference`}>
-            
-            User Preference
-        
-          </Link>
-        </button>
-        </div>
-        <div> </div> <div> </div>
-        <div> </div>
-        </div>
-    <br></br>
-
-=======
     <div className="overlay">
     <div className="sa">
       <div>
@@ -263,7 +245,6 @@ function DashboardPage(props) {
       </div>
   <br></br>
     
->>>>>>> 6a1d7e10522689bc7e78246f2302c1c6b917bfa5
 
 
     
@@ -281,7 +262,6 @@ function DashboardPage(props) {
       </TabPane>
        
 
-<<<<<<< HEAD
       <TabPane className="block" tab="Add a New Asset" key={2}>
         <div >
         <Tabs defaultActive={1}>
@@ -290,11 +270,6 @@ function DashboardPage(props) {
         
         <form onSubmit={handleBaseSubmit}>
               <label style={{fontSize: 30, fontWeight: "normal"}}>Asset Name:</label>
-=======
-      <TabPane className="block" tab="Add a New Asset" key="2">
-          <form onSubmit={ (checked && handleGenerationSubmit) || (checked2 && handleFlexibleSubmit) || ((!checked && !checked2) && handleNotGenerationSubmit)}>
-              <label>Asset Name:</label>
->>>>>>> 6a1d7e10522689bc7e78246f2302c1c6b917bfa5
               <input
                   type="text"
                   style={{ width: 300, fontWeight:"normal"}}
@@ -316,7 +291,6 @@ function DashboardPage(props) {
       </div>
           </TabPane>
 
-<<<<<<< HEAD
           <TabPane key={2} tab="Add Generation Asset">
           <div>
     
@@ -327,19 +301,6 @@ function DashboardPage(props) {
                   style={{ width: 300, fontWeight:"normal"}}
                   type="text"
                   value={assetName}
-=======
-              {checked && <label>Declination:</label>}
-              {checked && <input
-                  type="number"
-                  required
-                  value={declination}
-                  onChange={(e) => setDeclination(e.target.value)} />}
-                <br></br>
-
-              {checked && <label>Azimuth:</label>}
-              {checked && <input
-                  type="number"
->>>>>>> 6a1d7e10522689bc7e78246f2302c1c6b917bfa5
                   required
                   onChange={(e) => setAssetName(e.target.value)} />
                   <br></br>
