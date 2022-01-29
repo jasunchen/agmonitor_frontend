@@ -10,7 +10,11 @@ function AssetComponent(props){
             return "#F6416C";
         }
 
-        return "#FFDE7D";
+        return "#E5C922";
+    }
+
+    function pad(d) {
+        return (d < 10) ? '0' + d.toString() : d.toString();
     }
 
   return (
@@ -50,7 +54,7 @@ function AssetComponent(props){
                 { props.asset['modules_power'] && 
                     <div className="asset-property">
                         <div className="property-left">
-                            Asset Power: 
+                            Modules Power: 
                         </div> 
                         <div className="property-right">
                             {props.asset['modules_power']} kW
@@ -60,20 +64,20 @@ function AssetComponent(props){
                 { props.asset['start_charge_time'] && 
                     <div className="asset-property"> 
                         <div className="property-left">
-                            Preferred Charging Start:
+                            Preferred Charging Start Time:
                         </div> 
                         <div className="property-right">
-                            { props.asset['start_charge_time'] } units
+                            { pad(Math.floor(props.asset['start_charge_time']/3600)) } : {pad(Math.floor((props.asset['start_charge_time'] % 3600) / 60))}
                         </div>
                     </div> 
                 } 
                 { props.asset['end_charge_time'] && 
                      <div className="asset-property"> 
                         <div className="property-left">
-                            Preferred Charging End:
+                            Preferred Charging End Time:
                         </div> 
                         <div className="property-right">
-                            { props.asset['end_charge_time'] } units
+                            { pad(Math.floor(props.asset['end_charge_time']/3600)) } : {pad(Math.floor((props.asset['end_charge_time'] % 3600) / 60))}
                         </div>
                     </div> 
                 } 

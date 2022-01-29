@@ -2,17 +2,11 @@ import {useHistory, Link } from 'react-router-dom';
 import React, {useState, useEffect} from "react";
 import PlacesAutocomplete,{geocodeByAddress, geocodeByPlaceId, getLatLng} from 'react-places-autocomplete';
 import { withAuth0 } from '@auth0/auth0-react';
-<<<<<<< HEAD
+import {Tabs,Form, Dropdown, Button, Slider} from 'antd';
 
 
 function UserPreference(props){
     
-=======
-
-function UserPreference(props){
-    const email = props.auth0.user.email;
-
->>>>>>> d0b8c68f7287b533175b1aa00df944e793b40eac
     const [data, setData] = useState({});
     let history = useHistory();
     const [loading, setLoading] = useState(true);
@@ -104,7 +98,7 @@ function UserPreference(props){
     fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=AIzaSyAgWxooTzXCVXgF8O6J5czgHRwIopQxpVs`)
   .then(response => response.json())
   .then(data => {
-    console.log("Hello World");
+
     console.log(data);
     setCurrentAddress(data['results'][0]['formatted_address']);
   })
@@ -113,7 +107,7 @@ function UserPreference(props){
 
   return (
     <div >
-        <form onSubmit={handleUserPreferenceChange}>
+        <Form onSubmit={handleUserPreferenceChange}>
               <label>Set low limit to: </label>
                 <input
                   type="number"
@@ -155,7 +149,7 @@ function UserPreference(props){
                   <br></br>
               
                   <button> Update Preferences </button>
-        </form>
+        </Form>
 
      
         <h2> address: {currentAddress}</h2>
