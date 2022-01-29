@@ -187,8 +187,25 @@ function DashboardPage(props) {
   }
 
   return (
-    <><div>
-    <Tabs defaultActive="2">
+    <div className="overlay">
+    <div className="sa">
+      <div>
+    <button>
+        <Link to={`/userPreference`}>
+          
+          User Preference
+      
+        </Link>
+      </button>
+      </div>
+      <div> </div> <div> </div>
+      <div> </div>
+      </div>
+  <br></br>
+
+
+    
+   <Tabs defaultActive="2">
       <TabPane key="1" tab="Display Assets">
         {data['base'].map(asset => (
           <AssetComponent asset={asset} type="Base"/>
@@ -200,6 +217,7 @@ function DashboardPage(props) {
           <AssetComponent asset={asset} type="Generation"/>
         ))}
       </TabPane>
+       
 
       <TabPane className="block" tab="Add a New Asset" key="2">
           <form onSubmit={ (checked && handleGenerationSubmit) || (checked2 && handleFlexibleSubmit) || ((!checked && !checked2) && handleNotGenerationSubmit)}>
@@ -290,6 +308,6 @@ function DashboardPage(props) {
       </Tabs>
           </div>
   );
-}
+{"}"}
 
-export default  withAuth0(DashboardPage);
+export default  withAuth0(DashboardPage);}
