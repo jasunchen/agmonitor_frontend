@@ -342,7 +342,7 @@ function DashboardPage(props) {
  value={modules_power}
  required
  min = '1'
- onChange={(e) => setModulesPower(e.target.value)} /> <label style={{fontSize: 25, fontWeight: "normal"}}>kW;</label>
+ onChange={(e) => setModulesPower(e.target.value)} /> <label style={{fontSize: 25, fontWeight: "normal"}}>kW</label>
 
  </div>
  <br></br>
