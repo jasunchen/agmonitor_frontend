@@ -1,0 +1,43 @@
+.Navbar {
+  height: 80px;
+  display: flex;
+  align-items: center;
+}
+
+.nav-menu {
+  display: inline;
+  text-align: center;
+  width: calc(100% - 100px);
+  margin: 0 50px;
+}
+
+.nav-item{
+  display: block;
+  float: right;
+  padding: 0 40px 0 0;
+  overflow: hidden;
+}
+
+.nav-item a {
+  font-weight: 400;
+  font-size: 40px;
+  font-variant-caps: all-small-caps;
+}
+
+.nav-item:hover {
+  overflow-y: hidden !important;
+}
+
+.nav-link{
+}
+
+.nav-button {
+  margin: 18px 0;
+}
+
+.dropdown-content {
+  font-weight: 400;
+  font-size: 40px;
+  font-variant-caps: all-small-caps;
+  color: #F6416C;
+}

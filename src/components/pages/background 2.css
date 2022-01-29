@@ -1,0 +1,40 @@
+.overlay {
+  /*background: linear-gradient(
+    135deg,
+    rgba(29, 219, 105, 1) 0%,
+    rgba(35, 126, 210, 1) 100%
+  );*/
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  z-index: 1000;
+}
+
+.sr {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.middle img {
+  width: 15%;
+}
+
+.middle .arrow {
+  width: 5%;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.middle-next {
+  width: 90%;
+  margin: 15px auto;
+}
+
+.form {
+  width: 30%;
+  margin: 15px auto;
+}

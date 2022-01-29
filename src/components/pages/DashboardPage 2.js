@@ -3,7 +3,6 @@ import React, {useState, useEffect} from "react";
 import {Tabs} from 'antd'
 import AssetsList from "./AssetsList";
 import AssetComponent from "./AssetComponent";
-import UserPreference from "./UserPreference";
 import {useHistory, Link } from 'react-router-dom';
 import { withAuth0 } from '@auth0/auth0-react';
 import './dashboard.css'
@@ -172,18 +171,18 @@ function DashboardPage(props) {
       setChecked2(!checked2);
       setChecked(false);
     };
-  // const onTabClick = (key) => {
-  //   if (key == 3) {
-  //     props.history.push('/userPreference')
-  //   }
-  // }
+  const onTabClick = (key) => {
+    if (key == 3) {
+      props.history.push('/userPreference')
+    }
+  }
   if(loading){
       return <div> Loading... </div>
   }
 
   return (
     <><div>
-    <Tabs defaultActive="2">
+    <Tabs defaultActive="2" onTabClick={(key) => onTabClick(key)}>
       <TabPane key="1" tab="Display Assets">
         {data['base'].map(asset => (
           <AssetComponent asset={asset} type="Base"/>
@@ -280,7 +279,6 @@ function DashboardPage(props) {
       <TabPane className="block" tab="User Preference" key="3">
               {/* { error && <div>{ error }</div> }
     { isPending && <div>Loading...</div> } */}
-        <UserPreference />
       </TabPane>
       </Tabs>
           </div></>
