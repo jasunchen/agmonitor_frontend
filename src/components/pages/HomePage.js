@@ -52,6 +52,8 @@ function HomePage (props) {
         "pred_solar_generation" : 100,
         "pred_opt_threshold" : 100,
         "pred_should_charge" : false,
+        "hours_of_power" : 0,
+        "cost_or_shutoff" : 0,
         "alerts" : [['Advisory', 'High Surf Advisory issued January 26 at 11:45AM PST until January 26 at 8:00PM PST by NWS Los Angeles/Oxnard CA'], ['Advisory', 'High Surf Advisory issued January 26 at 2:58AM PST until January 26 at 8:00PM PST by NWS Los Angeles/Oxnard CA'], ['Advisory', 'High Surf Advisory issued January 24 at 8:04PM PST until January 26 at 8:00PM PST by NWS Los Angeles/Oxnard CA']]
     })
 
@@ -80,6 +82,8 @@ function HomePage (props) {
                 "pred_solar_generation" : data["pred_opt_threshold"],
                 "pred_opt_threshold" : data["pred_solar_generation"],
                 "pred_should_charge" : data["should_charge"],
+                "hours_of_power" : data["hours_of_power"],
+                "cost_or_shutoff" : data["cost_or_shutoff"],
             })
         })
         .catch((error) => console.log("Error: " + error))
@@ -193,21 +197,12 @@ function HomePage (props) {
         })
         .catch((error) => console.log("Error: " + error))
     }, []);
-    
-    function calculateColor(x){
-        if(x === true){
-            return "#00B8A9";
-        }
-
-        return "#F6416C";
-    }
-    
 
     if(state["loading"]){
         return (
             <div className="overlay"> 
                 <h1> Loading... </h1>
-                <p> This might take a few minutes... </p>
+                <p> This might take a few moments... </p>
             </div>
         )
     }
@@ -231,72 +226,80 @@ function HomePage (props) {
             
                 <h1> Recommendations </h1>
                 
-                <div className="snapshot-headers"> 
-                    Today, you 
-                    <span className="snapshot-head" style={{color: calculateColor(userInfo["pred_should_charge"])}}> 
-                        {userInfo["pred_should_charge"] ? " Should " : " Should Not "} 
-                    </span> 
-                    charge your flexible assets. 
-                    <span className="snapshot-explanation" onClick={chargeExplanationClick}>
-                        { explanationState["charge"] ? " (Click to Hide Explanation)" : " (Click to See Explanation)" }
-                    </span>
-                </div>
-
-                { explanationState["charge"] &&
-                    <div className="row">
-                        <div className="summary-chart">
-                            <Chart
-                                title="Energy Predictions"
-                                series={[
-                                    {
-                                        name: 'Solar Generation',
-                                        data: state["dayProduced"],
-                                        color: "#00B8A9"
-                                    },
-                                    {
-                                        name: 'Base Load Usage',
-                                        data: state["dayConsumed"],
-                                        color: "#F6416C"
-                                    },
-                                    {
-                                        name: 'Utility Usage',
-                                        data: state["dayProduced"],
-                                        color: "#FFDE7D"
-                                    },
-                                ]}
-                            />
-                        </div>
-                    </div>
-                }
-
-                <div className="snapshot-headers"> 
-                    Today, you should set your Tesla Battery Threshold to
-                    <span className="snapshot-head" style={{color: '#00B8A9'}}> 
-                        &nbsp;{userInfo["pred_opt_threshold"]}%
-                    </span> 
-                    .
-                    <span className="snapshot-explanation" onClick={thresholdExplanationClick}>
-                        { explanationState["threshold"] ? " (Click to Hide Explanation)" : " (Click to See Explanation)" }
-                    </span>
-                </div>
-
-                { explanationState["threshold"] &&
-                    <div>
-                        {userInfo["alerts"].length == 0 ? 
-                            <div>
-                                We recommend the threshold above because we forecast a low risk of a power shutoff since there are no weather alerts. 
+                <div>
+                    <div className="home-card" onClick={chargeExplanationClick}>
+                        { explanationState["charge"] ? 
+                            <div className="explanation-chart">
+                                <Chart
+                                    title="Energy Predictions"
+                                    series={[
+                                        {
+                                            name: 'Solar Generation',
+                                            data: state["dayProduced"],
+                                            color: "#00B8A9"
+                                        },
+                                        {
+                                            name: 'Base Load Usage',
+                                            data: state["dayConsumed"],
+                                            color: "#F6416C"
+                                        },
+                                        {
+                                            name: 'Utility Usage',
+                                            data: state["dayProduced"],
+                                            color: "#FFDE7D"
+                                        },
+                                    ]}
+                                />
                             </div>
-                        : 
-                            <div>
-                                We recommend the threshold above because we forecast the risk of a power shutoff based on these weather alerts:
-                                { userInfo["alerts"].map(alert => (
-                                    <li> <span className="alert-type"> {alert[0]}:</span> {alert[1]} </li>
-                                ))
-                                }
+                        :
+                            <div className="snapshot-headers"> 
+                                Today, the optimal charging times are
+                                    <span className="snapshot-head"> 
+                                        &nbsp;11 AM, 2 PM, 10 PM
+                                    </span> 
+                                . 
                             </div>
                         }
                     </div>
-                }
+
+                    <div className="home-card" onClick={thresholdExplanationClick}>
+                    { explanationState["threshold"] ?
+                        <div>
+                            <div>
+                                We base our recommendation on the following: 
+                            </div>
+
+                            <div>
+                                Your user preferences:
+                                    <li> <span className="alert-type"> Cost vs. Shutoff Risk:</span> {userInfo["cost_or_shutoff"]} </li>
+                                    <li> <span className="alert-type"> Requested Hours of Power:</span> {userInfo["hours_of_power"]} </li>
+                            </div>
+
+                            {userInfo["alerts"].length == 0 ? 
+                                <div>
+                                    Low risk of power shutoff due to no weather alerts.
+                                </div>
+                            : 
+                                <div>
+                                    A risk of power shutoff due to the following weather alerts:
+                                    { userInfo["alerts"].map(alert => (
+                                        <li> <span className="alert-type"> {alert[0]}:</span> {alert[1]} </li>
+                                    ))
+                                    }
+                                </div>
+                            }
+                        </div>
+                        :
+                        <div className="snapshot-headers"> 
+                            Today, you should set your Tesla Battery Threshold to
+                            <span className="snapshot-head"> 
+                                &nbsp;{userInfo["pred_opt_threshold"]}%
+                            </span> 
+                            .
+                        </div>
+                    }
+                    </div>
+                </div>
             </div>
 
             <h1> Energy Snapshot </h1>

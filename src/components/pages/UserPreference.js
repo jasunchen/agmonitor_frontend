@@ -108,22 +108,25 @@ function UserPreference(props) {
 
   return (
     <div className="user-preference">
-      <div className="back" onClick={() => props.history.go(-1)}>Back to dashboard</div>
       <form onSubmit={handleUserPreferenceChange}>
-        <label>Set low limit to: </label>
+        <label>Set low and max limit to: </label>
         <Slider
+          range={true}
           min={0}
           max={100}
-          value={low_limit}
-          onChange={(value) => setLowLimit(value)}/>
+          value={[low_limit, max_limit]}
+          onChange={(value) => {
+            setLowLimit(value[0])
+            setMaxLimit(value[1])
+          }}/>
         <br></br>
-        <label>Set max limit to: </label>
-        <Slider
-          min={0}
-          max={100}
-          value={max_limit}
-          onChange={(value) => setMaxLimit(value)}/>
-        <br></br>
+        {/*<label>Set max limit to: </label>*/}
+        {/*<Slider*/}
+        {/*  min={0}*/}
+        {/*  max={100}*/}
+        {/*  value={max_limit}*/}
+        {/*  onChange={(value) => setMaxLimit(value)}/>*/}
+        {/*<br></br>*/}
         <label>Set battery size to: </label>
         <input
           type="number"
