@@ -308,6 +308,6 @@ function DashboardPage(props) {
       </Tabs>
           </div>
   );
-{"}"}
+}
 
-export default  withAuth0(DashboardPage);}
+export default  withAuth0(DashboardPage);
