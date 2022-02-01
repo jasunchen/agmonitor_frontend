@@ -1,6 +1,8 @@
 .user-preference {
-  width: 80%;
+  width: 100%;
   margin: 20px auto;
+  max-width: 800px;
+  min-width: 100px;
 }
 
 .user-preference .red {

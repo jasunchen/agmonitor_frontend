@@ -193,14 +193,7 @@ function DashboardPage(props) {
   //     props.history.push('/userPreference')
   //   }
   // }
-  if(loading){
-      return (
-        <div className="overlay"> 
-          <h1> Loading... </h1>
-          <p> This might take a few moments... </p>
-        </div>
-      )
-  }
+
   //////////////////////////////////
 
  
@@ -231,388 +224,160 @@ function DashboardPage(props) {
   ////////////////////////////////////////
 
 
-
-
+  if(loading){
+    return (
+      <div className="overlay"> 
+        <h1> Loading... </h1>
+        <p> This might take a few moments... </p>
+      </div>
+    )
+  }
 
   return (
     <div className="overlay">
-    <div className="sa">
-      <div>
-      
-      </div>
-      <div> </div> <div> </div>
-      <div> </div>
-      </div>
-  <br></br>
     
-
-
-    
-   <Tabs defaultActive="2">
-      <TabPane key="1" tab="Display Assets">
-        {data['base'].map(asset => (
-          <AssetComponent asset={asset} type="Base"/>
+      <Tabs defaultActive="1">
+        <TabPane key="1" tab="View Assets">
+          { data['base'].length + data['flexible'].length + data['generation'].length == 0 &&
+            <div>
+              You have not created any assets yet!
+            </div>
+          }
+          {data['base'].map(asset => (
+            <AssetComponent asset={asset} type="Base"/>
+            ))}
+          {data['flexible'].map(asset => (
+            <AssetComponent asset={asset} type="Flexible"/>
           ))}
-        {data['flexible'].map(asset => (
-          <AssetComponent asset={asset} type="Flexible"/>
-        ))}
-        {data['generation'].map(asset => (
-          <AssetComponent asset={asset} type="Generation"/>
-        ))}
-      </TabPane>
+          {data['generation'].map(asset => (
+            <AssetComponent asset={asset} type="Generation"/>
+          ))}
+        </TabPane>
        
 
-      <TabPane className="block" tab="Add a New Asset" key={2}>
-        <div >
-        <Tabs defaultActive={1}>
-          <TabPane key={1} tab="Add Base Asset">
-          <div >
-        
-        <form onSubmit={handleBaseSubmit}>
-              <label style={{fontSize: 30, fontWeight: "normal"}}>Asset Name:</label>
-              <input
-                  type="text"
-                  style={{ width: 300, fontWeight:"normal"}}
-                  required
-                  value={assetName}
-                  onChange={(e) => setAssetName(e.target.value)} />
-                  <br></br>
-              <label style={{fontSize: 30, fontWeight: "normal"}}>Asset Description:</label>
-              <textarea
-                  required
-                  style={{ width: 644, fontWeight:"normal" }}
-                  value={assetDescription}
-                  onChange={(e) => setAssetDescription(e.target.value)}
-              ></textarea>
-            <br></br>
+        <TabPane className="block" tab="Add a New Asset" key={2}>
+          <Tabs defaultActive={1}>
+            <TabPane key={1} tab="Add Base Asset">
+              <form className="asset-form" onSubmit={handleBaseSubmit}>
+                <div className="form-item">
+                  <label className="form-label"> Asset Name: </label>
+                  <input type="text" className="form-input" required value={assetName}
+                    onChange={(e) => setAssetName(e.target.value)} />
+                </div>
+                
+                <div className="form-item">
+                  <label className="form-label"> Asset Description: </label>
+                  <textarea required className="form-textarea" value={assetDescription}
+                    onChange={(e) => setAssetDescription(e.target.value)} />
+                </div>
+                
+                <button className="asset-button"> Create Base Asset </button>
+              </form>
+            </TabPane>
 
-              <button style={{ width: 100, fontWeight:"normal" }}>Add Asset</button>
-          </form>
-      </div>
-          </TabPane>
+            <TabPane key={2} tab="Add Generation Asset">
+              <form className="asset-form" onSubmit = {handleGenerationSubmit}>
+                <div className="form-item">
+                  <label className="form-label">Asset Name:</label> 
+                  <input className="form-input" type="text" required value={assetName}
+                    onChange={(e) => setAssetName(e.target.value)} />
+                </div>
 
-          <TabPane key={2} tab="Add Generation Asset">
-          <div>
-    
-    <form onSubmit = {handleGenerationSubmit}>
-    
-    <label style={{fontSize: 30, fontWeight: "normal"}}>Asset Name:</label> 
-              <input
-                  style={{ width: 300, fontWeight:"normal"}}
-                  type="text"
-                  value={assetName}
-                  required
-                  onChange={(e) => setAssetName(e.target.value)} />
-                  <br></br>
-              <label style={{fontSize: 30, fontWeight:"normal"}}>Asset Description:</label>
-              <textarea
-                  style={{ width: 644, fontWeight:"normal" }}
-                  value={assetDescription}
-                  required
-                  onChange={(e) => setAssetDescription(e.target.value)}>
-              </textarea>
-   <br></br>
-   <div>
-  <label style={{fontSize: 30, fontWeight: "normal"}}> Declination: </label> 
+                <div className="form-item">
+                  <label className="form-label">Asset Description:</label>
+                  <textarea required className="form-textarea" value={assetDescription}
+                    onChange={(e) => setAssetDescription(e.target.value)} />
+                </div>
+
+                <div className="form-item">
+                  <label className="form-label"> Asset Declination: </label> 
+                  <input className="form-smallinput" type="number" value={declination} required
+                    min = '0' max = '90' onChange={(e) => setDeclination(e.target.value)} /> 
+                  <label className="form-context">&deg;</label>
+                </div>
  
- <input
- style={{ width: 70, fontWeight:'normal' }}
- type="number"
- value={declination}
- required
- min = '0'
- max = '90'
- onChange={(e) => setDeclination(e.target.value)} /> <label style={{fontSize: 30, fontWeight: "normal"}}>&deg;</label>
- 
- <br></br>
- 
-<label style={{fontSize: 30, fontWeight: "normal"}}> Azimuth: </label> 
- 
- <input
- style={{ width: 70, fontWeight:'normal' }}
- type="number"
- value={azimuth}
- required
- min = '-180'
- max = '180'
- onChange={(e) => setAzimuth(e.target.value)} /> <label style={{fontSize: 30, fontWeight: "normal"}}>&deg;</label>
- 
- <br></br>
- 
- 
- <label style={{fontSize: 30, fontWeight: "normal"}}> Modules Power: </label> 
- 
- <input
- style={{ width: 95, fontWeight:'normal' }}
- type="number"
- value={modules_power}
- required
- min = '1'
- onChange={(e) => setModulesPower(e.target.value)} /> <label style={{fontSize: 25, fontWeight: "normal"}}>kW</label>
+                <div className="form-item">
+                  <label className="form-label"> Asset Azimuth: </label> 
+                  <input className="form-smallinput" type="number" value={azimuth} required
+                    min = '-180' max = '180' onChange={(e) => setAzimuth(e.target.value)} /> 
+                  <label className="form-context">&deg;</label>
+                </div>
 
- </div>
- <br></br>
+                <div className="form-item">
+                  <label className="form-label"> Asset Power: </label> 
+                  <input className="form-smallinput" type="number" value={modules_power} required
+                  min = '1' onChange={(e) => setModulesPower(e.target.value)} /> 
+                  <label className="form-context"> kW </label>
+                </div>
 
- <button style={{ width: 100, fontWeight:"normal" }}>Add Asset</button>
-    </form>
-    
-</div>
-          </TabPane>
+                <button className="asset-button"> Create Generation Asset </button>
+              </form>
+            </TabPane>
 
+            <TabPane key={3} tab='Add Flexible Asset'>
+              <form className="asset-form" onSubmit = {handleFlexibleSubmit}>
+                <div className="form-item">
+                  <label className="form-label"> Asset Name: </label> 
+                  <input required className="form-input" type="text" value={assetName} 
+                    onChange={(e) => setAssetName(e.target.value)} />
+                </div>
 
-          <TabPane key={3} tab='Add Flexible Asset'>
-          <div>
-  
-            
-  <form onSubmit = {handleFlexibleSubmit}>
-  <label style={{fontSize: 30, fontWeight: "normal"}}>Asset Name:</label> 
-              <input
-                  style={{ width: 300, fontWeight:"normal"}}
-                  type="text"
-                  value={assetName}
-                  required
-                  onChange={(e) => setAssetName(e.target.value)} />
-                  <br></br>
-              <label style={{fontSize: 30, fontWeight:"normal"}}>Asset Description:</label>
-              <textarea
-                  style={{ width: 644, fontWeight:"normal" }}
-                  value={assetDescription}
-                  required
-                  onChange={(e) => setAssetDescription(e.target.value)}>
-              </textarea>
-   <br></br>
-      <div>
-  <label style={{fontSize: 30, fontWeight: "normal"}}>Start charge time: </label>
-        <Select
-          labelInValue
-          defaultValue={{ value: 0 }}
-          style={{ width: 70 }}
-          size = "large"
-          onChange={onStartChargeTimeHrChange}
-        >
-          <Option value= {0} > 00 </Option>
-          <Option value= {1} > 01 </Option>
-          <Option value= {2} > 02 </Option>
-          <Option value= {3} > 03 </Option>
-          <Option value= {4} > 04 </Option>
-          <Option value= {5} > 05 </Option>
-          <Option value= {6} > 06 </Option>
-          <Option value= {7} > 07 </Option>
-          <Option value= {8} > 08 </Option>
-          <Option value= {9} > 09 </Option>
-          <Option value= {10} > 10 </Option>
-          <Option value= {11} > 11 </Option>
-          <Option value= {12} > 12 </Option>
-          <Option value= {13} > 13 </Option>
-          <Option value= {14} > 14 </Option>
-          <Option value= {15} > 15 </Option>
-          <Option value= {16} > 16 </Option>
-          <Option value= {17} > 17 </Option>
-          <Option value= {18} > 18 </Option>
-          <Option value= {19} > 19 </Option>
-          <Option value= {20} > 20 </Option>
-          <Option value= {21} > 21 </Option>
-          <Option value= {22} > 22 </Option>
-          <Option value= {23} > 23 </Option>
-        </Select>
-        
-          <label> : </label>
-        <Select
-          labelInValue
-          defaultValue={{ value: 0 }}
-          style={{ width: 70 }}
-          size = "large"
-          onChange={onStartChargeTimeMinChange}
-        >
-          <Option value= {0} > 00 </Option>
-          <Option value= {1} > 01 </Option>
-          <Option value= {2} > 02 </Option>
-          <Option value= {3} > 03 </Option>
-          <Option value= {4} > 04 </Option>
-          <Option value= {5} > 05 </Option>
-          <Option value= {6} > 06 </Option>
-          <Option value= {7} > 07 </Option>
-          <Option value= {8} > 08 </Option>
-          <Option value= {9} > 09 </Option>
-          <Option value= {10} > 10 </Option>
-          <Option value= {11} > 11 </Option>
-          <Option value= {12} > 12 </Option>
-          <Option value= {13} > 13 </Option>
-          <Option value= {14} > 14 </Option>
-          <Option value= {15} > 15 </Option>
-          <Option value= {16} > 16 </Option>
-          <Option value= {17} > 17 </Option>
-          <Option value= {18} > 18 </Option>
-          <Option value= {19} > 19 </Option>
-          <Option value= {20} > 20 </Option>
-          <Option value= {21} > 21 </Option>
-          <Option value= {22} > 22 </Option>
-          <Option value= {23} > 23 </Option>
-          <Option value= {24} > 24 </Option>
-          <Option value= {25} > 25 </Option>
-          <Option value= {26} > 26 </Option>
-          <Option value= {27} > 27 </Option>
-          <Option value= {28} > 28 </Option>
-          <Option value= {29} > 29 </Option>
-          <Option value= {30} > 30 </Option>
-          <Option value= {31} > 31 </Option>
-          <Option value= {32} > 32 </Option>
-          <Option value= {33} > 33 </Option>
-          <Option value= {34} > 34 </Option>
-          <Option value= {35} > 35 </Option>
-          <Option value= {36} > 36 </Option>
-          <Option value= {37} > 37 </Option>
-          <Option value= {38} > 38 </Option>
-          <Option value= {39} > 39 </Option>
-          <Option value= {40} > 40 </Option>
-          <Option value= {41} > 41 </Option>
-          <Option value= {42} > 42 </Option>
-          <Option value= {43} > 43 </Option>
-          <Option value= {44} > 44 </Option>
-          <Option value= {45} > 45 </Option>
-          <Option value= {46} > 46 </Option>
-          <Option value= {47} > 47 </Option>
-          <Option value= {48} > 48 </Option>
-          <Option value= {49} > 49 </Option>
-          <Option value= {50} > 50 </Option>
-          <Option value= {51} > 51 </Option>
-          <Option value= {52} > 52 </Option>
-          <Option value= {53} > 53 </Option>
-          <Option value= {54} > 54 </Option>
-          <Option value= {55} > 55 </Option>
-          <Option value= {56} > 56 </Option>
-          <Option value= {57} > 57 </Option>
-          <Option value= {58} > 58 </Option>
-          <Option value= {59} > 59 </Option>
-        </Select>
-        </div>
-        <br></br>
+                <div className="form-item">
+                  <label className="form-label"> Asset Description: </label>
+                  <textarea className="form-textarea" value={assetDescription} required
+                    onChange={(e) => setAssetDescription(e.target.value)} />
+                </div>
 
-        <div>
-  <label style={{fontSize: 30, fontWeight: "normal"}}>End charge time: </label>
-        <Select
-          labelInValue
-          defaultValue={{ value: 0 }}
-          style={{ width: 70 }}
-          size = "large"
-          onChange={onEndChargeTimeHrChange}
-        >
-          <Option value= {0} > 00 </Option>
-          <Option value= {1} > 01 </Option>
-          <Option value= {2} > 02 </Option>
-          <Option value= {3} > 03 </Option>
-          <Option value= {4} > 04 </Option>
-          <Option value= {5} > 05 </Option>
-          <Option value= {6} > 06 </Option>
-          <Option value= {7} > 07 </Option>
-          <Option value= {8} > 08 </Option>
-          <Option value= {9} > 09 </Option>
-          <Option value= {10} > 10 </Option>
-          <Option value= {11} > 11 </Option>
-          <Option value= {12} > 12 </Option>
-          <Option value= {13} > 13 </Option>
-          <Option value= {14} > 14 </Option>
-          <Option value= {15} > 15 </Option>
-          <Option value= {16} > 16 </Option>
-          <Option value= {17} > 17 </Option>
-          <Option value= {18} > 18 </Option>
-          <Option value= {19} > 19 </Option>
-          <Option value= {20} > 20 </Option>
-          <Option value= {21} > 21 </Option>
-          <Option value= {22} > 22 </Option>
-          <Option value= {23} > 23 </Option>
-        </Select>
-        
-          <label> : </label>
-        <Select
-          labelInValue
-          defaultValue={{ value: 0 }}
-          style={{ width: 70 }}
-          size = "large"
-          onChange={onEndChargeTimeMinChange}
-        >
-          <Option value= {0} > 00 </Option>
-          <Option value= {1} > 01 </Option>
-          <Option value= {2} > 02 </Option>
-          <Option value= {3} > 03 </Option>
-          <Option value= {4} > 04 </Option>
-          <Option value= {5} > 05 </Option>
-          <Option value= {6} > 06 </Option>
-          <Option value= {7} > 07 </Option>
-          <Option value= {8} > 08 </Option>
-          <Option value= {9} > 09 </Option>
-          <Option value= {10} > 10 </Option>
-          <Option value= {11} > 11 </Option>
-          <Option value= {12} > 12 </Option>
-          <Option value= {13} > 13 </Option>
-          <Option value= {14} > 14 </Option>
-          <Option value= {15} > 15 </Option>
-          <Option value= {16} > 16 </Option>
-          <Option value= {17} > 17 </Option>
-          <Option value= {18} > 18 </Option>
-          <Option value= {19} > 19 </Option>
-          <Option value= {20} > 20 </Option>
-          <Option value= {21} > 21 </Option>
-          <Option value= {22} > 22 </Option>
-          <Option value= {23} > 23 </Option>
-          <Option value= {24} > 24 </Option>
-          <Option value= {25} > 25 </Option>
-          <Option value= {26} > 26 </Option>
-          <Option value= {27} > 27 </Option>
-          <Option value= {28} > 28 </Option>
-          <Option value= {29} > 29 </Option>
-          <Option value= {30} > 30 </Option>
-          <Option value= {31} > 31 </Option>
-          <Option value= {32} > 32 </Option>
-          <Option value= {33} > 33 </Option>
-          <Option value= {34} > 34 </Option>
-          <Option value= {35} > 35 </Option>
-          <Option value= {36} > 36 </Option>
-          <Option value= {37} > 37 </Option>
-          <Option value= {38} > 38 </Option>
-          <Option value= {39} > 39 </Option>
-          <Option value= {40} > 40 </Option>
-          <Option value= {41} > 41 </Option>
-          <Option value= {42} > 42 </Option>
-          <Option value= {43} > 43 </Option>
-          <Option value= {44} > 44 </Option>
-          <Option value= {45} > 45 </Option>
-          <Option value= {46} > 46 </Option>
-          <Option value= {47} > 47 </Option>
-          <Option value= {48} > 48 </Option>
-          <Option value= {49} > 49 </Option>
-          <Option value= {50} > 50 </Option>
-          <Option value= {51} > 51 </Option>
-          <Option value= {52} > 52 </Option>
-          <Option value= {53} > 53 </Option>
-          <Option value= {54} > 54 </Option>
-          <Option value= {55} > 55 </Option>
-          <Option value= {56} > 56 </Option>
-          <Option value= {57} > 57 </Option>
-          <Option value= {58} > 58 </Option>
-          <Option value= {59} > 59 </Option>
-        </Select>
-        </div>
-        <br></br>
+                <div className="form-item">
+                  <label className="form-label"> Allowed Charging Start Time: </label>
+                  <Select labelInValue defaultValue={{ value: 0 }}
+                    style={{ width: 70 }} size = "large"
+                    onChange={onStartChargeTimeHrChange}>
+                      {[...Array(24).keys()].map(i => 
+                        <Option value={i}> {i < 10 ? "0" + i : i} </Option>
+                      )}
+                  </Select>
+                  <label className="form-context"> : </label>
+                  <Select labelInValue defaultValue={{ value: 0 }}
+                    style={{ width: 70 }} size = "large"
+                    onChange={onStartChargeTimeMinChange}>
+                      {[...Array(60).keys()].map(i => 
+                        <Option value={i}> {i < 10 ? "0" + i : i} </Option>
+                      )}
+                  </Select>
+                </div>
 
-        <button style={{ width: 100, fontWeight:"normal" }}>Add Asset</button>
-  </form>
-</div>
-          </TabPane>
-
-        </Tabs>
-
-      </div>
+                <div className="form-item">
+                  <label className="form-label"> Allowed Charging End Time: </label>
+                  <Select labelInValue defaultValue={{ value: 0 }}
+                    style={{ width: 70 }} size = "large"
+                    onChange={onEndChargeTimeHrChange}>
+                      {[...Array(24).keys()].map(i => 
+                        <Option value={i}> {i < 10 ? "0" + i : i} </Option>
+                      )}
+                  </Select>
           
-        
-      </TabPane>
-      <TabPane className="block" tab="User Preference" key="3">
-              {/* { error && <div>{ error }</div> }
-    { isPending && <div>Loading...</div> } */}
-        <UserPreference />
-      </TabPane>
+                  <label className="form-context"> : </label>
+                  <Select labelInValue defaultValue={{ value: 0 }}
+                    style={{ width: 70 }} size = "large"
+                    onChange={onEndChargeTimeMinChange}>
+                      {[...Array(60).keys()].map(i => 
+                        <Option value={i}> {i < 10 ? "0" + i : i} </Option>
+                      )}
+                  </Select>
+                </div>
+
+                <button className="asset-button"> Create Flexible Asset </button>
+              </form>
+            </TabPane>
+          </Tabs> 
+        </TabPane>
+      
+        <TabPane className="block" tab="Edit Preferences" key="3">
+          <UserPreference />
+        </TabPane>
       </Tabs>
-          </div>
+    </div>
   );
 }
 
