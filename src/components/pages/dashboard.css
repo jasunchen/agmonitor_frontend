@@ -18,10 +18,7 @@
   padding-bottom: 50px;
 }
 
-.sa {
-  display: flex;
-  justify-content: space-around;
-}
+
 .ant-tabs {
   width: 80vw;
   margin: 0 auto;
@@ -86,4 +83,29 @@ form {
   text-align: right;
   font-weight: 300;
   font-size: 18px;
+}
+
+.form-label {
+  font-size: 26px;
+  font-weight: 300;
+}
+
+.form-input {
+  font-size: 26px;
+  font-weight: 300;
+}
+
+.form-smallinput {
+  width: 70px;
+  font-size: 26px;
+  font-weight: 300;
+}
+
+.form-textarea {
+  font-size: 26px;
+  font-weight: 300;
+}
+
+.asset-button {
+  width: 100px;
 }

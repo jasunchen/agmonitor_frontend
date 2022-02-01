@@ -235,9 +235,9 @@ function SpecificAssetPage() {
 
 
         <form onSubmit={ ((data['type_of_asset'] == 'base') && handleNotGenerationChangeSubmit) || (data['type_of_asset'] == 'generation' && handleGenerationChangeSubmit) || (data['type_of_asset'] == 'flexible' && handleFlexibleChangeSubmit)}>
-            <label style={{fontSize: 30, fontWeight: "normal"}}>Change Asset Name:</label> 
+            <label className="form-label">Change Asset Name:</label> 
               <input
-                  style={{ width: 300, fontWeight:"normal"}}
+                  className="form-input"
                   type="text"
                   value={assetName}
                   required
@@ -245,7 +245,7 @@ function SpecificAssetPage() {
                   <br></br>
               <label style={{fontSize: 30, fontWeight:"normal"}}>Change Asset Description:</label>
               <textarea
-                  style={{ width: 644, fontWeight:"normal" }}
+                  className="form-textarea"
                   value={assetDescription}
                   required
                   onChange={(e) => setAssetDescription(e.target.value)}
@@ -257,34 +257,34 @@ function SpecificAssetPage() {
 {data['type_of_asset'] == 'generation' &&
  <div>
    <br></br>
-  <label style={{fontSize: 30, fontWeight: "normal"}}> Change Declination: </label> 
+  <label className="form-label"> Change Declination: </label> 
  
  <input
- style={{ width: 70, fontWeight:'normal' }}
+ className="form-smallinput"
  type="number"
  value={declination}
  required
  min = '0'
  max = '90'
- onChange={(e) => setDeclination(e.target.value)} /> <label style={{fontSize: 30, fontWeight: "normal"}}>&deg;</label>
+ onChange={(e) => setDeclination(e.target.value)} /> <label className="form-label">&deg;</label>
  
  <br></br>
  
-<label style={{fontSize: 30, fontWeight: "normal"}}> Change Azimuth: </label> 
+<label className="form-label"> Change Azimuth: </label> 
  
  <input
- style={{ width: 70, fontWeight:'normal' }}
+ className="form-smallinput"
  type="number"
  value={azimuth}
  required
  min = '-180'
  max = '180'
- onChange={(e) => setAzimuth(e.target.value)} /> <label style={{fontSize: 30, fontWeight: "normal"}}>&deg;</label>
+ onChange={(e) => setAzimuth(e.target.value)} /> <label className="form-label">&deg;</label>
  
  <br></br>
  
  
- <label style={{fontSize: 30, fontWeight: "normal"}}> Change Modules Power: </label> 
+ <label className="form-label"> Change Modules Power: </label> 
  
  <input
  style={{ width: 95, fontWeight:'normal' }}
@@ -300,7 +300,7 @@ function SpecificAssetPage() {
  { data['type_of_asset'] == 'flexible' && <div> 
  <div>
  <br></br>
-   <label style={{fontSize: 30, fontWeight: "normal"}}> Start Charge Time: </label>
+   <label className="form-label"> Start Charge Time: </label>
 {start_charge_time_min &&
  <Select
           labelInValue
@@ -335,7 +335,7 @@ function SpecificAssetPage() {
           <Option value= {23} > 23 </Option>
         </Select>}
 
-          <label style={{fontSize: 30, fontWeight: "normal"}}> : </label>
+          <label className="form-label"> : </label>
         {start_charge_time_min &&
         <Select
           labelInValue
@@ -409,7 +409,7 @@ function SpecificAssetPage() {
   </div>
   <br></br>
   <div>
-  <label style={{fontSize: 30, fontWeight: "normal"}}>End charge time: </label>
+  <label className="form-label">End charge time: </label>
   {end_charge_time_hr &&
         <Select
           labelInValue
@@ -445,7 +445,7 @@ function SpecificAssetPage() {
         </Select>
 }
         
-          <label style={{fontSize: 30, fontWeight: "normal"}}> : </label>
+          <label className="form-label"> : </label>
 {end_charge_time_min &&
         <Select
           labelInValue
