@@ -226,8 +226,6 @@ function HomePage (props) {
     return (
         <div className="overlay">
             <div className="recommendations">
-
-            
                 <h1> Recommendations </h1>
                 
                 <div>
@@ -273,29 +271,43 @@ function HomePage (props) {
                                 We base our recommendation on the following: 
                             </div>
 
-                            <div className="recommendation-type">
-                                Your user preferences:
+                            <div>
+                                <div className="recommendation-type">
+                                    Your configured preferences:
+                                </div>
                                     <li className="threshold-reason"> 
                                         <span className="threshold-label"> Accepted Battery Threshold: </span> 
                                         &nbsp;{userInfo["low_limit"]}% - {userInfo["max_limit"]}%  
                                     </li>
                                     <li className="threshold-reason"> 
-                                        <span className="threshold-label"> Cost vs. Shutoff Risk: </span> 
-                                        &nbsp;{userInfo["cost_or_shutoff"]} 
+                                        <span className="threshold-label"> Energy Optimization: </span> 
+                                        {userInfo["cost_or_shutoff"] == 50 &&
+                                            <span className="threshold-span"> &nbsp;Reducing cost and shutoff risk equally </span>
+                                        }
+                                        {userInfo["cost_or_shutoff"] < 50 &&
+                                            <span className="threshold-span"> &nbsp;Reducing cost in favor of reducing shutoff risk </span>
+                                        }
+                                        {userInfo["cost_or_shutoff"] > 50 &&
+                                            <span className="threshold-span"> &nbsp;Reducing shutoff risk in favor of cost </span>
+                                        }
                                     </li>
                                     <li className="threshold-reason"> 
-                                        <span className="threshold-label"> Requested Hours of Power: </span> 
-                                        &nbsp;{userInfo["hours_of_power"]} 
+                                        <span className="threshold-label"> Backup Power Requested: </span> 
+                                        &nbsp;{userInfo["hours_of_power"]} Hours
                                     </li>
                             </div>
 
-                            {userInfo["alerts"].length == 0 ? 
-                                <div>
-                                    Low risk of power shutoff due to no weather alerts.
+                            <div>
+                                <div className="recommendation-type">
+                                    Predicted Shutoff Risk via Weather Alerts:
                                 </div>
+                            </div>
+                            {userInfo["alerts"].length == 0 ? 
+                                <li className="threshold-reason">
+                                    Currently, there are no weather alerts so there is minimal shutoff risk. 
+                                </li>
                             : 
                                 <div>
-                                    A risk of power shutoff due to the following weather alerts:
                                     { userInfo["alerts"].map(alert => (
                                         <li className="threshold-reason"> 
                                             <span className="threshold-label"> {alert[0]}:</span> 
