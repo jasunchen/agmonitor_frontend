@@ -54,6 +54,8 @@ function HomePage (props) {
         "pred_should_charge" : false,
         "hours_of_power" : 0,
         "cost_or_shutoff" : 0,
+        "low_limit" : 0,
+        "max_limit" : 100,
         "alerts" : [['Advisory', 'High Surf Advisory issued January 26 at 11:45AM PST until January 26 at 8:00PM PST by NWS Los Angeles/Oxnard CA'], ['Advisory', 'High Surf Advisory issued January 26 at 2:58AM PST until January 26 at 8:00PM PST by NWS Los Angeles/Oxnard CA'], ['Advisory', 'High Surf Advisory issued January 24 at 8:04PM PST until January 26 at 8:00PM PST by NWS Los Angeles/Oxnard CA']]
     })
 
@@ -79,11 +81,13 @@ function HomePage (props) {
             console.log(data);
             setUserInfo({
                 ...userInfo,
-                "pred_solar_generation" : data["pred_opt_threshold"],
-                "pred_opt_threshold" : data["pred_solar_generation"],
+                "pred_solar_generation" : data["pred_solar_generation"],
+                "pred_opt_threshold" : data["pred_opt_threshold"],
                 "pred_should_charge" : data["should_charge"],
                 "hours_of_power" : data["hours_of_power"],
                 "cost_or_shutoff" : data["cost_or_shutoff"],
+                "low_limit" : data["low_limit"],
+                "max_limit" : data["max_limit"],
             })
         })
         .catch((error) => console.log("Error: " + error))
@@ -269,10 +273,20 @@ function HomePage (props) {
                                 We base our recommendation on the following: 
                             </div>
 
-                            <div>
+                            <div className="recommendation-type">
                                 Your user preferences:
-                                    <li> <span className="alert-type"> Cost vs. Shutoff Risk:</span> {userInfo["cost_or_shutoff"]} </li>
-                                    <li> <span className="alert-type"> Requested Hours of Power:</span> {userInfo["hours_of_power"]} </li>
+                                    <li className="threshold-reason"> 
+                                        <span className="threshold-label"> Accepted Battery Threshold: </span> 
+                                        &nbsp;{userInfo["low_limit"]}% - {userInfo["max_limit"]}%  
+                                    </li>
+                                    <li className="threshold-reason"> 
+                                        <span className="threshold-label"> Cost vs. Shutoff Risk: </span> 
+                                        &nbsp;{userInfo["cost_or_shutoff"]} 
+                                    </li>
+                                    <li className="threshold-reason"> 
+                                        <span className="threshold-label"> Requested Hours of Power: </span> 
+                                        &nbsp;{userInfo["hours_of_power"]} 
+                                    </li>
                             </div>
 
                             {userInfo["alerts"].length == 0 ? 
@@ -283,7 +297,10 @@ function HomePage (props) {
                                 <div>
                                     A risk of power shutoff due to the following weather alerts:
                                     { userInfo["alerts"].map(alert => (
-                                        <li> <span className="alert-type"> {alert[0]}:</span> {alert[1]} </li>
+                                        <li className="threshold-reason"> 
+                                            <span className="threshold-label"> {alert[0]}:</span> 
+                                            &nbsp;{alert[1]} 
+                                        </li>
                                     ))
                                     }
                                 </div>

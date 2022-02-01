@@ -109,49 +109,45 @@ function UserPreference(props) {
   return (
     <div className="user-preference">
       <form onSubmit={handleUserPreferenceChange}>
-        <label>Set low and max limit to: </label>
-        <Slider
-          range={true}
-          min={0}
-          max={100}
-          value={[low_limit, max_limit]}
-          onChange={(value) => {
-            setLowLimit(value[0])
-            setMaxLimit(value[1])
-          }}/>
-        <br></br>
-        {/*<label>Set max limit to: </label>*/}
-        {/*<Slider*/}
-        {/*  min={0}*/}
-        {/*  max={100}*/}
-        {/*  value={max_limit}*/}
-        {/*  onChange={(value) => setMaxLimit(value)}/>*/}
-        {/*<br></br>*/}
-        <label>Set battery size to: </label>
-        <input
-          type="number"
-          required
-          value={battery_size}
-          onInput={(e) => setBatterySize(e.target.value)}/>
-        {!(battery_size >= 0 || /^\d+$/.test(battery_size)) &&
-          <div className="red">the size should be larger than 0</div>}
-        <br></br>
-        <label>Set hours of power to: </label>
-        <Slider
-          min={0}
-          max={100}
-          value={hours_of_power}
-          onChange={(value) => setHoursOfPower(value)}/>
-        <br></br>
-        <label>Set cost or shutoff to: </label>
-        <Slider
-          min={0}
-          max={100}
-          value={cost_or_shutoff}
-          onChange={(value) => setCostOrShutOff(value)}/>
-        <br></br>
+        <div className="form-item">
+          <label className="form-label"> Acceptable Battery Threshold: </label>
+          <Slider
+            range={true}
+            min={0}
+            max={100}
+            value={[low_limit, max_limit]}
+            onChange={(value) => {
+              setLowLimit(value[0])
+              setMaxLimit(value[1])
+            }}/>
+        </div>
 
-        <button> Update Preferences</button>
+        <div className="form-item">
+          <label className="form-label"> Battery Size: </label>
+          <input className="form-smallinput" type="number" required min = '1' value={battery_size}
+            onInput={(e) => setBatterySize(e.target.value)}/>
+          <label className="form-context"> kWH </label>
+        </div>
+
+        <div className="form-item">
+          <label className="form-label">Set hours of power to: </label>
+          <Slider
+            min={0}
+            max={100}
+            value={hours_of_power}
+            onChange={(value) => setHoursOfPower(value)}/>
+        </div>
+        
+        <div className="form-item">
+          <label className="form-label">Set cost or shutoff to: </label>
+          <Slider
+            min={0}
+            max={100}
+            value={cost_or_shutoff}
+            onChange={(value) => setCostOrShutOff(value)}/>
+        </div>
+
+        <button className="asset-button"> Update Preferences</button>
       </form>
 
 
@@ -166,7 +162,7 @@ function UserPreference(props) {
             <input
               {...getInputProps({
                 placeholder: 'Type in your address...',
-                className: 'location-search-input'
+                className: 'location-search-input form-input'
               })}
             />
             <div className="autocomplete-dropdown-container">
@@ -195,11 +191,7 @@ function UserPreference(props) {
         )}
       </PlacesAutocomplete>
 
-      <p>lat: {lat}</p>
-      <p>long: {long}</p>
-
-
-      <button onClick={handleUserPreferenceChange}>Update Address</button>
+      <button className="asset-button" onClick={handleUserPreferenceChange}> Update Address </button>
     </div>
   );
 }

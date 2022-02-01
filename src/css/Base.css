@@ -104,7 +104,19 @@ ol li::before{
 }
 
 .overlay {
-    margin: 50px 0;
+    margin: 0px 0;
     padding: 0 5%;
-    min-height: calc(100vh - 250px);
+    min-height: calc(100vh - 150px);
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }

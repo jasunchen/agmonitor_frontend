@@ -258,96 +258,116 @@ function DashboardPage(props) {
         <TabPane className="block" tab="Add a New Asset" key={2}>
           <Tabs defaultActive={1}>
             <TabPane key={1} tab="Add Base Asset">
-              <form onSubmit={handleBaseSubmit}>
-                <label className="form-label"> Asset Name: </label>
-                <input type="text" className="form-input" required value={assetName}
-                  onChange={(e) => setAssetName(e.target.value)} />
+              <form className="asset-form" onSubmit={handleBaseSubmit}>
+                <div className="form-item">
+                  <label className="form-label"> Asset Name: </label>
+                  <input type="text" className="form-input" required value={assetName}
+                    onChange={(e) => setAssetName(e.target.value)} />
+                </div>
                 
-                <label className="form-label"> Asset Description: </label>
-                <textarea required className="form-textarea" value={assetDescription}
-                  onChange={(e) => setAssetDescription(e.target.value)} />
+                <div className="form-item">
+                  <label className="form-label"> Asset Description: </label>
+                  <textarea required className="form-textarea" value={assetDescription}
+                    onChange={(e) => setAssetDescription(e.target.value)} />
+                </div>
                 
-                <button className="asset-button">Add Asset</button>
+                <button className="asset-button"> Create Base Asset </button>
               </form>
             </TabPane>
 
             <TabPane key={2} tab="Add Generation Asset">
-              <form onSubmit = {handleGenerationSubmit}>
-                <label className="form-label">Asset Name:</label> 
-                <input className="form-input" type="text" required value={assetName}
-                  onChange={(e) => setAssetName(e.target.value)} />
+              <form className="asset-form" onSubmit = {handleGenerationSubmit}>
+                <div className="form-item">
+                  <label className="form-label">Asset Name:</label> 
+                  <input className="form-input" type="text" required value={assetName}
+                    onChange={(e) => setAssetName(e.target.value)} />
+                </div>
 
-                <label className="form-label">Asset Description:</label>
-                <textarea required className="form-textarea" value={assetDescription}
-                  onChange={(e) => setAssetDescription(e.target.value)} />
-  
-                <label className="form-label"> Declination: </label> 
-                <input className="form-smallinput" type="number" value={declination} required
-                  min = '0' max = '90' onChange={(e) => setDeclination(e.target.value)} /> 
-                <label className="form-label">&deg;</label>
+                <div className="form-item">
+                  <label className="form-label">Asset Description:</label>
+                  <textarea required className="form-textarea" value={assetDescription}
+                    onChange={(e) => setAssetDescription(e.target.value)} />
+                </div>
+
+                <div className="form-item">
+                  <label className="form-label"> Asset Declination: </label> 
+                  <input className="form-smallinput" type="number" value={declination} required
+                    min = '0' max = '90' onChange={(e) => setDeclination(e.target.value)} /> 
+                  <label className="form-context">&deg;</label>
+                </div>
  
-                <label className="form-label"> Azimuth: </label> 
- 
-                <input className="form-smallinput" type="number" value={azimuth} required
-                  min = '-180' max = '180' onChange={(e) => setAzimuth(e.target.value)} /> 
-                <label className="form-label">&deg;</label>
+                <div className="form-item">
+                  <label className="form-label"> Asset Azimuth: </label> 
+                  <input className="form-smallinput" type="number" value={azimuth} required
+                    min = '-180' max = '180' onChange={(e) => setAzimuth(e.target.value)} /> 
+                  <label className="form-context">&deg;</label>
+                </div>
 
-                <label className="form-label"> Modules Power: </label> 
-                <input className="form-smallinput" type="number" value={modules_power} required
-                min = '1' onChange={(e) => setModulesPower(e.target.value)} /> 
-                <label className="form-label"> kW </label>
+                <div className="form-item">
+                  <label className="form-label"> Asset Power: </label> 
+                  <input className="form-smallinput" type="number" value={modules_power} required
+                  min = '1' onChange={(e) => setModulesPower(e.target.value)} /> 
+                  <label className="form-context"> kW </label>
+                </div>
 
-
-                <button className="asset-button">Add Asset</button>
+                <button className="asset-button"> Create Generation Asset </button>
               </form>
             </TabPane>
 
             <TabPane key={3} tab='Add Flexible Asset'>
-              <form onSubmit = {handleFlexibleSubmit}>
-                <label className="form-label"> Asset Name: </label> 
-                <input required className="form-input" type="text" value={assetName} 
-                  onChange={(e) => setAssetName(e.target.value)} />
-                
-                <label className="form-label"> Asset Description: </label>
-                <textarea className="form-textarea" value={assetDescription} required
-                  onChange={(e) => setAssetDescription(e.target.value)} />
+              <form className="asset-form" onSubmit = {handleFlexibleSubmit}>
+                <div className="form-item">
+                  <label className="form-label"> Asset Name: </label> 
+                  <input required className="form-input" type="text" value={assetName} 
+                    onChange={(e) => setAssetName(e.target.value)} />
+                </div>
 
-                <label className="form-label">Start charge time: </label>
-                <Select labelInValue defaultValue={{ value: 0 }}
-                  style={{ width: 70 }} size = "large"
-                  onChange={onStartChargeTimeHrChange}>
-                    {[...Array(24).keys()].map(i => 
-                      <Option value={i}> {i < 10 ? "0" + i : i} </Option>
-                    )}
-                </Select>
-                <label className="form-label"> : </label>
-                <Select labelInValue defaultValue={{ value: 0 }}
-                  style={{ width: 70 }} size = "large"
-                  onChange={onStartChargeTimeMinChange}>
-                    {[...Array(60).keys()].map(i => 
-                      <Option value={i}> {i < 10 ? "0" + i : i} </Option>
-                    )}
-                </Select>
+                <div className="form-item">
+                  <label className="form-label"> Asset Description: </label>
+                  <textarea className="form-textarea" value={assetDescription} required
+                    onChange={(e) => setAssetDescription(e.target.value)} />
+                </div>
 
-                <label className="form-label">End charge time: </label>
-                <Select labelInValue defaultValue={{ value: 0 }}
-                  style={{ width: 70 }} size = "large"
-                  onChange={onEndChargeTimeHrChange}>
-                    {[...Array(24).keys()].map(i => 
-                      <Option value={i}> {i < 10 ? "0" + i : i} </Option>
-                    )}
-                </Select>
-        
-                <label className="form-label"> : </label>
-                <Select labelInValue defaultValue={{ value: 0 }}
-                  style={{ width: 70 }} size = "large"
-                  onChange={onEndChargeTimeMinChange}>
-                    {[...Array(60).keys()].map(i => 
-                      <Option value={i}> {i < 10 ? "0" + i : i} </Option>
-                    )}
-                </Select>
+                <div className="form-item">
+                  <label className="form-label"> Allowed Charging Start Time: </label>
+                  <Select labelInValue defaultValue={{ value: 0 }}
+                    style={{ width: 70 }} size = "large"
+                    onChange={onStartChargeTimeHrChange}>
+                      {[...Array(24).keys()].map(i => 
+                        <Option value={i}> {i < 10 ? "0" + i : i} </Option>
+                      )}
+                  </Select>
+                  <label className="form-context"> : </label>
+                  <Select labelInValue defaultValue={{ value: 0 }}
+                    style={{ width: 70 }} size = "large"
+                    onChange={onStartChargeTimeMinChange}>
+                      {[...Array(60).keys()].map(i => 
+                        <Option value={i}> {i < 10 ? "0" + i : i} </Option>
+                      )}
+                  </Select>
+                </div>
 
-                <button className="asset-button">Add Asset</button>
+                <div className="form-item">
+                  <label className="form-label"> Allowed Charging End Time: </label>
+                  <Select labelInValue defaultValue={{ value: 0 }}
+                    style={{ width: 70 }} size = "large"
+                    onChange={onEndChargeTimeHrChange}>
+                      {[...Array(24).keys()].map(i => 
+                        <Option value={i}> {i < 10 ? "0" + i : i} </Option>
+                      )}
+                  </Select>
+          
+                  <label className="form-context"> : </label>
+                  <Select labelInValue defaultValue={{ value: 0 }}
+                    style={{ width: 70 }} size = "large"
+                    onChange={onEndChargeTimeMinChange}>
+                      {[...Array(60).keys()].map(i => 
+                        <Option value={i}> {i < 10 ? "0" + i : i} </Option>
+                      )}
+                  </Select>
+                </div>
+
+                <button className="asset-button"> Create Flexible Asset </button>
               </form>
             </TabPane>
           </Tabs> 

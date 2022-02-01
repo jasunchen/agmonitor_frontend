@@ -54,7 +54,7 @@ function AssetComponent(props){
                 { props.asset['modules_power'] && 
                     <div className="asset-property">
                         <div className="property-left">
-                            Modules Power: 
+                            Asset Power: 
                         </div> 
                         <div className="property-right">
                             {props.asset['modules_power']} kW
