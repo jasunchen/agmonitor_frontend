@@ -42,9 +42,6 @@ class AuthenticationButton extends React.Component {
 
     const menu = (
       <Menu>
-        <Menu.Item><span onClick={() => {
-          this.props.history.push('/profile')
-        }}>Edit Profile</span></Menu.Item>
         <Menu.Item><span onClick={() =>
           logout({
             returnTo: window.location.origin,

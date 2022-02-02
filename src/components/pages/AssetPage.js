@@ -7,14 +7,14 @@ import AssetComponent from "./AssetComponent";
 import UserPreference from "./UserPreference";
 import {useHistory, Link } from 'react-router-dom';
 import { withAuth0 } from '@auth0/auth0-react';
-import './dashboard.css'
+import '../../css/Asset.css'
 import 'antd/dist/antd.css'
 
 
 
 
 
-function DashboardPage(props) {
+function AssetPage(props) {
    //const {data: assets } = useFetch('http://localhost:8000/getUserAsset')
 
    const [data, setData] = useState({
@@ -381,4 +381,4 @@ function DashboardPage(props) {
   );
 }
 
-export default  withAuth0(DashboardPage);
+export default  withAuth0(AssetPage);
