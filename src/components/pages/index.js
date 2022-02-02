@@ -1,11 +1,8 @@
 import AboutPage from "./AboutPage";
-import DashboardPage from "./DashboardPage";
+import AssetPage from "./AssetPage";
 import ErrorPage from "./ErrorPage";
-import ExploreDataPage from "./ExploreDataPage";
-import HomePage from "./HomePage";
-import ProfilePage from "./ProfilePage";
+import ExplorePage from "./ExplorePage";
+import SnapshotPage from "./SnapshotPage";
 import SpecificAssetPage from "./SpecificAssetPage";
-import UserPreference from "./UserPreference";
 
-
-export { AboutPage, DashboardPage, ErrorPage, ExploreDataPage, HomePage, ProfilePage, SpecificAssetPage, UserPreference };
+export { AboutPage, AssetPage, ErrorPage, ExplorePage, SnapshotPage, SpecificAssetPage };

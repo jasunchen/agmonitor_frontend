@@ -5,7 +5,7 @@ import Chart from "../utility/Chart";
 import DataGrid, {Row } from 'react-data-grid';
 import { withAuth0 } from '@auth0/auth0-react';
 
-function ExploreDataPage (props) {
+function ExplorePage (props) {
     const email = props.auth0.user.email;
     const dayDelta = 86400;
 
@@ -178,4 +178,4 @@ function ExploreDataPage (props) {
     );
 };
 
-export default withAuth0(ExploreDataPage);
+export default withAuth0(ExplorePage);

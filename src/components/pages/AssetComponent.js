@@ -18,7 +18,7 @@ function AssetComponent(props){
     }
 
   return (
-          <Link to={`/dashboard/${props.asset['id']}`}>
+          <Link to={`/asset/${props.asset['id']}`}>
               <div className="asset-component">
                 <div className="asset-name">
                     <div className="name-left">
@@ -54,7 +54,7 @@ function AssetComponent(props){
                 { props.asset['modules_power'] && 
                     <div className="asset-property">
                         <div className="property-left">
-                            Modules Power: 
+                            Asset Power: 
                         </div> 
                         <div className="property-right">
                             {props.asset['modules_power']} kW

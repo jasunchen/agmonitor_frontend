@@ -235,9 +235,9 @@ function SpecificAssetPage() {
 
 
         <form onSubmit={ ((data['type_of_asset'] == 'base') && handleNotGenerationChangeSubmit) || (data['type_of_asset'] == 'generation' && handleGenerationChangeSubmit) || (data['type_of_asset'] == 'flexible' && handleFlexibleChangeSubmit)}>
-            <label style={{fontSize: 30, fontWeight: "normal"}}>Change Asset Name:</label> 
+            <label className="form-label">Change Asset Name:</label> 
               <input
-                  style={{ width: 300, fontWeight:"normal"}}
+                  className="form-input"
                   type="text"
                   value={assetName}
                   required
@@ -245,7 +245,7 @@ function SpecificAssetPage() {
                   <br></br>
               <label style={{fontSize: 30, fontWeight:"normal"}}>Change Asset Description:</label>
               <textarea
-                  style={{ width: 644, fontWeight:"normal" }}
+                  className="form-textarea"
                   value={assetDescription}
                   required
                   onChange={(e) => setAssetDescription(e.target.value)}
@@ -257,34 +257,34 @@ function SpecificAssetPage() {
 {data['type_of_asset'] == 'generation' &&
  <div>
    <br></br>
-  <label style={{fontSize: 30, fontWeight: "normal"}}> Change Declination: </label> 
+  <label className="form-label"> Change Declination: </label> 
  
  <input
- style={{ width: 70, fontWeight:'normal' }}
+ className="form-smallinput"
  type="number"
  value={declination}
  required
  min = '0'
  max = '90'
- onChange={(e) => setDeclination(e.target.value)} /> <label style={{fontSize: 30, fontWeight: "normal"}}>&deg;</label>
+ onChange={(e) => setDeclination(e.target.value)} /> <label className="form-label">&deg;</label>
  
  <br></br>
  
-<label style={{fontSize: 30, fontWeight: "normal"}}> Change Azimuth: </label> 
+<label className="form-label"> Change Azimuth: </label> 
  
  <input
- style={{ width: 70, fontWeight:'normal' }}
+ className="form-smallinput"
  type="number"
  value={azimuth}
  required
  min = '-180'
  max = '180'
- onChange={(e) => setAzimuth(e.target.value)} /> <label style={{fontSize: 30, fontWeight: "normal"}}>&deg;</label>
+ onChange={(e) => setAzimuth(e.target.value)} /> <label className="form-label">&deg;</label>
  
  <br></br>
  
  
- <label style={{fontSize: 30, fontWeight: "normal"}}> Change Modules Power: </label> 
+ <label className="form-label"> Change Modules Power: </label> 
  
  <input
  style={{ width: 95, fontWeight:'normal' }}
@@ -300,7 +300,7 @@ function SpecificAssetPage() {
  { data['type_of_asset'] == 'flexible' && <div> 
  <div>
  <br></br>
-   <label style={{fontSize: 30, fontWeight: "normal"}}> Start Charge Time: </label>
+   <label className="form-label"> Start Charge Time: </label>
 {start_charge_time_min &&
  <Select
           labelInValue
@@ -308,34 +308,13 @@ function SpecificAssetPage() {
           style={{ width: 70 }}
           size="large"
           onChange={onStartChargeTimeHrChange}
-        >
-          <Option value= {0} > 00 </Option>
-          <Option value= {1} > 01 </Option>
-          <Option value= {2} > 02 </Option>
-          <Option value= {3} > 03 </Option>
-          <Option value= {4} > 04 </Option>
-          <Option value= {5} > 05 </Option>
-          <Option value= {6} > 06 </Option>
-          <Option value= {7} > 07 </Option>
-          <Option value= {8} > 08 </Option>
-          <Option value= {9} > 09 </Option>
-          <Option value= {10} > 10 </Option>
-          <Option value= {11} > 11 </Option>
-          <Option value= {12} > 12 </Option>
-          <Option value= {13} > 13 </Option>
-          <Option value= {14} > 14 </Option>
-          <Option value= {15} > 15 </Option>
-          <Option value= {16} > 16 </Option>
-          <Option value= {17} > 17 </Option>
-          <Option value= {18} > 18 </Option>
-          <Option value= {19} > 19 </Option>
-          <Option value= {20} > 20 </Option>
-          <Option value= {21} > 21 </Option>
-          <Option value= {22} > 22 </Option>
-          <Option value= {23} > 23 </Option>
+        >xs
+          {[...Array(24).keys()].map(i => 
+            <Option value={i}> {i < 10 ? "0" + i : i} </Option>
+          )}
         </Select>}
 
-          <label style={{fontSize: 30, fontWeight: "normal"}}> : </label>
+          <label className="form-context"> : </label>
         {start_charge_time_min &&
         <Select
           labelInValue
@@ -344,72 +323,15 @@ function SpecificAssetPage() {
           size="large"
           onChange={onStartChargeTimeMinChange}
         >
-          <Option value= {0} > 00 </Option>
-          <Option value= {1} > 01 </Option>
-          <Option value= {2} > 02 </Option>
-          <Option value= {3} > 03 </Option>
-          <Option value= {4} > 04 </Option>
-          <Option value= {5} > 05 </Option>
-          <Option value= {6} > 06 </Option>
-          <Option value= {7} > 07 </Option>
-          <Option value= {8} > 08 </Option>
-          <Option value= {9} > 09 </Option>
-          <Option value= {10} > 10 </Option>
-          <Option value= {11} > 11 </Option>
-          <Option value= {12} > 12 </Option>
-          <Option value= {13} > 13 </Option>
-          <Option value= {14} > 14 </Option>
-          <Option value= {15} > 15 </Option>
-          <Option value= {16} > 16 </Option>
-          <Option value= {17} > 17 </Option>
-          <Option value= {18} > 18 </Option>
-          <Option value= {19} > 19 </Option>
-          <Option value= {20} > 20 </Option>
-          <Option value= {21} > 21 </Option>
-          <Option value= {22} > 22 </Option>
-          <Option value= {23} > 23 </Option>
-          <Option value= {24} > 24 </Option>
-          <Option value= {25} > 25 </Option>
-          <Option value= {26} > 26 </Option>
-          <Option value= {27} > 27 </Option>
-          <Option value= {28} > 28 </Option>
-          <Option value= {29} > 29 </Option>
-          <Option value= {30} > 30 </Option>
-          <Option value= {31} > 31 </Option>
-          <Option value= {32} > 32 </Option>
-          <Option value= {33} > 33 </Option>
-          <Option value= {34} > 34 </Option>
-          <Option value= {35} > 35 </Option>
-          <Option value= {36} > 36 </Option>
-          <Option value= {37} > 37 </Option>
-          <Option value= {38} > 38 </Option>
-          <Option value= {39} > 39 </Option>
-          <Option value= {40} > 40 </Option>
-          <Option value= {41} > 41 </Option>
-          <Option value= {42} > 42 </Option>
-          <Option value= {43} > 43 </Option>
-          <Option value= {44} > 44 </Option>
-          <Option value= {45} > 45 </Option>
-          <Option value= {46} > 46 </Option>
-          <Option value= {47} > 47 </Option>
-          <Option value= {48} > 48 </Option>
-          <Option value= {49} > 49 </Option>
-          <Option value= {50} > 50 </Option>
-          <Option value= {51} > 51 </Option>
-          <Option value= {52} > 52 </Option>
-          <Option value= {53} > 53 </Option>
-          <Option value= {54} > 54 </Option>
-          <Option value= {55} > 55 </Option>
-          <Option value= {56} > 56 </Option>
-          <Option value= {57} > 57 </Option>
-          <Option value= {58} > 58 </Option>
-          <Option value= {59} > 59 </Option>
+          {[...Array(60).keys()].map(i => 
+            <Option value={i}> {i < 10 ? "0" + i : i} </Option>
+          )}
         </Select>
 }
   </div>
   <br></br>
   <div>
-  <label style={{fontSize: 30, fontWeight: "normal"}}>End charge time: </label>
+  <label className="form-label">End charge time: </label>
   {end_charge_time_hr &&
         <Select
           labelInValue
@@ -418,34 +340,13 @@ function SpecificAssetPage() {
           size="large"
           onChange={onEndChargeTimeHrChange}
         >
-          <Option value= {0} > 00 </Option>
-          <Option value= {1} > 01 </Option>
-          <Option value= {2} > 02 </Option>
-          <Option value= {3} > 03 </Option>
-          <Option value= {4} > 04 </Option>
-          <Option value= {5} > 05 </Option>
-          <Option value= {6} > 06 </Option>
-          <Option value= {7} > 07 </Option>
-          <Option value= {8} > 08 </Option>
-          <Option value= {9} > 09 </Option>
-          <Option value= {10} > 10 </Option>
-          <Option value= {11} > 11 </Option>
-          <Option value= {12} > 12 </Option>
-          <Option value= {13} > 13 </Option>
-          <Option value= {14} > 14 </Option>
-          <Option value= {15} > 15 </Option>
-          <Option value= {16} > 16 </Option>
-          <Option value= {17} > 17 </Option>
-          <Option value= {18} > 18 </Option>
-          <Option value= {19} > 19 </Option>
-          <Option value= {20} > 20 </Option>
-          <Option value= {21} > 21 </Option>
-          <Option value= {22} > 22 </Option>
-          <Option value= {23} > 23 </Option>
+          {[...Array(24).keys()].map(i => 
+            <Option value={i}> {i < 10 ? "0" + i : i} </Option>
+          )}
         </Select>
 }
         
-          <label style={{fontSize: 30, fontWeight: "normal"}}> : </label>
+          <label className="form-context"> : </label>
 {end_charge_time_min &&
         <Select
           labelInValue
@@ -454,66 +355,9 @@ function SpecificAssetPage() {
           size="large"
           onChange={onEndChargeTimeMinChange}
         >
-          <Option value= {0} > 00 </Option>
-          <Option value= {1} > 01 </Option>
-          <Option value= {2} > 02 </Option>
-          <Option value= {3} > 03 </Option>
-          <Option value= {4} > 04 </Option>
-          <Option value= {5} > 05 </Option>
-          <Option value= {6} > 06 </Option>
-          <Option value= {7} > 07 </Option>
-          <Option value= {8} > 08 </Option>
-          <Option value= {9} > 09 </Option>
-          <Option value= {10} > 10 </Option>
-          <Option value= {11} > 11 </Option>
-          <Option value= {12} > 12 </Option>
-          <Option value= {13} > 13 </Option>
-          <Option value= {14} > 14 </Option>
-          <Option value= {15} > 15 </Option>
-          <Option value= {16} > 16 </Option>
-          <Option value= {17} > 17 </Option>
-          <Option value= {18} > 18 </Option>
-          <Option value= {19} > 19 </Option>
-          <Option value= {20} > 20 </Option>
-          <Option value= {21} > 21 </Option>
-          <Option value= {22} > 22 </Option>
-          <Option value= {23} > 23 </Option>
-          <Option value= {24} > 24 </Option>
-          <Option value= {25} > 25 </Option>
-          <Option value= {26} > 26 </Option>
-          <Option value= {27} > 27 </Option>
-          <Option value= {28} > 28 </Option>
-          <Option value= {29} > 29 </Option>
-          <Option value= {30} > 30 </Option>
-          <Option value= {31} > 31 </Option>
-          <Option value= {32} > 32 </Option>
-          <Option value= {33} > 33 </Option>
-          <Option value= {34} > 34 </Option>
-          <Option value= {35} > 35 </Option>
-          <Option value= {36} > 36 </Option>
-          <Option value= {37} > 37 </Option>
-          <Option value= {38} > 38 </Option>
-          <Option value= {39} > 39 </Option>
-          <Option value= {40} > 40 </Option>
-          <Option value= {41} > 41 </Option>
-          <Option value= {42} > 42 </Option>
-          <Option value= {43} > 43 </Option>
-          <Option value= {44} > 44 </Option>
-          <Option value= {45} > 45 </Option>
-          <Option value= {46} > 46 </Option>
-          <Option value= {47} > 47 </Option>
-          <Option value= {48} > 48 </Option>
-          <Option value= {49} > 49 </Option>
-          <Option value= {50} > 50 </Option>
-          <Option value= {51} > 51 </Option>
-          <Option value= {52} > 52 </Option>
-          <Option value= {53} > 53 </Option>
-          <Option value= {54} > 54 </Option>
-          <Option value= {55} > 55 </Option>
-          <Option value= {56} > 56 </Option>
-          <Option value= {57} > 57 </Option>
-          <Option value= {58} > 58 </Option>
-          <Option value= {59} > 59 </Option>
+          {[...Array(60).keys()].map(i => 
+            <Option value={i}> {i < 10 ? "0" + i : i} </Option>
+          )}
         </Select>
 }
         </div> 

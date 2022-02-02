@@ -1,0 +1,183 @@
+.header {
+  cursor: pointer;
+  border-top: 0.5px solid #bbbbbb;
+  padding: center;
+  font-size: 24px;
+  color: #222;
+  font-weight: bold;
+  margin: center;
+}
+
+.header:hover {
+  background-color: rgba(24, 207, 146, 0.2);
+}
+
+.content {
+  padding: 15px;
+  font-size: 30px;
+  padding-bottom: 50px;
+}
+
+
+.ant-tabs {
+  width: 80vw;
+  margin: 0 auto;
+}
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.asset-component {
+  display: inline-block;
+  vertical-align: top;
+  margin: 20px 2.5%;
+  padding: 10px;
+  width: 45%;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+}
+
+.asset-name {
+  margin: 0 0 0 0;
+}
+
+.name-left {
+  display: inline-block;
+  width: calc(100% - 120px);
+  text-align: left;
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.name-right {
+  display: inline-block;
+  width: 120px;
+  text-align: right;
+  font-size: 24px;
+  font-weight: 400;
+  font-variant: all-small-caps;
+}
+
+.asset-description {
+  text-align: justify;
+  margin: 5px 10px 10px 10px;
+  font-size: 16px;
+}
+
+.asset-property {
+  margin: 0px 10px 0 10px;
+}
+
+.property-left {
+  display: inline-block;
+  width: calc(100% - 80px);
+  text-align: left;
+  font-weight: 200;
+  font-size: 18px;
+}
+
+.property-right {
+  display: inline-block;
+  width: 80px;
+  text-align: right;
+  font-weight: 300;
+  font-size: 18px;
+}
+
+.form-item {
+  width: 100%;
+  margin: 10px 0;
+}
+
+.form-label {
+  display: inline-block;
+  vertical-align: top;
+  font-size: 20px;
+  font-weight: 300;
+  width: 220px;
+}
+
+
+.form-context {
+  display: inline-block;
+  vertical-align: top;
+  font-size: 20px;
+  font-weight: 300;
+  margin: 0 2px;
+}
+
+.form-input {
+  display: inline-block;
+  font-size: 20px;
+  border-radius: 5px;
+  border: 1px solid grey;
+  width: calc(100% - 220px);
+  max-width: 400px;
+  min-width: 100px;
+}
+
+
+.form-smallinput {
+  display: inline-block;
+  width: 70px;
+  font-size: 20px;
+  border-radius: 5px;
+  border: 1px solid grey;
+  margin: 0 2px 0 0;
+}
+
+.form-textarea {
+  display: inline-block;
+  font-size: 20px;
+  border-radius: 5px;
+  width: calc(100% - 220px);
+  border: 1px solid grey;
+  max-width: 400px;
+  min-width: 100px;
+}
+
+.asset-button {
+  background: none;
+  border: 1.5px solid black;
+  border-radius: 5px;
+  cursor: pointer;
+  font-variant: all-small-caps;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 1;
+  padding: 5px 0 13px 0;
+  width: 100%;
+  max-width: 620px;
+  min-width: 100px;
+  margin: 10px 0 0 0;
+}
+
+.asset-button:hover {
+  background: #FFDE7D;
+  text-decoration: none;
+}
+
+.ant-tabs-tab-btn {
+  font-variant: all-small-caps !important;
+  font-size: 30px;
+  font-weight: 400;
+}
+
+.asset-form {
+  margin: 0 0 50px 0;
+}
+
+.ant-select-selector {
+  display: inline-block;
+  width: 70px !important;
+  border-radius: 5px !important;
+  border: 1px solid grey !important;
+}
+
+.ant-slider {
+  display: inline-block !important;
+  width: calc(100% - 220px);
+  max-width: 400px;
+  min-width: 100px;
+}
