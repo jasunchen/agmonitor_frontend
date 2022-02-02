@@ -1,14 +1,14 @@
-// HomePage.js
+// SnapshotPage.js
 // Engineer: Alex Mei
 
 import React, { useState, useEffect } from 'react';
 
 import Chart from "../utility/Chart";
-import "../../css/Home.css";
+import "../../css/Snapshot.css";
 import { withAuth0 } from '@auth0/auth0-react';
 import DataGrid, {Row } from 'react-data-grid';
 
-function HomePage (props) {
+function SnapshotPage (props) {
     const [explanationState, setExplanationState] = useState({
         "charge" : false,
         "threshold" : false,
@@ -27,7 +27,6 @@ function HomePage (props) {
             "threshold" : !explanationState["threshold"]
         });
     }
-    
 
     let email = props.auth0.user.email;
 
@@ -391,4 +390,4 @@ function HomePage (props) {
     );
 };
 
-export default withAuth0(HomePage);
+export default withAuth0(SnapshotPage);

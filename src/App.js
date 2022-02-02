@@ -1,12 +1,12 @@
 // App.js
 // Modified by: Alex Mei
 import React, { useState, useEffect } from 'react';
-import { Switch , Route } from 'react-router-dom';
+import { Switch , Route, Redirect } from 'react-router-dom';
 import { withAuth0 } from "@auth0/auth0-react";
 import './App.css';
 import "./css/Base.css";
 import axios from 'axios';
-import {HomePage, ErrorPage, AboutPage, ExploreDataPage, ProfilePage, DashboardPage, SpecificAssetPage, UserPreference} from './components/pages';
+import {SnapshotPage, ErrorPage, AboutPage, ExplorePage, AssetPage, SpecificAssetPage} from './components/pages';
 import ProtectedRoute from './auth/protected-route';
 import Navbar from './components/shared/Navbar';
 import Footer from './components/shared/Footer';
@@ -24,16 +24,17 @@ class App extends React.Component {
       <main>
           <Navbar />
           <Switch>
-            <Route path="/" exact component = {AboutPage}/>
+            <Route exact path="/">
+              {this.props.auth0.user ? <Redirect to="/snapshot" /> : <AboutPage />}
+            </Route>
+            <Route exact path="/home">
+              <Redirect to="/snapshot" />
+            </Route>
             <Route path="/about" exact component = {AboutPage}/>
-            <ProtectedRoute path="/home" exact component = {HomePage}/>
-            <ProtectedRoute path="/profile" exact component = {ProfilePage}/>
-            <ProtectedRoute path="/dashboard" exact component = {DashboardPage}/>
-            <ProtectedRoute path="/explore_data" exact component = {ExploreDataPage}/>
-            <Route path="/dashboard/:id"  component = {SpecificAssetPage} />
-            {/*<Route path="/userPreference" component = {UserPreference} />*/}
-
-
+            <ProtectedRoute path="/snapshot" exact component = {SnapshotPage}/>
+            <ProtectedRoute path="/asset" exact component = {AssetPage}/>
+            <ProtectedRoute path="/explore" exact component = {ExplorePage}/>
+            <Route path="/asset/:id"  component = {SpecificAssetPage} />
             <Route path="/error" exact component = {ErrorPage}/>
           </Switch>
           <Footer />
