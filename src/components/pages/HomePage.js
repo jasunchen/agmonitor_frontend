@@ -229,48 +229,23 @@ function HomePage (props) {
                 <h1> Recommendations </h1>
                 
                 <div>
-                    <div className="home-card" onClick={chargeExplanationClick}>
-                        { explanationState["charge"] ? 
-                            <div className="explanation-chart">
-                                <Chart
-                                    title="Energy Predictions"
-                                    series={[
-                                        {
-                                            name: 'Solar Generation',
-                                            data: state["dayProduced"],
-                                            color: "#00B8A9"
-                                        },
-                                        {
-                                            name: 'Base Load Usage',
-                                            data: state["dayConsumed"],
-                                            color: "#F6416C"
-                                        },
-                                        {
-                                            name: 'Utility Usage',
-                                            data: state["dayProduced"],
-                                            color: "#FFDE7D"
-                                        },
-                                    ]}
-                                />
-                            </div>
-                        :
-                            <div className="snapshot-headers"> 
-                                Today, the optimal charging times are
-                                    <span className="snapshot-head"> 
-                                        &nbsp;11 AM, 2 PM, 10 PM
-                                    </span> 
-                                . 
-                            </div>
-                        }
-                    </div>
 
-                    <div className="home-card" onClick={thresholdExplanationClick}>
+                <div className="home-card" onClick={thresholdExplanationClick}>
                     { explanationState["threshold"] ?
                         <div>
                             <div>
                                 We base our recommendation on the following: 
                             </div>
 
+                            <div>
+                                <div className="recommendation-type">
+                                    Your predicted energy usage:
+                                </div>
+                                <li className="threshold-reason"> 
+                                    <span className="threshold-label"> Predicted Net Usage: </span> 
+                                        65 kWH
+                                </li>
+                            </div>
                             <div>
                                 <div className="recommendation-type">
                                     Your configured preferences:
@@ -328,6 +303,42 @@ function HomePage (props) {
                         </div>
                     }
                     </div>
+
+                    <div className="home-card" onClick={chargeExplanationClick}>
+                        { explanationState["charge"] ? 
+                            <div className="explanation-chart">
+                                <Chart
+                                    title="Energy Predictions"
+                                    series={[
+                                        {
+                                            name: 'Solar Generation',
+                                            data: state["dayProduced"],
+                                            color: "#00B8A9"
+                                        },
+                                        {
+                                            name: 'Base Load Usage',
+                                            data: state["dayConsumed"],
+                                            color: "#F6416C"
+                                        },
+                                        {
+                                            name: 'Utility Usage',
+                                            data: state["dayProduced"],
+                                            color: "#FFDE7D"
+                                        },
+                                    ]}
+                                />
+                            </div>
+                        :
+                            <div className="snapshot-headers"> 
+                                Today, the optimal charging times are
+                                    <span className="snapshot-head"> 
+                                        &nbsp;11 AM, 2 PM, 10 PM
+                                    </span> 
+                                . 
+                            </div>
+                        }
+                    </div>
+
                 </div>
             </div>
 
