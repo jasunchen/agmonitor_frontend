@@ -7,7 +7,7 @@
 .explanation-chart {
     float: left;
     width: 90%;
-    margin: 0 5%;
+    margin: 10px 5%;
   }
 
 .row {
@@ -16,8 +16,7 @@
 
 .snapshot-headers {
   text-align: center;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin: 20px 0 5px 0;
   font-size: 40px !important;
   font-weight: 500;
   font-variant: all-small-caps;
@@ -44,16 +43,18 @@
 }
 
 .threshold-reason {
-  font-size: 16px;
+  font-size: 18px;
+  font-weight: 300;
 }
 
 .threshold-label {
-  font-weight: 300;
-  font-size: 16px;
+  font-weight: 400;
+  font-size: 18px;
 }
 
 .threshold-span {
-  font-size: 16px;
+  font-size: 18px;
+  font-weight: 300;
 }
 
 .home-card {
@@ -68,8 +69,19 @@
   cursor: pointer;
 }
 
+
+.recommendation-text {
+  font-weight: 300;
+  margin: 10px 0 0 0;
+}
+
 .recommendation-type {
   font-variant: all-small-caps;
-  font-weight: 400;
-  font-size: 25px !important; 
+  font-weight: 500;
+  font-size: 28px !important; 
+}
+
+.click-icon {
+  width: 25px;
+  float: right;
 }

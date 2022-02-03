@@ -8,10 +8,7 @@ class LoginButton extends React.Component {
     const { loginWithRedirect } = this.props.auth0;
 
     return (
-      <button
-        className="btn btn-primary btn-block nav-button"
-        onClick={() => loginWithRedirect()}
-      >
+      <button className="nav-button" onClick={() => loginWithRedirect()}>
         Log In
       </button>
     );
