@@ -121,6 +121,27 @@ function UserPreference(props) {
       <form onSubmit={handleUserPreferenceChange}>
       
         <div className="form-item">
+          <label className="form-label"> Phone Number: </label>
+          <PhoneInput 
+            className='form-smallinput'
+            country={'us'}
+            value={phoneNumber}
+            onChange={setPhoneNumber}
+            placeholder='enter phone number'
+          />
+        </div>
+
+        <div className="form-item">
+          <label className="form-label"> Battery Size: </label>
+          <input className="form-smallinput" 
+                 type="number" 
+                 required min = '1' 
+                 value={battery_size}
+                 onInput={(e) => setBatterySize(e.target.value)}/>
+          <label className="form-context"> kWH </label>
+        </div>
+
+        <div className="form-item">
           <label className="form-label"> Acceptable Battery Threshold: </label>
           <Slider
             range={true}
@@ -136,18 +157,7 @@ function UserPreference(props) {
         </div>
 
         <div className="form-item">
-          <label className="form-label"> Battery Size: </label>
-          <input className="form-smallinput" 
-                 type="number" 
-                 required min = '1' 
-                 value={battery_size}
-                 onInput={(e) => setBatterySize(e.target.value)}/>
-          <label className="form-context"> kWH </label>
-        </div>
-        
-
-        <div className="form-item">
-          <label className="form-label">Set hours of power to: </label>
+          <label className="form-label"> Hours of Backup Power: </label>
           <Slider
             marks = {sliderMarks}
             min={0}
@@ -157,9 +167,8 @@ function UserPreference(props) {
             <label className = "form-context2">   {hours_of_power} </label>
         </div>
       
-        
         <div className="form-item">
-          <label className="form-label">Set cost or shutoff to: </label>
+          <label className="form-label"> Cost versus Risk Tolerance: </label>
           <Slider
             marks = {sliderMarks}
             min={0}
@@ -169,67 +178,51 @@ function UserPreference(props) {
             
             <label className = "form-context2">   {cost_or_shutoff} </label>
         </div>
-        
 
         <div className="form-item">
-          <label className="form-label">Current Phone number: </label>
-          <PhoneInput 
-          className='form-smallinput'
-          country={'us'}
-          value={phoneNumber}
-          onChange={setPhoneNumber}
-          placeholder='enter phone number'
-        />
-          
+          <label className='form-label'> Current Address: </label>
+          <div className="form-address-label"> {currentAddress} </div>
         </div>
-          
-        <br></br>
+          <PlacesAutocomplete
+            value={address}
+            onChange={setAddress}
+            onSelect={handleSelect}
+          >
+            {({getInputProps, suggestions, getSuggestionItemProps, loading}) => (
+              <div>
+                <input
+                  {...getInputProps({
+                    placeholder: "Change your address here...",
+                    className: 'location-search-input form-address-input'
+                  })}
+                />
+                <div className="autocomplete-dropdown-container">
+                  {loading && <div>Loading...</div>}
+                  {suggestions.map(suggestion => {
+                    const className = suggestion.active
+                      ? 'suggestion-item--active'
+                      : 'suggestion-item';
+                    // inline style for demonstration purpose
+                    const style = suggestion.active
+                      ? {backgroundColor: '#7393B3', cursor: 'pointer'}
+                      : {backgroundColor: '#ffffff', cursor: 'pointer'};
+                    return (
+                      <div
+                        {...getSuggestionItemProps(suggestion, {
+                          className,
+                          style,
+                        })}
+                      >
+                        <span>{suggestion.description}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </PlacesAutocomplete>
 
-      <label className='form-address-label'> Current Address: {currentAddress}</label>
-      <PlacesAutocomplete
-        value={address}
-        onChange={setAddress}
-        onSelect={handleSelect}
-        
-      >
-        {({getInputProps, suggestions, getSuggestionItemProps, loading}) => (
-          <div>
-            <input
-            className = 'form-input'
-              {...getInputProps({
-                placeholder: "Change your address here...",
-                className: 'location-search-input form-input'
-              })}
-            />
-            <div className="autocomplete-dropdown-container">
-              {loading && <div>Loading...</div>}
-              {suggestions.map(suggestion => {
-                const className = suggestion.active
-                  ? 'suggestion-item--active'
-                  : 'suggestion-item';
-                // inline style for demonstration purpose
-                const style = suggestion.active
-                  ? {backgroundColor: '#7393B3', cursor: 'pointer'}
-                  : {backgroundColor: '#ffffff', cursor: 'pointer'};
-                return (
-                  <div
-                    {...getSuggestionItemProps(suggestion, {
-                      className,
-                      style,
-                    })}
-                  >
-                    <span>{suggestion.description}</span>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        )}
-      </PlacesAutocomplete>
-
-      <br></br>
-
-        <button className="asset-button"> Update Preferences</button>
+        <button className="asset-button"> Update Preferences </button>
       </form>
       
 

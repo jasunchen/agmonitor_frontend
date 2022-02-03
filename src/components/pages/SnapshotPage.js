@@ -2,6 +2,7 @@
 // Engineer: Alex Mei
 
 import React, { useState, useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
 
 import Chart from "../utility/Chart";
 import "../../css/Snapshot.css";
@@ -31,7 +32,7 @@ function SnapshotPage (props) {
     let email = props.auth0.user.email;
 
     // TODO: configure time
-    const currentTime = 1635724800;
+    const currentTime = 1621036800;
     const dayDelta = 86400;
     const hourDelta = 3600;
 
@@ -48,6 +49,7 @@ function SnapshotPage (props) {
 
     // TODO
     const [userInfo, setUserInfo] = useState({
+        "exists": true,
         "pred_solar_generation" : 100,
         "pred_opt_threshold" : 100,
         "pred_should_charge" : false,
@@ -77,17 +79,24 @@ function SnapshotPage (props) {
         })
         .then(response => response.json()) 
         .then(data => {
-            console.log(data);
-            setUserInfo({
-                ...userInfo,
-                "pred_solar_generation" : data["pred_solar_generation"],
-                "pred_opt_threshold" : data["pred_opt_threshold"],
-                "pred_should_charge" : data["should_charge"],
-                "hours_of_power" : data["hours_of_power"],
-                "cost_or_shutoff" : data["cost_or_shutoff"],
-                "low_limit" : data["low_limit"],
-                "max_limit" : data["max_limit"],
-            })
+            if (!data["max_limit"]) {
+                setUserInfo({
+                    ...userInfo,
+                    "exists" : false
+                })
+            }
+            else {
+                setUserInfo({
+                    ...userInfo,
+                    "pred_solar_generation" : data["pred_solar_generation"],
+                    "pred_opt_threshold" : data["pred_opt_threshold"],
+                    "pred_should_charge" : data["should_charge"],
+                    "hours_of_power" : data["hours_of_power"],
+                    "cost_or_shutoff" : data["cost_or_shutoff"],
+                    "low_limit" : data["low_limit"],
+                    "max_limit" : data["max_limit"],
+                })
+            }
         })
         .catch((error) => console.log("Error: " + error))
 
@@ -210,12 +219,8 @@ function SnapshotPage (props) {
         )
     }
 
-    if(!state["hasAsset"]){
-        return (
-            <div className="overlay"> 
-                <h1> An error has occurred! Did you create an asset yet? </h1>
-            </div>
-        )
+    if(!userInfo["exists"] || !state["hasAsset"]){
+        return <Redirect to="/asset" />
     }
 
     const columns = [
@@ -230,9 +235,11 @@ function SnapshotPage (props) {
                 <div>
 
                 <div className="home-card" onClick={thresholdExplanationClick}>
+                    <img className="click-icon" src="/click-icon.png" alt="" />
+
                     { explanationState["threshold"] ?
                         <div>
-                            <div>
+                            <div className="recommendation-text">
                                 We base our recommendation on the following: 
                             </div>
 
@@ -304,6 +311,8 @@ function SnapshotPage (props) {
                     </div>
 
                     <div className="home-card" onClick={chargeExplanationClick}>
+                        <img className="click-icon" src="/click-icon.png" alt="" />
+
                         { explanationState["charge"] ? 
                             <div className="explanation-chart">
                                 <Chart

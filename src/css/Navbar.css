@@ -32,7 +32,20 @@
 }
 
 .nav-button {
-  margin: 18px 0;
+  margin: 15px 0;
+  background: none;
+  border-radius: 5px;
+  border: 1.5px solid black;
+  font-variant: all-small-caps;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 1;
+  padding: 0 8px 8px 8px;
+  cursor: pointer;
+}
+
+.nav-button:hover {
+  background: #FFDE7D;
 }
 
 .dropdown-content {

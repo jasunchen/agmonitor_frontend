@@ -234,7 +234,7 @@ function AssetPage(props) {
         <TabPane key="1" tab="View Assets">
           { data['base'].length + data['flexible'].length + data['generation'].length == 0 &&
             <div>
-              You have not created any assets yet!
+              You have not created any assets yet! You must setup your assets for this application to be functional.
             </div>
           }
           {data['base'].map(asset => (
