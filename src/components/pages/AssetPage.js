@@ -188,13 +188,7 @@ function AssetPage(props) {
       setChecked2(!checked2);
       setChecked(false);
     };
-  // const onTabClick = (key) => {
-  //   if (key == 3) {
-  //     props.history.push('/userPreference')
-  //   }
-  // }
 
-  //////////////////////////////////
 
  
   const onStartChargeTimeHrChange = value => {
@@ -332,7 +326,7 @@ function AssetPage(props) {
 
                 <div className="form-item">
                   <label className="form-label"> Allowed Charging Start Time: </label>
-                  <Select labelInValue defaultValue={{ value: 0 }}
+                  <Select labelInValue 
                     style={{ width: 70 }} size = "large"
                     onChange={onStartChargeTimeHrChange}>
                       {[...Array(24).keys()].map(i => 
@@ -340,7 +334,7 @@ function AssetPage(props) {
                       )}
                   </Select>
                   <label className="form-context"> : </label>
-                  <Select labelInValue defaultValue={{ value: 0 }}
+                  <Select labelInValue 
                     style={{ width: 70 }} size = "large"
                     onChange={onStartChargeTimeMinChange}>
                       {[...Array(60).keys()].map(i => 
@@ -351,7 +345,7 @@ function AssetPage(props) {
 
                 <div className="form-item">
                   <label className="form-label"> Allowed Charging End Time: </label>
-                  <Select labelInValue defaultValue={{ value: 0 }}
+                  <Select labelInValue 
                     style={{ width: 70 }} size = "large"
                     onChange={onEndChargeTimeHrChange}>
                       {[...Array(24).keys()].map(i => 
@@ -360,7 +354,7 @@ function AssetPage(props) {
                   </Select>
           
                   <label className="form-context"> : </label>
-                  <Select labelInValue defaultValue={{ value: 0 }}
+                  <Select labelInValue 
                     style={{ width: 70 }} size = "large"
                     onChange={onEndChargeTimeMinChange}>
                       {[...Array(60).keys()].map(i => 
