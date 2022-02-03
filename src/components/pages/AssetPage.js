@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 
-import {Tabs,Form, Dropdown, Button, Slider, TimePicker, Select} from 'antd';
+import {Tabs, Select} from 'antd';
 
 import AssetsList from "./AssetsList";
 import AssetComponent from "./AssetComponent";
@@ -288,7 +288,9 @@ function AssetPage(props) {
                   <textarea required className="form-textarea" value={assetDescription}
                     onChange={(e) => setAssetDescription(e.target.value)} />
                 </div>
-
+                <label className="form-label2">
+                      See solar panel document for information below:
+                 </label>
                 <div className="form-item">
                   <label className="form-label"> Asset Declination: </label> 
                   <input className="form-smallinput" type="number" value={declination} required

@@ -204,37 +204,15 @@ function SpecificAssetPage() {
   return (
     <div className="overlay">
     
-    {data['type_of_asset'] == 'flexible' &&
+    {data['type_of_asset'] == 'base' &&
     <div>
     
     <div style={{fontWeight: "bold", color: "#E5C922", fontSize: 60}}> 
           {data['asset_name']}
     </div>
-    </div>
-    }
 
-    {data['type_of_asset'] == 'base' &&
-    <div>
-    
-    <div style={{fontWeight: "bold", color: "#F6416C", fontSize: 60}}> 
-          {data['asset_name']}
-    </div>
-    </div>
-    }
-
-    {data['type_of_asset'] == 'generation' &&
-    <div>
-    
-    <div style={{fontWeight: "bold", color: "#00B8A9", fontSize: 60}}> 
-          {data['asset_name']}
-    </div>
-    </div>
-    }
-
-    
-
-
-        <form onSubmit={ ((data['type_of_asset'] == 'base') && handleNotGenerationChangeSubmit) || (data['type_of_asset'] == 'generation' && handleGenerationChangeSubmit) || (data['type_of_asset'] == 'flexible' && handleFlexibleChangeSubmit)}>
+    <form className="asset-form" onSubmit={handleNotGenerationChangeSubmit}>
+          <div className="form-item"> 
             <label className="form-label">Change Asset Name:</label> 
               <input
                   className="form-input"
@@ -242,21 +220,57 @@ function SpecificAssetPage() {
                   value={assetName}
                   required
                   onChange={(e) => setAssetName(e.target.value)} />
+          </div>
                   <br></br>
-              <label style={{fontSize: 30, fontWeight:"normal"}}>Change Asset Description:</label>
+          <div className="form-item">
+              <label className="form-label">Change Asset Description:</label>
               <textarea
-                  className="form-textarea"
+                  className="form-input"
                   value={assetDescription}
                   required
                   onChange={(e) => setAssetDescription(e.target.value)}
               ></textarea>
-              
-              
-              
+          </div>
+
+          <button className='asset-button'>Submit</button>
+    </form>
+
+    </div>
+    }
+
+
 
 {data['type_of_asset'] == 'generation' &&
- <div>
-   <br></br>
+    <div>
+    
+    <div style={{fontWeight: "bold", color: "#E5C922", fontSize: 60}}> 
+          {data['asset_name']}
+    </div>
+
+    <form className="asset-form" onSubmit={ handleGenerationChangeSubmit }>
+          <div className="form-item"> 
+            <label className="form-label">Change Asset Name:</label> 
+              <input
+                  className="form-input"
+                  type="text"
+                  value={assetName}
+                  required
+                  onChange={(e) => setAssetName(e.target.value)} />
+          </div>
+                  
+          <div className="form-item">
+              <label className="form-label">Change Asset Description:</label>
+              <textarea
+                  className="form-input"
+                  value={assetDescription}
+                  required
+                  onChange={(e) => setAssetDescription(e.target.value)}
+              ></textarea>
+          </div>
+          <label className="form-label2">
+              See solar panel document for information below:
+          </label>
+          <div className = 'form-item'>
   <label className="form-label"> Change Declination: </label> 
  
  <input
@@ -267,11 +281,12 @@ function SpecificAssetPage() {
  min = '0'
  max = '90'
  onChange={(e) => setDeclination(e.target.value)} /> <label className="form-label">&deg;</label>
+ </div>
  
- <br></br>
  
+
+<div className = 'form-item'>
 <label className="form-label"> Change Azimuth: </label> 
- 
  <input
  className="form-smallinput"
  type="number"
@@ -280,95 +295,154 @@ function SpecificAssetPage() {
  min = '-180'
  max = '180'
  onChange={(e) => setAzimuth(e.target.value)} /> <label className="form-label">&deg;</label>
+</div>
+
  
- <br></br>
- 
- 
+ <div className = 'form-item'>
  <label className="form-label"> Change Modules Power: </label> 
  
  <input
- style={{ width: 95, fontWeight:'normal' }}
+ className='form-smallinput'
  type="number"
  value={modules_power}
  required
  min = '1'
- onChange={(e) => setModulesPower(e.target.value)} /> <label style={{fontSize: 25, fontWeight: "normal"}}>kW</label>
+ onChange={(e) => setModulesPower(e.target.value)} /> 
+ <label className="form-context"> kW </label>
  </div>
-}
 
 
- { data['type_of_asset'] == 'flexible' && <div> 
- <div>
- <br></br>
-   <label className="form-label"> Start Charge Time: </label>
-{start_charge_time_min &&
- <Select
-          labelInValue
-          defaultValue={{ value: start_charge_time_hr }}
-          style={{ width: 70 }}
-          size="large"
-          onChange={onStartChargeTimeHrChange}
-        >xs
-          {[...Array(24).keys()].map(i => 
-            <Option value={i}> {i < 10 ? "0" + i : i} </Option>
-          )}
-        </Select>}
+ <button className='asset-button'>Submit</button>
 
-          <label className="form-context"> : </label>
-        {start_charge_time_min &&
-        <Select
-          labelInValue
-          defaultValue={{ value: start_charge_time_min }}
-          style={{ width: 70 }}
-          size="large"
-          onChange={onStartChargeTimeMinChange}
-        >
-          {[...Array(60).keys()].map(i => 
-            <Option value={i}> {i < 10 ? "0" + i : i} </Option>
-          )}
-        </Select>
-}
-  </div>
-  <br></br>
-  <div>
-  <label className="form-label">End charge time: </label>
-  {end_charge_time_hr &&
-        <Select
-          labelInValue
-          defaultValue={{ value: end_charge_time_hr }}
-          style={{ width: 70 }}
-          size="large"
-          onChange={onEndChargeTimeHrChange}
-        >
-          {[...Array(24).keys()].map(i => 
-            <Option value={i}> {i < 10 ? "0" + i : i} </Option>
-          )}
-        </Select>
-}
-        
-          <label className="form-context"> : </label>
-{end_charge_time_min &&
-        <Select
-          labelInValue
-          defaultValue={{ value: end_charge_time_min }}
-          style={{ width: 70 }}
-          size="large"
-          onChange={onEndChargeTimeMinChange}
-        >
-          {[...Array(60).keys()].map(i => 
-            <Option value={i}> {i < 10 ? "0" + i : i} </Option>
-          )}
-        </Select>
-}
-        </div> 
-        </div>}
-        <br></br>  
-              <button style={{ width: 70, fontWeight:"normal" }}>Submit</button>
-              
+ <button 
+      className = 'asset-delete-button'
+      onClick = {handleDelete}> 
+      Delete Asset
+  </button>
     </form>
 
-    <br></br>
-    <button onClick = {handleDelete} style={{ fontWeight:"normal", color: 'red' }}> Delete Asset</button>
+    </div>
+  }
+
+
+
+    
+{data['type_of_asset'] == 'flexible' &&
+    <div>
+    
+    <div style={{fontWeight: "bold", color: "#E5C922", fontSize: 60}}> 
+          {data['asset_name']}
+    </div>
+
+    <form className="asset-form" onSubmit={handleFlexibleChangeSubmit}>
+          <div className="form-item"> 
+            <label className="form-label">Change Asset Name:</label> 
+              <input
+                  className="form-input"
+                  type="text"
+                  value={assetName}
+                  required
+                  onChange={(e) => setAssetName(e.target.value)} />
+          </div>
+                  <br></br>
+          <div className="form-item">
+              <label className="form-label">Change Asset Description:</label>
+              <textarea
+                  className="form-input"
+                  value={assetDescription}
+                  required
+                  onChange={(e) => setAssetDescription(e.target.value)}
+              ></textarea>
+          </div>
+
+          <div className="form-item">
+ 
+
+ <label className="form-label"> Start Charge Time: </label>
+{start_charge_time_min &&
+<Select
+        labelInValue
+        defaultValue={{ value: start_charge_time_hr }}
+        style={{ width: 70 }}
+        size="large"
+        onChange={onStartChargeTimeHrChange}
+      >
+        {[...Array(24).keys()].map(i => 
+          <Option value={i}> {i < 10 ? "0" + i : i} </Option>
+        )}
+      </Select>}
+
+        <label className="form-context"> : </label>
+      {start_charge_time_min &&
+      <Select
+        labelInValue
+        defaultValue={{ value: start_charge_time_min }}
+        style={{ width: 70 }}
+        size="large"
+        onChange={onStartChargeTimeMinChange}
+      >
+        {[...Array(60).keys()].map(i => 
+          <Option value={i}> {i < 10 ? "0" + i : i} </Option>
+        )}
+      </Select>
+      }
+
+</div>
+<div className="form-item">
+<label className="form-label">End charge time: </label>
+{end_charge_time_hr &&
+      <Select
+        labelInValue
+        defaultValue={{ value: end_charge_time_hr }}
+        style={{ width: 70 }}
+        size="large"
+        onChange={onEndChargeTimeHrChange}
+      >
+        {[...Array(24).keys()].map(i => 
+          <Option value={i}> {i < 10 ? "0" + i : i} </Option>
+        )}
+      </Select>
+}
+      
+        <label className="form-context"> : </label>
+{end_charge_time_min &&
+      <Select
+        labelInValue
+        defaultValue={{ value: end_charge_time_min }}
+        style={{ width: 70 }}
+        size="large"
+        onChange={onEndChargeTimeMinChange}
+      >
+        {[...Array(60).keys()].map(i => 
+          <Option value={i}> {i < 10 ? "0" + i : i} </Option>
+        )}
+      </Select>
+}
+      </div>
+
+
+          <button className='asset-button'>Submit</button>
+
+          <button 
+      className = 'asset-delete-button'
+      onClick = {handleDelete}> 
+      Delete Asset
+    </button>
+
+    </form>
+
+    </div>
+  }
+
+        
+ 
+
+ 
+
+              
+    
+
+    
 
 
     </div>

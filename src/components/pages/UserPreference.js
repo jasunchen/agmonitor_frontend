@@ -1,8 +1,10 @@
 import {useHistory, Link} from 'react-router-dom';
 import React, {useState, useEffect} from "react";
-import PlacesAutocomplete, {geocodeByAddress, geocodeByPlaceId, getLatLng} from 'react-places-autocomplete';
+import PlacesAutocomplete, {geocodeByAddress, getLatLng} from 'react-places-autocomplete';
 import { Slider } from 'antd';
 import {withAuth0} from '@auth0/auth0-react';
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
 import './userPreference.css'
 
 function UserPreference(props) {
@@ -20,6 +22,7 @@ function UserPreference(props) {
   const [currentAddress, setCurrentAddress] = useState("");
   const [lat, setLat] = useState();
   const [long, setLong] = useState();
+  const [phoneNumber, setPhoneNumber] = useState();
 
 
   // configure server URL
@@ -47,6 +50,7 @@ function UserPreference(props) {
         setHoursOfPower(data['hours_of_power']);
         setLat(data['latitude']);
         setLong(data['longitude']);
+        setPhoneNumber(data['phone_number']);
         setLoading(false);
       })
       .catch((error) => console.log("Error: " + error));
@@ -71,7 +75,8 @@ function UserPreference(props) {
         "cost_or_shutoff": cost_or_shutoff,
         "hours_of_power": hours_of_power,
         "longitude": long,
-        "latitude": lat
+        "latitude": lat,
+        "phone_number": phoneNumber
       })
     })
       .then(response => response.json())
@@ -87,7 +92,7 @@ function UserPreference(props) {
 
     const results = await geocodeByAddress(value);
     const latlong = await getLatLng(results[0])
-    console.log(latlong)
+  
     // setAddress(value)
     setLat(latlong.lat)
     setLong(latlong.lng)
@@ -106,13 +111,20 @@ function UserPreference(props) {
       .catch((error) => console.log("Error: " + error));
   }
 
+  const sliderMarks = {
+    0: '0',
+    100: '100'
+  }
+
   return (
     <div className="user-preference">
       <form onSubmit={handleUserPreferenceChange}>
+      
         <div className="form-item">
           <label className="form-label"> Acceptable Battery Threshold: </label>
           <Slider
             range={true}
+            marks = {sliderMarks}
             min={0}
             max={100}
             value={[low_limit, max_limit]}
@@ -120,48 +132,72 @@ function UserPreference(props) {
               setLowLimit(value[0])
               setMaxLimit(value[1])
             }}/>
+            <label className = "form-context2">   {low_limit} ~ {max_limit} </label>
         </div>
 
         <div className="form-item">
           <label className="form-label"> Battery Size: </label>
-          <input className="form-smallinput" type="number" required min = '1' value={battery_size}
-            onInput={(e) => setBatterySize(e.target.value)}/>
+          <input className="form-smallinput" 
+                 type="number" 
+                 required min = '1' 
+                 value={battery_size}
+                 onInput={(e) => setBatterySize(e.target.value)}/>
           <label className="form-context"> kWH </label>
         </div>
+        
 
         <div className="form-item">
           <label className="form-label">Set hours of power to: </label>
           <Slider
+            marks = {sliderMarks}
             min={0}
             max={100}
             value={hours_of_power}
             onChange={(value) => setHoursOfPower(value)}/>
+            <label className = "form-context2">   {hours_of_power} </label>
         </div>
+      
         
         <div className="form-item">
           <label className="form-label">Set cost or shutoff to: </label>
           <Slider
+            marks = {sliderMarks}
             min={0}
             max={100}
             value={cost_or_shutoff}
             onChange={(value) => setCostOrShutOff(value)}/>
+            
+            <label className = "form-context2">   {cost_or_shutoff} </label>
         </div>
+        
 
-        <button className="asset-button"> Update Preferences</button>
-      </form>
+        <div className="form-item">
+          <label className="form-label">Current Phone number: </label>
+          <PhoneInput 
+          className='form-smallinput'
+          country={'us'}
+          value={phoneNumber}
+          onChange={setPhoneNumber}
+          placeholder='enter phone number'
+        />
+          
+        </div>
+          
+        <br></br>
 
-
-      <h2> address: {currentAddress}</h2>
+      <label className='form-address-label'> Current Address: {currentAddress}</label>
       <PlacesAutocomplete
         value={address}
         onChange={setAddress}
         onSelect={handleSelect}
+        
       >
         {({getInputProps, suggestions, getSuggestionItemProps, loading}) => (
           <div>
             <input
+            className = 'form-input'
               {...getInputProps({
-                placeholder: 'Type in your address...',
+                placeholder: "Change your address here...",
                 className: 'location-search-input form-input'
               })}
             />
@@ -191,7 +227,15 @@ function UserPreference(props) {
         )}
       </PlacesAutocomplete>
 
-      <button className="asset-button" onClick={handleUserPreferenceChange}> Update Address </button>
+      <br></br>
+
+        <button className="asset-button"> Update Preferences</button>
+      </form>
+      
+
+
+
+
     </div>
   );
 }
