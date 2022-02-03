@@ -3,6 +3,7 @@ import '../../css/Explore.css';
 import StockChart from "../utility/StockChart";
 import Chart from "../utility/Chart";
 import DataGrid, {Row } from 'react-data-grid';
+import { Redirect } from 'react-router-dom';
 import { withAuth0 } from '@auth0/auth0-react';
 
 function ExplorePage (props) {
@@ -17,7 +18,7 @@ function ExplorePage (props) {
         "rows" : [],
     });
 
-    const [currentTime, setTime] = useState(1635638400);
+    const [currentTime, setTime] = useState(1620950400);
     const [searchValue, setSearchValue] = useState(null);
 
     const columns = [
@@ -123,11 +124,7 @@ function ExplorePage (props) {
     }
 
     if(!state["hasAsset"]){
-        return (
-            <div className="overlay"> 
-                <h1> An error has occurred! Did you create an asset yet? </h1>
-            </div>
-        )
+        return <Redirect to="/asset" />
     }
     
 
