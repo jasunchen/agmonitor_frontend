@@ -21,7 +21,6 @@
   font-weight: 500;
   font-variant: all-small-caps;
   line-height: 1.3;
-  
 }
 
 .snapshot-head {
@@ -67,6 +66,7 @@
   border-radius: 10px;
   background: #F8F3D4;
   cursor: pointer;
+  min-width: 400px;
 }
 
 
@@ -84,4 +84,54 @@
 .click-icon {
   width: 25px;
   float: right;
+}
+
+.battery-bottom {
+  height: 160px;
+  width: 80px;
+  margin: 1px calc(50% - 40px) 0 calc(50% - 40px);
+  border: 2px solid black;
+  border-radius: 5px;
+}
+
+.battery-top {
+  width: 30px;
+  height: 10px;
+  margin: 20px calc(50% - 15px) 0 calc(50% - 15px);
+  background: black;
+  border-radius: 5px 5px 0 0;
+}
+
+.battery-level {
+  background: #00B8A9;
+  border-radius: 3px;
+}
+
+.battery-image {
+  display: inline-block;
+  width: 120px;
+}
+
+.battery-text {
+  display: inline-block;
+  width: calc(100% - 145px);
+  vertical-align: top;
+  margin-top: 8%;
+}
+
+.time-block {
+  display: inline-block;
+  width: calc(100% /48 + 1px);
+  height: 10px;
+  border: 1px solid black;
+  margin: 10px -1px 20px 0;
+}
+
+.time-hover {
+  display: none;
+}
+
+.time-block:hover + .time-hover {
+  display: inline-block;
+  color: red;
 }

@@ -52,6 +52,7 @@ function SnapshotPage (props) {
     const [userInfo, setUserInfo] = useState({
         "exists": true,
         "pred_solar_generation" : [[]],
+        "pred_good_time" : [],
         "pred_opt_threshold" : 100,
         "pred_should_charge" : false,
         "hours_of_power" : 0,
@@ -93,6 +94,7 @@ function SnapshotPage (props) {
                 let solar = [];
                 let utility = [];
                 let baseload = [];
+                let goodtime = [];
                 let netUsage = 0;
 
                 data["pred_solar_generation"].replace("[", "").replace("]", "").split(", ").map((e, i) => {
@@ -108,12 +110,19 @@ function SnapshotPage (props) {
                     baseload.push([(todayTime + intervalDelta * i) * 1000, parseFloat(e)]);
                 })
 
+                data["pred_good_time"].replace("[", "").replace("]", "").split(", ").map((e, i) => {
+                    goodtime.push(parseInt(e));
+                })
+
+                console.log(goodtime);
+
                 setUserInfo({
                     ...userInfo,
                     "pred_solar_generation" : solar,
                     "utility" : utility,
                     "netUsage" : netUsage / 192,
                     "baseload" : baseload,
+                    "pred_good_time" : goodtime,
                     "pred_opt_threshold" : data["pred_opt_threshold"],
                     "pred_should_charge" : data["should_charge"],
                     "hours_of_power" : data["hours_of_power"],
@@ -241,6 +250,14 @@ function SnapshotPage (props) {
         .catch((error) => console.log("Error: " + error))
     }, []);
 
+    function batteryHeight(x) {
+        return 156 * 0.01 * x + "px";
+    }
+
+    function batteryMargin(x) {
+        return (156 - 156 * 0.01 * x) + "px";
+    }
+
     if(state["loading"]){
         return (
             <div className="overlay"> 
@@ -327,12 +344,25 @@ function SnapshotPage (props) {
                             }
                         </div>
                         :
-                        <div className="snapshot-headers"> 
-                            Today, you should set your Tesla Battery Threshold to
-                            <span className="snapshot-head"> 
-                                &nbsp;{userInfo["pred_opt_threshold"]}%
-                            </span> 
-                            .
+                        <div> 
+                            <div className="battery-image">
+                                <div className="battery-top" /> 
+                                <div className="battery-bottom">
+                                    <div className="battery-level" 
+                                        style={{
+                                            height: batteryHeight(userInfo["pred_opt_threshold"]),
+                                            marginTop: batteryMargin(userInfo["pred_opt_threshold"])
+                                            }} />
+                                </div> 
+                            </div>
+
+                            <div className="snapshot-headers battery-text">
+                                Today, you should set your Battery Threshold to
+                                <span className="snapshot-head"> 
+                                    &nbsp;{userInfo["pred_opt_threshold"]}%
+                                </span> 
+                                .
+                            </div>
                         </div>
                     }
                     </div>
@@ -364,6 +394,7 @@ function SnapshotPage (props) {
                                 />
                             </div>
                         :
+                        <div>
                             <div className="snapshot-headers"> 
                                 Today, the optimal charging times are
                                     <span className="snapshot-head"> 
@@ -371,6 +402,16 @@ function SnapshotPage (props) {
                                     </span> 
                                 . 
                             </div>
+                            <div className="good-time">
+                                {userInfo["pred_good_time"].map((e, i) => 
+                                    <div className="time-block" 
+                                        style={{
+                                            background: e == 1 ? "#00B8A9" : "none"
+                                        }}/>
+                                )}
+                            </div>
+                        </div>
+                            
                         }
                     </div>
 
