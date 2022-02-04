@@ -13,8 +13,9 @@ function ExplorePage (props) {
     const [state, setState] = useState({
         "loading": true,
         "hasAsset": false,
-        "produced": [],
-        "consumed": [],
+        "base": [],
+        "flexible": [],
+        "generation": [],
         "rows" : [],
     });
 
@@ -23,8 +24,9 @@ function ExplorePage (props) {
 
     const columns = [
         { key: 'time', name: 'Time' },
-        { key: 'produced', name: 'Produced (kWH)' },
-        { key: 'consumed', name: 'Consumed (kWH)' }
+        { key: 'produced', name: 'Energy Produced (kWH)' },
+        { key: 'consumed-base', name: 'Energy Consumed (Base) (kWH)' },
+        { key: 'consumed-flexible', name: 'Energy Consumed (Flexible) (kWH)' }
     ];
 
     function rowKeyGetter(row) {
@@ -65,10 +67,20 @@ function ExplorePage (props) {
         })
         .then(response => response.json())
         .then(data => {
-            if(data["generation"].length !== 0){
-                const assetId = data["generation"][0]["id"];
+            if (data["generation"].length + data["base"].length + data["flexible"].length == 0) {
+                setState({
+                    ...state,
+                    "loading": false
+                })
+            }
+            else {
+                let assetIds = [];
+                data["base"].map(asset => assetIds.push(asset["id"]));
+                data["flexible"].map(asset => assetIds.push(asset["id"]));
+                data["generation"].map(asset => assetIds.push(asset["id"]));
+                
                 // DAILY VIEW
-                requestUrl = `${server}/getAssetData?id=${assetId}&start=${currentTime}&end=${currentTime + dayDelta}&page=1`
+                requestUrl = `${server}/getAssetData?id=${assetIds}&start=${currentTime}&end=${currentTime + dayDelta}&page=1`
 
                 fetch(requestUrl, {
                     method: 'GET',
@@ -79,36 +91,60 @@ function ExplorePage (props) {
                 })
                 .then(response => response.json()) 
                 .then(data => {
-                    let produced = [];
-                    let consumed = [];
+                    let base = [];
+                    let flexible = [];
+                    let generation = [];
                     let rows = [];
 
-                    data["data"].forEach(element => {
-                        produced.push([element["start_time"] * 1000, element["produced_energy"]])
-                        consumed.push([element["start_time"] * 1000, element["consumed_energy"]])
+                    console.log("Hello World");
+                    for(let i = 0; i < 96; ++i) {
                         rows.push({
-                            "time": new Date(element["start_time"] * 1000).toUTCString().replace("GMT", ""),
-                            "produced": element["produced_energy"], 
-                            "consumed": element["consumed_energy"]
+                            "time": 0,
+                            "produced": 0, 
+                            "consumed-base" : 0,
+                            "consumed-flexible" : 0
                         })
+                    }
+
+
+
+                    data.forEach(element => {
+                        if (element["type"] == "generation") {
+                            element["data"].forEach((e, i) => {
+                                generation.push([e["start_time"] * 1000, e["produced_energy"]]);
+                                rows[i]["time"] = new Date(e["start_time"] * 1000).toUTCString().replace("GMT", "");
+                                rows[i]["produced"] = e["produced_energy"];
+                            })
+                        }
+                        else if (element["type"] == "flexible") {
+                            element["data"].forEach((e, i) => {
+                                flexible.push([e["start_time"] * 1000, e["consumed_energy"]]);
+                                rows[i]["time"] = new Date(e["start_time"] * 1000).toUTCString().replace("GMT", "");
+                                rows[i]["consumed-flexible"] = e["consumed_energy"];
+                            })
+                        }
+                        else {
+                            element["data"].forEach((e, i) => {
+                                base.push([e["start_time"] * 1000, e["consumed_energy"]]);
+                                rows[i]["time"] = new Date(e["start_time"] * 1000).toUTCString().replace("GMT", "");
+                                rows[i]["consumed-base"] = e["consumed_energy"];
+                            })
+                        }
                     })
+
+                    console.log(rows);
 
                     setState({
                         ...state,
-                        "produced" : produced,
-                        "consumed" : consumed,
+                        "base" : base,
+                        "flexible" : flexible,
+                        "generation" : generation,
                         "rows": rows,
                         "loading" : false,
                         "hasAsset": true,
                     })
                 })
                 .catch((error) => console.log("Error: " + error))
-            }
-            else{
-                setState({
-                    ...state,
-                    "loading": false
-                })
             }
         })
         .catch((error) => console.log("Error: " + error))
@@ -158,13 +194,18 @@ function ExplorePage (props) {
                     series={[
                         {
                             name: 'Energy Produced',
-                            data: state["produced"],
+                            data: state["generation"],
                             color: "#00B8A9"
                         },
                         {
-                            name: 'Energy Consumed',
-                            data: state["consumed"],
+                            name: 'Energy Consumed (Base)',
+                            data: state["base"],
                             color: "#F6416C"
+                        },
+                        {
+                            name: 'Energy Consumed (Flexible)',
+                            data: state["flexible"],
+                            color: "#FFDE7D"
                         }
                     ]}
                 />
