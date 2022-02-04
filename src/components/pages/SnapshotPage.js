@@ -32,9 +32,11 @@ function SnapshotPage (props) {
     let email = props.auth0.user.email;
 
     // TODO: configure time
-    const currentTime = 1621036800;
+    const currentTime = 1621036800; // for historical data
+    const todayTime = 1643932800;
     const dayDelta = 86400;
     const hourDelta = 3600;
+    const intervalDelta = 900;
 
     const [state, setState] = useState({
         "hasAsset": false,
@@ -47,17 +49,19 @@ function SnapshotPage (props) {
         "peakEnd" : 1000 * (currentTime - 3 * hourDelta),
     });
 
-    // TODO
     const [userInfo, setUserInfo] = useState({
         "exists": true,
-        "pred_solar_generation" : 100,
+        "pred_solar_generation" : [[]],
         "pred_opt_threshold" : 100,
         "pred_should_charge" : false,
         "hours_of_power" : 0,
         "cost_or_shutoff" : 0,
         "low_limit" : 0,
         "max_limit" : 100,
-        "alerts" : [['Advisory', 'High Surf Advisory issued January 26 at 11:45AM PST until January 26 at 8:00PM PST by NWS Los Angeles/Oxnard CA'], ['Advisory', 'High Surf Advisory issued January 26 at 2:58AM PST until January 26 at 8:00PM PST by NWS Los Angeles/Oxnard CA'], ['Advisory', 'High Surf Advisory issued January 24 at 8:04PM PST until January 26 at 8:00PM PST by NWS Los Angeles/Oxnard CA']]
+        "alerts" : [],
+        "utility" : [[]],
+        "baseload" : [[]],
+        "netUsage" : 0
     })
 
     // configure server URL
@@ -86,9 +90,30 @@ function SnapshotPage (props) {
                 })
             }
             else {
+                let solar = [];
+                let utility = [];
+                let baseload = [];
+                let netUsage = 0;
+
+                data["pred_solar_generation"].replace("[", "").replace("]", "").split(", ").map((e, i) => {
+                    solar.push([(todayTime + intervalDelta * i) * 1000, parseFloat(e)]);
+                })
+                
+                data["utility"].replace("[", "").replace("]", "").split(", ").map((e, i) => {
+                    utility.push([(todayTime + intervalDelta * i) * 1000, parseFloat(e) / 1000]);
+                    netUsage += parseFloat(e) / 1000;
+                })
+
+                data["pred_baseload"].replace("[", "").replace("]", "").split(", ").map((e, i) => {
+                    baseload.push([(todayTime + intervalDelta * i) * 1000, parseFloat(e)]);
+                })
+
                 setUserInfo({
                     ...userInfo,
-                    "pred_solar_generation" : data["pred_solar_generation"],
+                    "pred_solar_generation" : solar,
+                    "utility" : utility,
+                    "netUsage" : netUsage / 192,
+                    "baseload" : baseload,
                     "pred_opt_threshold" : data["pred_opt_threshold"],
                     "pred_should_charge" : data["should_charge"],
                     "hours_of_power" : data["hours_of_power"],
@@ -130,20 +155,25 @@ function SnapshotPage (props) {
                     let dayProduced = state["dayProduced"];
                     let dayConsumed = state["dayConsumed"];
 
+                    /*
                     data["data"].forEach(element => {
                         dayProduced.push([element["start_time"] * 1000, element["produced_energy"]])
                         dayConsumed.push([element["start_time"] * 1000, element["consumed_energy"]])
                     })
+                    */
 
                     setState({
                         ...state,
                         "dayProduced" : dayProduced,
-                        "dayConsumed" : dayConsumed
+                        "dayConsumed" : dayConsumed,
+                        "loading" : false,
+                        "hasAsset" : true
                     })
                 })
                 
 
                 // WEEKLY VIEW
+                /*
                 let hasNext = true;
                 for(let page = 1; page <= 8; page += 1){
                     requestUrl = `${server}/getAssetData?id=${assetId}&start=${currentTime - 7 * dayDelta}&end=${currentTime}&page=${page}`
@@ -199,6 +229,7 @@ function SnapshotPage (props) {
                         console.log("Error: " + error)
                     })
                 }
+                */
             }
             else{
                 setState({
@@ -223,10 +254,6 @@ function SnapshotPage (props) {
         return <Redirect to="/asset" />
     }
 
-    const columns = [
-        { key: 'pred_solar_generation', name: 'Predicted Solar Generation' },
-    ];
-
     return (
         <div className="overlay">
             <div className="recommendations">
@@ -249,7 +276,7 @@ function SnapshotPage (props) {
                                 </div>
                                 <li className="threshold-reason"> 
                                     <span className="threshold-label"> Predicted Net Usage: </span> 
-                                        65 kWH
+                                        {Math.round(userInfo["netUsage"] * 100) / 100} kWH
                                 </li>
                             </div>
                             <div>
@@ -291,7 +318,7 @@ function SnapshotPage (props) {
                                 <div>
                                     { userInfo["alerts"].map(alert => (
                                         <li className="threshold-reason"> 
-                                            <span className="threshold-label"> {alert[0]}:</span> 
+                                            <span className="threshold-label"> {alert[0]}: </span> 
                                             &nbsp;{alert[1]} 
                                         </li>
                                     ))
@@ -320,17 +347,17 @@ function SnapshotPage (props) {
                                     series={[
                                         {
                                             name: 'Solar Generation',
-                                            data: state["dayProduced"],
+                                            data: userInfo["pred_solar_generation"],
                                             color: "#00B8A9"
                                         },
                                         {
                                             name: 'Base Load Usage',
-                                            data: state["dayConsumed"],
+                                            data: userInfo["baseload"],
                                             color: "#F6416C"
                                         },
                                         {
                                             name: 'Utility Usage',
-                                            data: state["dayProduced"],
+                                            data: userInfo["utility"],
                                             color: "#FFDE7D"
                                         },
                                     ]}
@@ -350,6 +377,7 @@ function SnapshotPage (props) {
                 </div>
             </div>
 
+            {/*
             <h1> Energy Snapshot </h1>
 
             <div className="row">
@@ -394,6 +422,8 @@ function SnapshotPage (props) {
                     />
                 </div>
             </div>
+
+            */}
         </div>
 
     );
