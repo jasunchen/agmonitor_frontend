@@ -87,6 +87,7 @@ form {
 .form-item {
   width: 100%;
   margin: 10px 0;
+  display: inline-flex;
 }
 
 .form-label {
@@ -103,6 +104,12 @@ form {
   font-size: 20px;
   font-weight: 300;
   width: 350px;
+}
+
+.form-icon {
+  display: inline-block;
+
+  width: calc(100% - 220px);
 }
 
 .form-address-label {
@@ -142,8 +149,34 @@ form {
   vertical-align: top;
   font-size: 20px;
   font-weight: 300;
-  margin: 0 30px;
+  margin: 0 20px 0 20px;
   color: #21a7fa;
+}
+
+.form-question-mark {
+  display: inline-block;
+  vertical-align: top;
+  margin: 7px 30px 0px -50px;
+}
+
+.form-pref-question-mark {
+  display: inline-block;
+  vertical-align: top;
+  margin: 7px 45px 0px 0px;
+}
+
+.form-phone-error-message {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0px 0px 0px -100px;
+  color: red;
+}
+
+.form-duration-error-message {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0px 0px 0px 70px;
+  color: red;
 }
 
 .form-input {
@@ -250,7 +283,7 @@ form {
 
 .form-control {
   font-size: 20px;
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: "Barlow Condensed", sans-serif;
   width: 200px !important;
   font-weight: 300 !important;
 }

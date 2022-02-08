@@ -4,6 +4,8 @@ import PlacesAutocomplete, {geocodeByAddress, getLatLng} from 'react-places-auto
 import { Slider } from 'antd';
 import {withAuth0} from '@auth0/auth0-react';
 import PhoneInput from 'react-phone-input-2'
+import {QuestionCircleOutlined} from '@ant-design/icons';
+import { Tooltip } from 'antd';
 import 'react-phone-input-2/lib/style.css'
 import './userPreference.css'
 
@@ -22,7 +24,7 @@ function UserPreference(props) {
   const [currentAddress, setCurrentAddress] = useState("");
   const [lat, setLat] = useState();
   const [long, setLong] = useState();
-  const [phoneNumber, setPhoneNumber] = useState();
+  const [phone_number, setPhoneNumber] = useState();
 
 
   // configure server URL
@@ -58,6 +60,9 @@ function UserPreference(props) {
 
   const handleUserPreferenceChange = (e) => {
     e.preventDefault();
+    if ((phone_number.length) != 11){
+      return;
+    }
 
     let requestUrl = `${server}/updateUser`
 
@@ -76,7 +81,7 @@ function UserPreference(props) {
         "hours_of_power": hours_of_power,
         "longitude": long,
         "latitude": lat,
-        "phone_number": phoneNumber
+        "phone_number": phone_number
       })
     })
       .then(response => response.json())
@@ -104,8 +109,6 @@ function UserPreference(props) {
     fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=AIzaSyAgWxooTzXCVXgF8O6J5czgHRwIopQxpVs`)
       .then(response => response.json())
       .then(data => {
-        console.log("Hello World");
-        console.log(data);
         setCurrentAddress(data['results'][0]['formatted_address']);
       })
       .catch((error) => console.log("Error: " + error));
@@ -116,23 +119,56 @@ function UserPreference(props) {
     100: '100'
   }
 
+  const handlePhoneChange = async value => {
+    setPhoneNumber(value)
+    console.log(phone_number)
+  }
+
+  
+
   return (
     <div className="user-preference">
       <form onSubmit={handleUserPreferenceChange}>
       
         <div className="form-item">
           <label className="form-label"> Phone Number: </label>
+          <Tooltip 
+    title={<span>Text notification will be sent to this phone number</span>}
+    className = 'form-question-mark'
+    placement='right'> 
+    <QuestionCircleOutlined className="form-pref-question-mark"/>
+</Tooltip>
           <PhoneInput 
             className='form-smallinput'
             country={'us'}
-            value={phoneNumber}
-            onChange={setPhoneNumber}
-            placeholder='enter phone number'
+            onlyCountries={["us"]}
+            enableAreaCodes={true}
+            value={phone_number}
+            placeholder='please enter phone number'
+            onChange={(value) => {
+              setPhoneNumber(value);
+           
+          
+            }}
+            isValid={(phone_number) => {
+              if ((phone_number.length) == 11) {
+                return true;
+              } 
+            }}
           />
+        {(!phone_number || phone_number.length != 11) && <label className = 'form-phone-error-message'>Invalid Phone Number!</label>}
+          
         </div>
+        { false && <div className='form-phone-error-message'> Invalid phone number!</div>}
 
         <div className="form-item">
           <label className="form-label"> Battery Size: </label>
+          <Tooltip 
+    title={<span>Set your battery size, must be greater than 1 kWH</span>}
+    className = 'form-question-mark'
+    placement='right'> 
+    <QuestionCircleOutlined className="form-pref-question-mark"/>
+</Tooltip>
           <input className="form-smallinput" 
                  type="number" 
                  required min = '1' 
@@ -143,6 +179,13 @@ function UserPreference(props) {
 
         <div className="form-item">
           <label className="form-label"> Acceptable Battery Threshold: </label>
+          <Tooltip 
+    title={<span>Set your battery threshold lower and upper limit (0~100)</span>}
+    className = 'form-question-mark'
+    placement='right'> 
+    <QuestionCircleOutlined className="form-pref-question-mark"/>
+</Tooltip>
+          
           <Slider
             range={true}
             marks = {sliderMarks}
@@ -158,6 +201,12 @@ function UserPreference(props) {
 
         <div className="form-item">
           <label className="form-label"> Hours of Backup Power: </label>
+          <Tooltip 
+    title={<span>Set hours of backup power (0~100) </span>}
+    className = 'form-question-mark'
+    placement='right'> 
+    <QuestionCircleOutlined className="form-pref-question-mark"/>
+</Tooltip>
           <Slider
             marks = {sliderMarks}
             min={0}
@@ -169,6 +218,12 @@ function UserPreference(props) {
       
         <div className="form-item">
           <label className="form-label"> Cost versus Risk Tolerance: </label>
+          <Tooltip 
+    title={<span>Set cost versus Risk Tolerance (0~100)</span>}
+    className = 'form-question-mark'
+    placement='right'> 
+    <QuestionCircleOutlined className="form-pref-question-mark"/>
+</Tooltip>
           <Slider
             marks = {sliderMarks}
             min={0}
@@ -181,6 +236,12 @@ function UserPreference(props) {
 
         <div className="form-item">
           <label className='form-label'> Current Address: </label>
+          <Tooltip 
+    title={<span>Set your current addreses</span>}
+    className = 'form-question-mark'
+    placement='right'> 
+    <QuestionCircleOutlined className="form-pref-question-mark"/>
+</Tooltip>
           <div className="form-address-label"> {currentAddress} </div>
         </div>
           <PlacesAutocomplete
