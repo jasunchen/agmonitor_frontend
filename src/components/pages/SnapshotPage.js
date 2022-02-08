@@ -107,7 +107,7 @@ function SnapshotPage (props) {
                 })
 
                 data["pred_baseload"].replace("[", "").replace("]", "").split(", ").map((e, i) => {
-                    baseload.push([(todayTime + intervalDelta * i) * 1000, parseFloat(e)]);
+                    baseload.push([(todayTime + intervalDelta * i) * 1000, parseFloat(e) / 1000]);
                 })
 
                 data["pred_good_time"].replace("[", "").replace("]", "").split(", ").map((e, i) => {
