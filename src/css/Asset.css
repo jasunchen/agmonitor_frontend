@@ -87,6 +87,7 @@ form {
 .form-item {
   width: 100%;
   margin: 10px 0;
+  display: inline-flex;
 }
 
 .form-label {
@@ -94,7 +95,7 @@ form {
   vertical-align: top;
   font-size: 20px;
   font-weight: 300;
-  width: 220px;
+  width: 250px;
 }
 
 .form-label2 {
@@ -102,7 +103,13 @@ form {
   vertical-align: top;
   font-size: 20px;
   font-weight: 300;
-  width: 300px;
+  width: 350px;
+}
+
+.form-icon {
+  display: inline-block;
+
+  width: calc(100% - 250px);
 }
 
 .form-address-label {
@@ -110,7 +117,7 @@ form {
   vertical-align: top;
   font-size: 20px;
   font-weight: 300;
-  width: calc(100% - 220px);
+  width: calc(100% - 250px);
   max-width: 400px;
   min-width: 100px;
 }
@@ -123,7 +130,7 @@ form {
   border-radius: 5px;
   border: 1px solid grey;
   width: 100%;
-  max-width: 620px;
+  max-width: 650px;
   min-width: 100px;
   margin: 0 0 20px 0;
   padding: 5px;
@@ -142,8 +149,35 @@ form {
   vertical-align: top;
   font-size: 20px;
   font-weight: 300;
-  margin: 0 30px;
+  margin: 0 0 0 20px;
+  width: 100px;
   color: #21a7fa;
+}
+
+.form-question-mark {
+  display: inline-block;
+  vertical-align: top;
+  margin: 6px 5px 0px 0px !important;
+}
+
+.form-pref-question-mark {
+  display: inline-block;
+  vertical-align: top;
+  margin: 7px 45px 0px 0px;
+}
+
+.form-phone-error-message {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0px 0px 0px -100px;
+  color: red;
+}
+
+.form-duration-error-message {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0px 0px 0px 70px;
+  color: red;
 }
 
 .form-input {
@@ -151,7 +185,7 @@ form {
   font-size: 20px;
   border-radius: 5px;
   border: 1px solid grey;
-  width: calc(100% - 220px);
+  width: calc(100% - 250px);
   max-width: 400px;
   min-width: 100px;
 }
@@ -169,7 +203,7 @@ form {
   display: inline-block;
   font-size: 20px;
   border-radius: 5px;
-  width: calc(100% - 220px);
+  width: calc(100% - 250px);
   border: 1px solid grey;
   max-width: 400px;
   min-width: 100px;
@@ -186,7 +220,7 @@ form {
   line-height: 1;
   padding: 5px 0 13px 0;
   width: 100%;
-  max-width: 620px;
+  max-width: 650px;
   min-width: 100px;
   margin: 10px 0 0 0;
 }
@@ -236,21 +270,21 @@ form {
 
 .ant-slider {
   display: inline-block !important;
-  width: calc(100% - 220px);
+  width: calc(100% - 250px);
   max-width: 400px;
   min-width: 100px;
 }
 
 .react-tel-input {
   display: inline-block !important;
-  width: calc(100% - 220px);
+  width: calc(100% - 250px);
   max-width: 400px;
   min-width: 100px;
 }
 
 .form-control {
   font-size: 20px;
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: "Barlow Condensed", sans-serif;
   width: 200px !important;
   font-weight: 300 !important;
 }

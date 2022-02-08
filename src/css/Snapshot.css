@@ -119,12 +119,18 @@
   margin-top: 8%;
 }
 
+.good-time {
+  border: 1px solid black;
+  margin: 0 0 0 0;
+  padding: 0 -1px 0 0;
+}
+
 .time-block {
   display: inline-block;
-  width: calc(100% /48 + 1px);
-  height: 10px;
-  border: 1px solid black;
-  margin: 10px -1px 20px 0;
+  width: calc(100% / 96);
+  height: 32px;
+  margin: 0 0 -8px 0;
+  background: #00B8A9;
 }
 
 .time-hover {
@@ -134,4 +140,24 @@
 .time-block:hover + .time-hover {
   display: inline-block;
   color: red;
+}
+
+.a {
+  opacity: 1;
+}
+
+.b {
+  opacity: 0.85;
+}
+
+.c {
+  opacity: 0.7;
+}
+
+.d {
+  opacity: 0.55;
+}
+
+.e {
+  opacity: 0.40;
 }

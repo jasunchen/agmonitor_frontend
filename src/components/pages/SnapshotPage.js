@@ -6,6 +6,7 @@ import { Redirect } from 'react-router-dom';
 
 import Chart from "../utility/Chart";
 import "../../css/Snapshot.css";
+import { Tooltip } from 'antd';
 import { withAuth0 } from '@auth0/auth0-react';
 import DataGrid, {Row } from 'react-data-grid';
 
@@ -111,7 +112,7 @@ function SnapshotPage (props) {
                 })
 
                 data["pred_good_time"].replace("[", "").replace("]", "").split(", ").map((e, i) => {
-                    goodtime.push(parseInt(e));
+                    goodtime.push(parseFloat(e));
                 })
 
                 console.log(goodtime);
@@ -374,20 +375,21 @@ function SnapshotPage (props) {
                             <div className="explanation-chart">
                                 <Chart
                                     title="Energy Predictions"
+                                    dateformat="%H:%M"
                                     series={[
                                         {
                                             name: 'Solar Generation',
-                                            data: userInfo["pred_solar_generation"],
+                                            data: userInfo["pred_solar_generation"].slice(0, 96),
                                             color: "#00B8A9"
                                         },
                                         {
                                             name: 'Base Load Usage',
-                                            data: userInfo["baseload"],
+                                            data: userInfo["baseload"].slice(0, 96),
                                             color: "#F6416C"
                                         },
                                         {
                                             name: 'Utility Usage',
-                                            data: userInfo["utility"],
+                                            data: userInfo["utility"].slice(0, 96),
                                             color: "#FFDE7D"
                                         },
                                     ]}
@@ -396,18 +398,25 @@ function SnapshotPage (props) {
                         :
                         <div>
                             <div className="snapshot-headers"> 
-                                Today, the optimal charging times are
-                                    <span className="snapshot-head"> 
-                                        &nbsp;11 AM, 2 PM, 10 PM
-                                    </span> 
-                                . 
+                                The brightest times below are the best times to charge today. 
                             </div>
                             <div className="good-time">
                                 {userInfo["pred_good_time"].map((e, i) => 
-                                    <div className="time-block" 
-                                        style={{
-                                            background: e == 1 ? "#00B8A9" : "none"
-                                        }}/>
+                                    <Tooltip 
+                                        title={
+                                            <span> {Math.floor(i / 4) < 10 && "0"}{Math.floor(i / 4)} : 
+                                                   {15 * (i % 4) < 10 && "0"}{15 * (i % 4)}
+                                             </span>
+                                        }
+                                        className={
+                                            e > 0.8 ? 'time-block a' : 
+                                            e > 0.6 ? 'time-block b' : 
+                                            e > 0.4 ? 'time-block c' : 
+                                            e > 0.2 ? 'time-block d' : 
+                                            'time-block e'
+                                        }
+                                        placement='right'
+                                    />
                                 )}
                             </div>
                         </div>
@@ -425,6 +434,7 @@ function SnapshotPage (props) {
                 <div className="summary-chart">
                     <Chart
                         title="Daily Snapshot"
+                        dateformat='%b %d %H:%M'
                         series={[
                             {
                                 name: 'Energy Produced',
@@ -448,6 +458,7 @@ function SnapshotPage (props) {
                 <div className="summary-chart">
                     <Chart
                         title="Weekly Snapshot"
+                        dateformat='%b %d %H:%M'
                         series={[
                             {
                                 name: 'Energy Produced',

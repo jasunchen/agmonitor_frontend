@@ -32,7 +32,7 @@ function Chart (props) {
                 type: "datetime",
                 labels: {
                     formatter: function() {
-                        return Highcharts.dateFormat('%b %d %H:%M', this.value);
+                        return Highcharts.dateFormat(props.dateformat, this.value);
                     },
                     style: {"fontSize": "16px", "fontWeight" : "200"}
                 },
