@@ -131,13 +131,16 @@ function UserPreference(props) {
       <form onSubmit={handleUserPreferenceChange}>
       
         <div className="form-item">
-          <label className="form-label"> Phone Number: </label>
-          <Tooltip 
-    title={<span>Text notification will be sent to this phone number</span>}
-    className = 'form-question-mark'
-    placement='right'> 
-    <QuestionCircleOutlined className="form-pref-question-mark"/>
-</Tooltip>
+          <label className="form-label"> 
+            <Tooltip 
+              title={<span>Text notification will be sent to this phone number</span>}
+              className = 'form-question-mark'
+              placement='right'> 
+              <QuestionCircleOutlined className="form-pref-question-mark"/>
+            </Tooltip>
+            Phone Number:
+          </label>
+          
           <PhoneInput 
             className='form-smallinput'
             country={'us'}
@@ -162,13 +165,16 @@ function UserPreference(props) {
         { false && <div className='form-phone-error-message'> Invalid phone number!</div>}
 
         <div className="form-item">
-          <label className="form-label"> Battery Size: </label>
-          <Tooltip 
-    title={<span>Set your battery size, must be greater than 1 kWH</span>}
-    className = 'form-question-mark'
-    placement='right'> 
-    <QuestionCircleOutlined className="form-pref-question-mark"/>
-</Tooltip>
+          <label className="form-label"> 
+            <Tooltip 
+              title={<span>Set your battery size, must be greater than 1 kWH</span>}
+              className = 'form-question-mark'
+              placement='right'> 
+              <QuestionCircleOutlined className="form-pref-question-mark"/>
+            </Tooltip>
+            Battery Size: 
+          </label>
+          
           <input className="form-smallinput" 
                  type="number" 
                  required min = '1' 
@@ -178,13 +184,15 @@ function UserPreference(props) {
         </div>
 
         <div className="form-item">
-          <label className="form-label"> Acceptable Battery Threshold: </label>
-          <Tooltip 
-    title={<span>Set your battery threshold lower and upper limit (0~100)</span>}
-    className = 'form-question-mark'
-    placement='right'> 
-    <QuestionCircleOutlined className="form-pref-question-mark"/>
-</Tooltip>
+          <label className="form-label"> 
+            <Tooltip 
+              title={<span>Set your battery threshold lower and upper limit (0~100)</span>}
+              className = 'form-question-mark'
+              placement='right'> 
+              <QuestionCircleOutlined className="form-pref-question-mark"/>
+            </Tooltip>
+            Acceptable Battery Threshold: 
+          </label>
           
           <Slider
             range={true}
@@ -200,30 +208,36 @@ function UserPreference(props) {
         </div>
 
         <div className="form-item">
-          <label className="form-label"> Hours of Backup Power: </label>
-          <Tooltip 
-    title={<span>Set hours of backup power (0~100) </span>}
-    className = 'form-question-mark'
-    placement='right'> 
-    <QuestionCircleOutlined className="form-pref-question-mark"/>
-</Tooltip>
+          <label className="form-label"> 
+            <Tooltip 
+              title={<span>Set hours of backup power (0~100) </span>}
+              className = 'form-question-mark'
+              placement='right'> 
+              <QuestionCircleOutlined className="form-pref-question-mark"/>
+            </Tooltip>
+            Hours of Backup Power: 
+          </label>
+          
           <Slider
             marks = {sliderMarks}
             min={0}
             max={100}
             value={hours_of_power}
             onChange={(value) => setHoursOfPower(value)}/>
-            <label className = "form-context2">   {hours_of_power} </label>
+            <label className = "form-context2">  {hours_of_power} </label>
         </div>
       
         <div className="form-item">
-          <label className="form-label"> Cost versus Risk Tolerance: </label>
-          <Tooltip 
-    title={<span>Set cost versus Risk Tolerance (0~100)</span>}
-    className = 'form-question-mark'
-    placement='right'> 
-    <QuestionCircleOutlined className="form-pref-question-mark"/>
-</Tooltip>
+          <label className="form-label"> 
+            <Tooltip 
+              title={<span>Set cost versus Risk Tolerance (0~100)</span>}
+              className = 'form-question-mark'
+              placement='right'> 
+              <QuestionCircleOutlined className="form-pref-question-mark"/>
+            </Tooltip>
+            Cost versus Risk Tolerance: 
+          </label>
+          
           <Slider
             marks = {sliderMarks}
             min={0}
@@ -235,13 +249,17 @@ function UserPreference(props) {
         </div>
 
         <div className="form-item">
-          <label className='form-label'> Current Address: </label>
-          <Tooltip 
-    title={<span>Set your current addreses</span>}
-    className = 'form-question-mark'
-    placement='right'> 
-    <QuestionCircleOutlined className="form-pref-question-mark"/>
-</Tooltip>
+          <label className='form-label'> 
+            <Tooltip 
+              title={<span>Set your current addresses</span>}
+              className = 'form-question-mark'
+              placement='right'> 
+              <QuestionCircleOutlined className="form-pref-question-mark"/>
+            </Tooltip>
+
+            Current Address: 
+          </label>
+          
           <div className="form-address-label"> {currentAddress} </div>
         </div>
           <PlacesAutocomplete

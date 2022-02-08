@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 
-import {Tabs} from 'antd';
+import { Tabs, Tooltip } from 'antd';
 
 import AssetsList from "./AssetsList";
 import AssetComponent from "./AssetComponent";
@@ -8,7 +8,6 @@ import UserPreference from "./UserPreference";
 import {useHistory, Link } from 'react-router-dom';
 import Select from 'react-select';
 import {QuestionCircleOutlined} from '@ant-design/icons';
-import { Tooltip } from 'antd';
 import { withAuth0 } from '@auth0/auth0-react';
 import '../../css/Asset.css'
 import 'antd/dist/antd.css'
@@ -36,10 +35,10 @@ function AssetPage(props) {
    const [declination, setDeclination] = useState();
    const [azimuth, setAzimuth] = useState();
    const [modules_power, setModulesPower] = useState();
-   const [start_charge_time_hr, setStartChargeTimeHr] = useState();
-   const [start_charge_time_min, setStartChargeTimeMin] = useState();
-   const [end_charge_time_hr, setEndChargeTimeHr] = useState();
-   const [end_charge_time_min, setEndChargeTimeMin] = useState();
+   const [start_charge_time_hr, setStartChargeTimeHr] = useState(0);
+   const [start_charge_time_min, setStartChargeTimeMin] = useState(0);
+   const [end_charge_time_hr, setEndChargeTimeHr] = useState(0);
+   const [end_charge_time_min, setEndChargeTimeMin] = useState(0);
    const [duration_time_hr, setDurationTimeHr] = useState();
    const [duration_time_min, setDurationTimeMin] = useState();
    const [demand, setDemand] = useState();
@@ -118,9 +117,16 @@ function AssetPage(props) {
       e.preventDefault();
 
       let requestUrl = `${server}/addUserAsset`
-      if(parseInt(duration_time_hr) == 0 && parseInt(duration_time_min) == 0){
-        return;
-      }
+      console.log(JSON.stringify({
+        "email" : email,
+        "name" : assetName,
+        "description" : assetDescription,
+        "type_of_asset": "flexible",
+        "start_charge_time": parseInt(start_charge_time_hr) * 3600 + parseInt(start_charge_time_min) * 60,
+        "end_charge_time" : parseInt(end_charge_time_hr) * 3600 + parseInt(end_charge_time_min) * 60,
+        "duration": (duration_time_hr * 3600 + duration_time_min * 60).toString(),
+        "demand": demand.toString()
+      }));
 
       fetch(requestUrl, {
            method: 'POST',
@@ -137,8 +143,6 @@ function AssetPage(props) {
              "end_charge_time" : parseInt(end_charge_time_hr) * 3600 + parseInt(end_charge_time_min) * 60,
              "duration": (duration_time_hr * 3600 + duration_time_min * 60).toString(),
              "demand": demand.toString()
-
-
            })
       })
 
@@ -298,12 +302,15 @@ function AssetPage(props) {
                 </div>
                 
                 <div className="form-item">
-                  <label className="form-label"> Asset Declination: </label> 
-                  <Tooltip 
-                      title={<span>See solar panel documentation for declination (0 &deg; ~ 90 &deg;)</span>}
-                      placement='right'> 
-                      <QuestionCircleOutlined className="form-question-mark"/>
-                  </Tooltip>
+                  <label className="form-label"> 
+                    <Tooltip 
+                        title={<span>See solar panel documentation for declination (0 &deg; ~ 90 &deg;)</span>}
+                        placement='right'> 
+                        <QuestionCircleOutlined className="form-question-mark"/>
+                    </Tooltip>
+                    Asset Declination: 
+                  </label> 
+                  
                   <input className="form-smallinput" type="number" value={declination} required
                     min = '0' max = '90' onChange={(e) => setDeclination(e.target.value)} /> 
                   <label className="form-context">&deg;</label>
@@ -311,12 +318,15 @@ function AssetPage(props) {
                 </div>
  
                 <div className="form-item">
-                  <label className="form-label"> Asset Azimuth: </label> 
-                  <Tooltip 
-                      title={<span>See solar panel documentation for azimuth (-180 &deg; ~ 180 &deg;)</span>}
-                      placement='right'> 
-                      <QuestionCircleOutlined className="form-question-mark"/>
-                  </Tooltip>
+                  <label className="form-label"> 
+                    <Tooltip 
+                        title={<span>See solar panel documentation for azimuth (-180 &deg; ~ 180 &deg;)</span>}
+                        placement='right'> 
+                        <QuestionCircleOutlined className="form-question-mark"/>
+                    </Tooltip>
+                    Asset Azimuth: 
+                  </label> 
+                  
                   <input className="form-smallinput" type="number" value={azimuth} required
                     min = '-180' max = '180' onChange={(e) => setAzimuth(e.target.value)} /> 
                   <label className="form-context">&deg;</label>
@@ -324,12 +334,15 @@ function AssetPage(props) {
                 </div>
 
                 <div className="form-item">
-                  <label className="form-label"> Asset Power: </label> 
-                  <Tooltip 
-                      title={<span>See solar panel documentation for modules power</span>}
-                      placement='right'> 
-                      <QuestionCircleOutlined className="form-question-mark"/>
-                  </Tooltip>
+                  <label className="form-label"> 
+                    <Tooltip 
+                        title={<span>See solar panel documentation for modules power</span>}
+                        placement='right'> 
+                        <QuestionCircleOutlined className="form-question-mark"/>
+                    </Tooltip>
+                    Asset Power: 
+                  </label> 
+                  
                   <input className="form-smallinput" type="number" value={modules_power} required
                   min = '1' onChange={(e) => setModulesPower(e.target.value)} /> 
                   <label className="form-context"> kW </label>
@@ -357,99 +370,100 @@ function AssetPage(props) {
                 
 
                 <div className="form-item">
- <label className="form-label"> Charging Start Time: </label>
- <Tooltip 
-    title={<span>Set your charging start time (HH:MM)</span>}
-    className = 'form-question-mark'
-    placement='right'> 
-    <QuestionCircleOutlined className="form-question-mark"/>
-</Tooltip>
-
-      <Select
-        defaultValue={{ value: '0', label:'00' }}
-        style={{ width: 70 }}
-        onChange={onStartChargeTimeHrChange}
-        options = {hourOptions}
-      />
-
-        <label className="form-context"> : </label>
-     
-      <Select
-      defaultValue={{ value: '0', label:'00' }}
-      style={{ width: 70 }}
-      options = {minOptions}
-      onChange={onStartChargeTimeMinChange}
-    />
-
-</div>
-<div className="form-item">
-<label className="form-label">Charging End Time: </label>
-<Tooltip 
-    title={<span>Set your charging end time (HH:MM)</span>}
-    className = 'form-question-mark'
-    placement='right'> 
-    <QuestionCircleOutlined className="form-question-mark"/>
-</Tooltip>
-
-      <Select
-        defaultValue={{ value: '0', label:'00' }}
-        style={{ width: 70 }}
-        options = {hourOptions}
-        onChange={onEndChargeTimeHrChange}
-      />
-        
-
-      
-        <label className="form-context"> : </label>
-      <Select
-        defaultValue={{ value: '0', label:'00' }}
-        style={{ width: 70 }}
-        options = {minOptions}
-        onChange={onEndChargeTimeMinChange}
-      />
-       
-
-      </div>
-
-      <div className="form-item">
-                  <label className="form-label"> Asset Duration: </label>
-                  <Tooltip 
-    title={<span>Set your duration time in number of hours and minutes</span>}
-    className = 'form-question-mark'
-    placement='right'> 
-    <QuestionCircleOutlined className="form-question-mark"/>
-</Tooltip> 
-                 
-                  <input required className="form-smallinput" type="number" value={duration_time_hr} 
-                    onChange={(e) => setDurationTimeHr(e.target.value)} />
-
-<label className="form-context"> hr </label>
- 
-  <input required className="form-smallinput" type="number" value={duration_time_min} 
-                    onChange={(e) => setDurationTimeMin(e.target.value)} />
-                    <label className="form-context"> min </label>
-
-{(duration_time_hr == 0  && duration_time_min == 0) &&
-<div className = 'form-duration-error-message'> Duration must be greater than 0 hr 0 min! </div>}
+                  <label className="form-label"> 
+                    <Tooltip 
+                        title={<span>Set your charging start time (HH:MM)</span>}
+                        className = 'form-question-mark'
+                        placement='right'> 
+                        <QuestionCircleOutlined className="form-question-mark"/>
+                    </Tooltip>
+                    Charging Start Time: 
+                  </label>
                   
+                  <Select
+                    defaultValue={{ value: '0', label:'00' }}
+                    style={{ width: 70 }}
+                    onChange={onStartChargeTimeHrChange}
+                    options = {hourOptions}
+                  />
+
+                  <label className="form-context"> : </label>
+                  
+                  <Select
+                    defaultValue={{ value: '0', label:'00' }}
+                    style={{ width: 70 }}
+                    options = {minOptions}
+                    onChange={onStartChargeTimeMinChange}
+                  />
+
                 </div>
 
                 <div className="form-item">
-                  <label className="form-label"> Asset Energy Demand: </label> 
-                  <Tooltip 
-    title={<span>Set your energy demand in kWH, must be greater than 1 kWH</span>}
-    className = 'form-question-mark'
-    placement='right'> 
-    <QuestionCircleOutlined className="form-question-mark"/>
-</Tooltip>
+                  <label className="form-label">
+                    <Tooltip 
+                        title={<span>Set your charging end time (HH:MM)</span>}
+                        className = 'form-question-mark'
+                        placement='right'> 
+                        <QuestionCircleOutlined className="form-question-mark"/>
+                    </Tooltip>
+                    Charging End Time: 
+                  </label>
+
+                  <Select
+                    defaultValue={{ value: '0', label:'00' }}
+                    style={{ width: 70 }}
+                    options = {hourOptions}
+                    onChange={onEndChargeTimeHrChange}
+                  />
+                    
+                  <label className="form-context"> : </label>
+                  <Select
+                    defaultValue={{ value: '0', label:'00' }}
+                    style={{ width: 70 }}
+                    options = {minOptions}
+                    onChange={onEndChargeTimeMinChange}
+                  />
+                </div>
+
+                <div className="form-item">
+                  <label className="form-label"> 
+                    <Tooltip 
+                      title={<span>Set your duration time in number of hours and minutes</span>}
+                      className = 'form-question-mark'
+                      placement='right'> 
+                      <QuestionCircleOutlined className="form-question-mark"/>
+                    </Tooltip> 
+                    Asset Duration: 
+                  </label>
+                             
+                  <input required className="form-smallinput" type="number" value={duration_time_hr} 
+                    onChange={(e) => setDurationTimeHr(e.target.value)} />
+
+                  <label className="form-context"> hr </label>
+                  
+                  <input required className="form-smallinput" type="number" value={duration_time_min} 
+                                      onChange={(e) => setDurationTimeMin(e.target.value)} />
+                                      <label className="form-context"> min </label>
+
+                  {(duration_time_hr == 0  && duration_time_min == 0) &&
+                  <div className = 'form-duration-error-message'> Duration must be greater than 0 hr 0 min! </div>}
+                </div>
+
+                <div className="form-item">
+                  <label className="form-label"> 
+                    <Tooltip 
+                      title={<span>Set your energy demand in kWH, must be greater than 1 kWH</span>}
+                      className = 'form-question-mark'
+                      placement='right'> 
+                      <QuestionCircleOutlined className="form-question-mark"/>
+                    </Tooltip>
+                    Energy Demand: 
+                  </label> 
+                  
                   <input className="form-smallinput" type="number" value={demand} required
                     min = '1' onChange={(e) => setDemand(e.target.value)} /> 
                   <label className="form-context">kWH</label>
-                  
-      </div>
-
-
-
+                </div>
 
                 <button className="asset-button"> Create Flexible Asset </button>
               </form>

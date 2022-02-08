@@ -191,6 +191,7 @@ function ExplorePage (props) {
                 <div className="explore-chart">
                 <Chart 
                     title="Visualization" 
+                    dateformat='%b %d %H:%M'
                     series={[
                         {
                             name: 'Energy Produced',
