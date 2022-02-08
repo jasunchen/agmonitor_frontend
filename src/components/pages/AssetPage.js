@@ -35,10 +35,10 @@ function AssetPage(props) {
    const [declination, setDeclination] = useState();
    const [azimuth, setAzimuth] = useState();
    const [modules_power, setModulesPower] = useState();
-   const [start_charge_time_hr, setStartChargeTimeHr] = useState();
-   const [start_charge_time_min, setStartChargeTimeMin] = useState();
-   const [end_charge_time_hr, setEndChargeTimeHr] = useState();
-   const [end_charge_time_min, setEndChargeTimeMin] = useState();
+   const [start_charge_time_hr, setStartChargeTimeHr] = useState(0);
+   const [start_charge_time_min, setStartChargeTimeMin] = useState(0);
+   const [end_charge_time_hr, setEndChargeTimeHr] = useState(0);
+   const [end_charge_time_min, setEndChargeTimeMin] = useState(0);
    const [duration_time_hr, setDurationTimeHr] = useState();
    const [duration_time_min, setDurationTimeMin] = useState();
    const [demand, setDemand] = useState();
@@ -117,9 +117,16 @@ function AssetPage(props) {
       e.preventDefault();
 
       let requestUrl = `${server}/addUserAsset`
-      if(parseInt(duration_time_hr) == 0 && parseInt(duration_time_min) == 0){
-        return;
-      }
+      console.log(JSON.stringify({
+        "email" : email,
+        "name" : assetName,
+        "description" : assetDescription,
+        "type_of_asset": "flexible",
+        "start_charge_time": parseInt(start_charge_time_hr) * 3600 + parseInt(start_charge_time_min) * 60,
+        "end_charge_time" : parseInt(end_charge_time_hr) * 3600 + parseInt(end_charge_time_min) * 60,
+        "duration": (duration_time_hr * 3600 + duration_time_min * 60).toString(),
+        "demand": demand.toString()
+      }));
 
       fetch(requestUrl, {
            method: 'POST',
@@ -136,8 +143,6 @@ function AssetPage(props) {
              "end_charge_time" : parseInt(end_charge_time_hr) * 3600 + parseInt(end_charge_time_min) * 60,
              "duration": (duration_time_hr * 3600 + duration_time_min * 60).toString(),
              "demand": demand.toString()
-
-
            })
       })
 
@@ -452,7 +457,7 @@ function AssetPage(props) {
                       placement='right'> 
                       <QuestionCircleOutlined className="form-question-mark"/>
                     </Tooltip>
-                    Asset Energy Demand: 
+                    Energy Demand: 
                   </label> 
                   
                   <input className="form-smallinput" type="number" value={demand} required

@@ -230,323 +230,295 @@ function SpecificAssetPage() {
 
   return (
     <div className="overlay">
-    
-    {data['type_of_asset'] == 'base' &&
-    <div>
-    
-    <div style={{fontWeight: "bold", color: "#E5C922", fontSize: 60}}> 
-          {data['asset_name']}
-    </div>
-
-    <form className="asset-form" onSubmit={handleNotGenerationChangeSubmit}>
-          <div className="form-item"> 
-            <label className="form-label">Change Asset Name:</label> 
-              <input
-                  className="form-input"
-                  type="text"
-                  value={assetName}
-                  required
-                  onChange={(e) => setAssetName(e.target.value)} />
+      {data['type_of_asset'] == 'base' &&
+        <div>
+          <div style={{fontWeight: "bold", color: "#E5C922", fontSize: 60}}> 
+                {data['asset_name']}
           </div>
-                  <br></br>
-          <div className="form-item">
+
+          <form className="asset-form" onSubmit={handleNotGenerationChangeSubmit}>
+            <div className="form-item"> 
+              <label className="form-label">Change Asset Name:</label> 
+              <input
+                className="form-input"
+                type="text"
+                value={assetName}
+                required
+                onChange={(e) => setAssetName(e.target.value)} />
+            </div>
+
+            <div className="form-item">
               <label className="form-label">Change Asset Description:</label>
               <textarea
-                  className="form-input"
-                  value={assetDescription}
-                  required
-                  onChange={(e) => setAssetDescription(e.target.value)}
-              ></textarea>
-          </div>
+                className="form-input"
+                value={assetDescription}
+                required
+                onChange={(e) => setAssetDescription(e.target.value)}
+              />
+            </div>
 
-          <button className='asset-button'>Submit</button>
+            <button className='asset-button'>Submit</button>
 
-          <button 
+            <button 
               className = 'asset-delete-button'
               onClick = {handleDelete}> 
               Delete Asset
-          </button>
-    </form>
+            </button>
+          </form>
+        </div>
+      }
 
-    </div>
-    }
+      {data['type_of_asset'] == 'generation' &&
+        <div>
+          <div style={{fontWeight: "bold", color: "#E5C922", fontSize: 60}}> 
+                {data['asset_name']}
+          </div>
 
-
-
-{data['type_of_asset'] == 'generation' &&
-    <div>
-    
-    <div style={{fontWeight: "bold", color: "#E5C922", fontSize: 60}}> 
-          {data['asset_name']}
-    </div>
-
-    <form className="asset-form" onSubmit={ handleGenerationChangeSubmit }>
-          <div className="form-item"> 
-            <label className="form-label">Change Asset Name:</label> 
-              <input
+          <form className="asset-form" onSubmit={ handleGenerationChangeSubmit }>
+            <div className="form-item"> 
+              <label className="form-label">Change Asset Name:</label> 
+                <input
                   className="form-input"
                   type="text"
                   value={assetName}
                   required
                   onChange={(e) => setAssetName(e.target.value)} />
-          </div>
+            </div>
                   
-          <div className="form-item">
+            <div className="form-item">
               <label className="form-label">Change Asset Description:</label>
               <textarea
-                  className="form-input"
-                  value={assetDescription}
-                  required
-                  onChange={(e) => setAssetDescription(e.target.value)}
-              ></textarea>
-          </div>
-         
-
-          <div className = 'form-item'>
-  <label className="form-label"> Change Declination: </label> 
-  <Tooltip 
-    title={<span>See solar panel documentation for declination (0 &deg; ~ 90 &deg;)</span>}
-    className = 'form-question-mark'
-    placement='right'> 
-    <QuestionCircleOutlined className="form-question-mark"/>
-</Tooltip>
- 
- <input
- className="form-smallinput"
- type="number"
- value={declination}
- required
- min = '0'
- max = '90'
- onChange={(e) => setDeclination(e.target.value)} /> <label className="form-context">&deg;</label>
- 
-
-
-
-
+                className="form-input"
+                value={assetDescription}
+                required
+                onChange={(e) => setAssetDescription(e.target.value)}
+              />
+            </div>
     
- </div>
- 
- 
-
-<div className = 'form-item'>
-<label className="form-label"> Change Azimuth: </label> 
-<Tooltip 
-    title={<span>See solar panel documentation for declination (0 &deg; ~ 90 &deg;)</span>}
-    className = 'form-question-mark'
-    placement='right'> 
-    <QuestionCircleOutlined className="form-question-mark"/>
-</Tooltip>
- <input
- className="form-smallinput"
- type="number"
- value={azimuth}
- required
- min = '-180'
- max = '180'
- onChange={(e) => setAzimuth(e.target.value)} /> <label className="form-context">&deg;</label>
-
-</div>
-
- 
- <div className = 'form-item'>
- <label className="form-label"> Change Modules Power: </label> 
- <Tooltip 
-    title={<span>See solar panel documentation for declination (0 &deg; ~ 90 &deg;)</span>}
-    className = 'form-question-mark'
-    placement='right'> 
-    <QuestionCircleOutlined className="form-question-mark"/>
-</Tooltip>
- <input
- className='form-smallinput'
- type="number"
- value={modules_power}
- required
- min = '1'
- onChange={(e) => setModulesPower(e.target.value)} />
- 
- <label className="form-context"> kW </label>
- 
- </div>
-
-
- <button className='asset-button'>Submit</button>
-
- <button 
-      className = 'asset-delete-button'
-      onClick = {handleDelete}> 
-      Delete Asset
-  </button>
-    </form>
-
-    </div>
-  }
-
-
-
-    
-{data['type_of_asset'] == 'flexible' &&
-    <div>
-    
-    <div style={{fontWeight: "bold", color: "#E5C922", fontSize: 60}}> 
-          {data['asset_name']}
-    </div>
-
-    <form className="asset-form" onSubmit={handleFlexibleChangeSubmit}>
-          <div className="form-item"> 
-            <label className="form-label">Change Asset Name:</label> 
+            <div className = 'form-item'>
+              <label className="form-label"> 
+                <Tooltip 
+                  title={<span>See solar panel documentation for declination (0 &deg; ~ 90 &deg;)</span>}
+                  className = 'form-question-mark'
+                  placement='right'> 
+                  <QuestionCircleOutlined className="form-question-mark"/>
+                </Tooltip>
+                Change Declination:
+              </label> 
+  
               <input
-                  className="form-input"
-                  type="text"
-                  value={assetName}
-                  required
-                  onChange={(e) => setAssetName(e.target.value)} />
-          </div>
-                  <br></br>
-          <div className="form-item">
-              <label className="form-label">Change Asset Description:</label>
-              <textarea
-                  className="form-input"
-                  value={assetDescription}
-                  required
-                  onChange={(e) => setAssetDescription(e.target.value)}
-              ></textarea>
-          </div>
-
-          
-
-          <div className="form-item" >
- <label className="form-label"> Start Charge Time: </label>
- <Tooltip 
-    title={<span>Set your charging start time (HH:MM)</span>}
-    className = 'form-question-mark'
-    placement='right'> 
-    <QuestionCircleOutlined className="form-question-mark"/>
-</Tooltip>
- 
-{start_charge_time_hr &&
-
-      <Select
-        
-        defaultValue={{ value: start_charge_time_hr, label:start_charge_time_hr }}
-        
-        onChange={onStartChargeTimeHrChange}
-        options = {hourOptions}
-      />}
-
-        <label className="form-context"> : </label>
-      {start_charge_time_min &&
-      <Select
-      
-      defaultValue={{ value: start_charge_time_min, label:start_charge_time_min }}
-      
-      options = {minOptions}
-      onChange={onStartChargeTimeMinChange}
-    />}
-
-</div>
-<div className="form-item">
-<label className="form-label">End charge time: </label>
-<Tooltip 
-    title={<span>Set your charging end time (HH:MM)</span>}
-    className = 'form-question-mark'
-    placement='right'> 
-    <QuestionCircleOutlined className="form-question-mark"/>
-</Tooltip>
-{end_charge_time_hr &&
-      <Select
-        
-        defaultValue={{ value: end_charge_time_hr, label:end_charge_time_hr }}
-        
-        options = {hourOptions}
-        onChange={onEndChargeTimeHrChange}
-      />
-        
-}
-      
-        <label className="form-context"> : </label>
-{end_charge_time_min &&
-      <Select
-        
-        defaultValue={{ value: end_charge_time_min, label:end_charge_time_min }}
-        options = {minOptions}
-        onChange={onEndChargeTimeMinChange}
-      />
-       
-}
-
-      </div>
-
-      <div className="form-item">
-                  <label className="form-label"> Asset Duration: </label>
-                  <Tooltip 
-    title={<span>Set your duration time in number of hours and minutes</span>}
-    className = 'form-question-mark'
-    placement='right'> 
-    <QuestionCircleOutlined className="form-question-mark"/>
-</Tooltip> 
-                   
-                    <input required className="form-smallinput" type="number" value={duration_time_hr} 
-                    onChange={(e) => setDurationTimeHr(e.target.value)} />
-
-  <label className="form-context"> hr </label>
- 
-    <input required className="form-smallinput" type="number" value={duration_time_min} 
-                    onChange={(e) => setDurationTimeMin(e.target.value)} />
-                    <label className="form-context"> min </label>
-
-{(duration_time_hr == 0  && duration_time_min == 0) &&
-<div className = 'form-duration-error-message'> Duration must be greater than 0 hr 0 min! </div>}
-                  
-                </div>
-
-                <div className="form-item">
-                  <label className="form-label"> Asset Energy Demand: </label>
-                  <Tooltip 
-    title={<span>Set your energy demand in kWH, must be greater than 1 kWH</span>}
-    className = 'form-question-mark'
-    placement='right'> 
-    <QuestionCircleOutlined className="form-question-mark"/>
-</Tooltip>
-                  <input className="form-smallinput" type="number" value={demand} required
-                    min = '1' onChange={(e) => setDemand(e.target.value)} /> 
-                  <label className="form-context">kWH</label>
-                  
-      </div>
-
-      
-
-
-          <button className='asset-button'>Submit</button>
-
-          <button 
-      className = 'asset-delete-button'
-      onClick = {handleDelete}> 
-      Delete Asset
-    </button>
-
-    </form>
-
-    </div>
-  }
-
-        
- 
-
- 
-
+                className="form-smallinput"
+                type="number"
+                value={declination}
+                required
+                min = '0'
+                max = '90'
+                onChange={(e) => setDeclination(e.target.value)} /> 
               
+              <label className="form-context">&deg;</label>
+            </div>
+ 
+            <div className = 'form-item'>
+              <label className="form-label"> 
+                <Tooltip 
+                    title={<span>See solar panel documentation for declination (0 &deg; ~ 90 &deg;)</span>}
+                    className = 'form-question-mark'
+                    placement='right'> 
+                    <QuestionCircleOutlined className="form-question-mark"/>
+                </Tooltip>
+                Change Azimuth: 
+              </label> 
+
+              <input
+                className="form-smallinput"
+                type="number"
+                value={azimuth}
+                required
+                min = '-180'
+                max = '180'
+                onChange={(e) => setAzimuth(e.target.value)} /> 
+            
+              <label className="form-context">&deg;</label>
+            </div>
+
+            <div className = 'form-item'>
+              <label className="form-label"> 
+                <Tooltip 
+                    title={<span>See solar panel documentation for declination (0 &deg; ~ 90 &deg;)</span>}
+                    className = 'form-question-mark'
+                    placement='right'> 
+                    <QuestionCircleOutlined className="form-question-mark"/>
+                </Tooltip>
+                Change Modules Power: 
+              </label> 
+              
+              <input
+              className='form-smallinput'
+              type="number"
+              value={modules_power}
+              required
+              min = '1'
+              onChange={(e) => setModulesPower(e.target.value)} />
+              
+              <label className="form-context"> kW </label>
+            </div>
+
+            <button className='asset-button'>Submit</button>
+
+            <button 
+              className = 'asset-delete-button'
+              onClick = {handleDelete}> 
+              Delete Asset
+            </button>
+          </form>
+        </div>
+      }
     
+      {data['type_of_asset'] == 'flexible' &&
+        <div>
+          <div style={{fontWeight: "bold", color: "#E5C922", fontSize: 60}}> 
+            {data['asset_name']}
+          </div>
 
-    
+          <form className="asset-form" onSubmit={handleFlexibleChangeSubmit}>
+            <div className="form-item"> 
+              <label className="form-label">Change Asset Name:</label> 
+              <input
+                className="form-input"
+                type="text"
+                value={assetName}
+                required
+                onChange={(e) => setAssetName(e.target.value)} />
+            </div>
 
+            <div className="form-item">
+              <label className="form-label">Change Asset Description:</label>
+              <textarea
+                className="form-input"
+                value={assetDescription}
+                required
+                onChange={(e) => setAssetDescription(e.target.value)}
+              />
+            </div>
 
+            <div className="form-item" >
+              <label className="form-label"> 
+                <Tooltip 
+                    title={<span>Set your charging start time (HH:MM)</span>}
+                    className = 'form-question-mark'
+                    placement='right'> 
+                    <QuestionCircleOutlined className="form-question-mark"/>
+                </Tooltip>
+                Start Charge Time: 
+              </label>
+              
+              {start_charge_time_hr &&
+                <Select
+                  defaultValue={{ value: start_charge_time_hr, label:start_charge_time_hr }}
+                  onChange={onStartChargeTimeHrChange}
+                  options = {hourOptions}
+                />
+              }
+              
+              <label className="form-context"> : </label>
+
+              {start_charge_time_min &&
+                <Select
+                  defaultValue={{ value: start_charge_time_min, label:start_charge_time_min }}
+                  options = {minOptions}
+                  onChange={onStartChargeTimeMinChange}
+                />
+              }
+            </div>
+
+            <div className="form-item">
+              <label className="form-label"> 
+                <Tooltip 
+                  title={<span>Set your charging end time (HH:MM)</span>}
+                  className = 'form-question-mark'
+                  placement='right'> 
+                  <QuestionCircleOutlined className="form-question-mark"/>
+                </Tooltip>
+                End charge time: 
+              </label>
+              
+
+              {end_charge_time_hr &&
+                <Select
+                  defaultValue={{ value: end_charge_time_hr, label: end_charge_time_hr }}
+                  options = {hourOptions}
+                  onChange={onEndChargeTimeHrChange}
+                />  
+              }
+      
+              <label className="form-context"> : </label>
+
+              {end_charge_time_min &&
+                <Select
+                  defaultValue={{ value: end_charge_time_min, label:end_charge_time_min }}
+                  options = {minOptions}
+                  onChange={onEndChargeTimeMinChange}
+                />
+              }
+            </div>
+
+            <div className="form-item">
+              <label className="form-label"> 
+                <Tooltip 
+                  title={<span>Set your duration time in number of hours and minutes</span>}
+                  className = 'form-question-mark'
+                  placement='right'> 
+                  <QuestionCircleOutlined className="form-question-mark"/>
+                </Tooltip>
+                Asset Duration: 
+              </label>
+                   
+              <input required className="form-smallinput" type="number" value={duration_time_hr} 
+              onChange={(e) => setDurationTimeHr(e.target.value)} />
+
+              <label className="form-context"> hr </label>
+ 
+              <input required className="form-smallinput" type="number" value={duration_time_min} 
+                onChange={(e) => setDurationTimeMin(e.target.value)} />
+              
+              <label className="form-context"> min </label>
+
+              {(duration_time_hr == 0 && duration_time_min == 0) &&
+                <div className = 'form-duration-error-message'> 
+                  Duration must be greater than 0 hr 0 min! 
+                </div>
+              }      
+            </div>
+
+            <div className="form-item">
+              <label className="form-label"> 
+                <Tooltip 
+                  title={<span>Set your energy demand in kWH, must be greater than 1 kWH</span>}
+                  className = 'form-question-mark'
+                  placement='right'> 
+                  <QuestionCircleOutlined className="form-question-mark"/>
+                </Tooltip>
+                Asset Energy Demand: 
+              </label>
+
+              <input className="form-smallinput" type="number" value={demand} required
+                min = '1' onChange={(e) => setDemand(e.target.value)} /> 
+              
+              <label className="form-context">kWH</label>    
+            </div>
+
+            <button className='asset-button'>Submit</button>
+
+            <button 
+              className = 'asset-delete-button'
+              onClick = {handleDelete}> 
+              Delete Asset
+            </button>
+          </form>
+        </div>
+      }
     </div>
-
-   
   );
 }
-
-
 
 export default withAuth0(SpecificAssetPage);
