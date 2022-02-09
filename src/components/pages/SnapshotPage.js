@@ -419,6 +419,37 @@ function SnapshotPage (props) {
                                     />
                                 )}
                             </div>
+                            <div className="time-labels">
+                                <div className="time-label">
+                                    00:00
+                                </div>
+                                <div className="time-label">
+                                    06:00
+                                </div>
+                                <div className="time-label">
+                                    12:00
+                                </div>
+                                <div className="time-label">
+                                    18:00
+                                </div>
+                            </div>
+                            <div className="key-labels">
+                                <div className="key-label">
+                                    Worst Time
+                                </div>   
+                                <div className="key-label-color e" />   
+                                <div className="key-label-color d" />   
+                                <div className="key-label-color c" />  
+                                <div className="key-label-color b" />  
+                                <div className="key-label-color a" />  
+                                <div className="key-label"  
+                                    style={{
+                                        textAlign: 'right'
+                                    }}
+                                >
+                                    Best Time
+                                </div>   
+                            </div>
                         </div>
                             
                         }
