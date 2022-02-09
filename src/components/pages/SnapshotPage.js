@@ -415,7 +415,7 @@ function SnapshotPage (props) {
                                             e > 0.2 ? 'time-block d' : 
                                             'time-block e'
                                         }
-                                        placement='right'
+                                        placement='bottom'
                                     />
                                 )}
                             </div>

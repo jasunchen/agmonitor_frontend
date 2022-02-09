@@ -135,7 +135,7 @@ function UserPreference(props) {
             <Tooltip 
               title={<span>Text notification will be sent to this phone number</span>}
               className = 'form-question-mark'
-              placement='right'> 
+              placement='left'> 
               <QuestionCircleOutlined className="form-pref-question-mark"/>
             </Tooltip>
             Phone Number:
@@ -169,7 +169,7 @@ function UserPreference(props) {
             <Tooltip 
               title={<span>Set your battery size, must be greater than 1 kWH</span>}
               className = 'form-question-mark'
-              placement='right'> 
+              placement='left'> 
               <QuestionCircleOutlined className="form-pref-question-mark"/>
             </Tooltip>
             Battery Size: 
@@ -188,7 +188,7 @@ function UserPreference(props) {
             <Tooltip 
               title={<span>Set your battery threshold lower and upper limit (0~100)</span>}
               className = 'form-question-mark'
-              placement='right'> 
+              placement='left'> 
               <QuestionCircleOutlined className="form-pref-question-mark"/>
             </Tooltip>
             Acceptable Battery Threshold: 
@@ -212,7 +212,7 @@ function UserPreference(props) {
             <Tooltip 
               title={<span>Set hours of backup power (0~100) </span>}
               className = 'form-question-mark'
-              placement='right'> 
+              placement='left'> 
               <QuestionCircleOutlined className="form-pref-question-mark"/>
             </Tooltip>
             Hours of Backup Power: 
@@ -232,7 +232,7 @@ function UserPreference(props) {
             <Tooltip 
               title={<span>Set cost versus Risk Tolerance (0~100)</span>}
               className = 'form-question-mark'
-              placement='right'> 
+              placement='left'> 
               <QuestionCircleOutlined className="form-pref-question-mark"/>
             </Tooltip>
             Cost versus Risk Tolerance: 
@@ -253,7 +253,7 @@ function UserPreference(props) {
             <Tooltip 
               title={<span>Set your current addresses</span>}
               className = 'form-question-mark'
-              placement='right'> 
+              placement='left'> 
               <QuestionCircleOutlined className="form-pref-question-mark"/>
             </Tooltip>
 
