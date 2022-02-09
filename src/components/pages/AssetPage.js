@@ -336,7 +336,7 @@ function AssetPage(props) {
                 <div className="form-item">
                   <label className="form-label"> 
                     <Tooltip 
-                        title={<span>See solar panel documentation for modules power</span>}
+                        title={<span> See solar panel documentation maximum peak power. </span>}
                         placement='right'> 
                         <QuestionCircleOutlined className="form-question-mark"/>
                     </Tooltip>

@@ -121,7 +121,7 @@
 
 .good-time {
   border: 1px solid black;
-  margin: 0 0 0 0;
+  margin: 20px 0 0 0;
   padding: 0 -1px 0 0;
 }
 
@@ -160,4 +160,36 @@
 
 .e {
   opacity: 0.40;
+}
+
+.time-labels {
+  width: 100%;
+}
+
+.time-label {
+  display: inline-block;
+  width: calc(100% / 4);
+  font-weight: 400;
+}
+
+.key-labels {
+  width: 100%;
+}
+
+.key-label {
+  display: inline-block;
+  vertical-align: bottom;
+  width: 100px;
+  line-height: 1;
+  font-weight: 400;
+  font-variant: all-small-caps;
+  font-size: 28px;
+}
+
+.key-label-color {
+  display: inline-block;
+  background: #00B8A9;
+  vertical-align: bottom;
+  height: 20px;
+  width: calc((100% - 200px) / 5);
 }
