@@ -63,7 +63,8 @@ function SnapshotPage (props) {
         "alerts" : [],
         "utility" : [[]],
         "baseload" : [[]],
-        "netUsage" : 0
+        "netUsage" : 0,
+        "battery_size" : 0
     })
 
     // configure server URL
@@ -103,8 +104,8 @@ function SnapshotPage (props) {
                 })
                 
                 data["utility"].replace("[", "").replace("]", "").split(", ").map((e, i) => {
-                    utility.push([(todayTime + intervalDelta * i) * 1000, parseFloat(e) / 1000]);
-                    netUsage += parseFloat(e) / 1000;
+                    utility.push([(todayTime + intervalDelta * i) * 1000, parseFloat(e)]);
+                    netUsage += parseFloat(e);
                 })
 
                 data["pred_baseload"].replace("[", "").replace("]", "").split(", ").map((e, i) => {
@@ -130,6 +131,7 @@ function SnapshotPage (props) {
                     "cost_or_shutoff" : data["cost_or_shutoff"],
                     "low_limit" : data["low_limit"],
                     "max_limit" : data["max_limit"],
+                    "battery_size" : data["battery_size"]
                 })
             }
         })
@@ -358,10 +360,11 @@ function SnapshotPage (props) {
                             </div>
 
                             <div className="snapshot-headers battery-text">
-                                Today, you should set your Battery Threshold to
+                                Today, you should set your {userInfo["battery_size"]} kWH Battery Threshold to
                                 <span className="snapshot-head"> 
-                                    &nbsp;{userInfo["pred_opt_threshold"]}%
+                                    &nbsp;{userInfo["pred_opt_threshold"]}% 
                                 </span> 
+                                &nbsp;({Math.round(userInfo["pred_opt_threshold"] * userInfo["battery_size"]) / 100} kWH)
                                 .
                             </div>
                         </div>
