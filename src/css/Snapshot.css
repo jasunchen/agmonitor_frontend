@@ -69,10 +69,6 @@
   min-width: 400px;
 }
 
-.home-card:hover {
-  background: #f8eda5;
-}
-
 .recommendation-text {
   font-weight: 300;
   margin: 10px 0 0 0;
@@ -123,25 +119,17 @@
 }
 
 .good-time {
-<<<<<<< HEAD
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
-  margin: 0 0 0 0;
-  padding: 0 0 0 0;
-=======
   border: 1px solid black;
   margin: 20px 0 0 0;
   padding: 0 -1px 0 0;
->>>>>>> 98b5503afcb0c079035b01bcbc2ad4205de3a979
 }
 
 .time-block {
   display: inline-block;
-  width: calc(100% / 48);
+  width: calc(100% / 96);
   height: 32px;
-  margin: -1px 0px -8px 0px;
+  margin: 0 0 -8px 0;
   background: #00b8a9;
-  border-left: 1px solid black;
 }
 
 .time-hover {
@@ -170,11 +158,7 @@
 }
 
 .e {
-<<<<<<< HEAD
   opacity: 0.4;
-}
-=======
-  opacity: 0.40;
 }
 
 .time-labels {
@@ -203,9 +187,8 @@
 
 .key-label-color {
   display: inline-block;
-  background: #00B8A9;
+  background: #00b8a9;
   vertical-align: bottom;
   height: 20px;
   width: calc((100% - 200px) / 5);
 }
->>>>>>> 98b5503afcb0c079035b01bcbc2ad4205de3a979
