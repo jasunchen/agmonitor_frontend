@@ -119,6 +119,7 @@ function UserPreference(props) {
     100: '100'
   }
 
+
   const handlePhoneChange = async value => {
     setPhoneNumber(value)
     console.log(phone_number)
