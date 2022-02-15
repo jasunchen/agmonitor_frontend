@@ -64,7 +64,8 @@ function SnapshotPage (props) {
         "utility" : [[]],
         "baseload" : [[]],
         "netUsage" : 0,
-        "battery_size" : 0
+        "battery_size" : 0,
+        "good_time_range" : "",
     })
 
     // configure server URL
@@ -98,6 +99,7 @@ function SnapshotPage (props) {
                 let baseload = [];
                 let goodtime = [];
                 let netUsage = 0;
+                let textDict = JSON.parse(data["text"]);
 
                 data["pred_solar_generation"].replace("[", "").replace("]", "").split(", ").map((e, i) => {
                     solar.push([(todayTime + intervalDelta * i) * 1000, parseFloat(e)]);
@@ -116,7 +118,6 @@ function SnapshotPage (props) {
                     goodtime.push(parseFloat(e));
                 })
 
-                console.log(goodtime);
 
                 setUserInfo({
                     ...userInfo,
@@ -131,7 +132,10 @@ function SnapshotPage (props) {
                     "cost_or_shutoff" : data["cost_or_shutoff"],
                     "low_limit" : data["low_limit"],
                     "max_limit" : data["max_limit"],
-                    "battery_size" : data["battery_size"]
+                    "battery_size" : data["battery_size"],
+                    "alerts" : textDict["alerts"],
+                    "good_time_range" : textDict["goodTimesRange"],
+
                 })
             }
         })
@@ -401,7 +405,11 @@ function SnapshotPage (props) {
                         :
                         <div>
                             <div className="snapshot-headers"> 
-                                The brightest times below are the best times to charge today. 
+                                The best times for you to charge tomorrow is from 
+                                <span className="snapshot-head"> 
+                                    &nbsp;{userInfo["good_time_range"]}
+                                </span> 
+                                .
                             </div>
                             <div className="good-time">
                                 {userInfo["pred_good_time"].map((e, i) => 
