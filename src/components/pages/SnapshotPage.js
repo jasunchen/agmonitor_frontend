@@ -360,9 +360,9 @@ function SnapshotPage (props) {
                             </div>
 
                             <div className="snapshot-headers battery-text">
-                                Today, you should set your {userInfo["battery_size"]} kWH Battery Threshold to
+                                Today, you should set your {Math.round(userInfo["battery_size"] * 100) / 100} kWH Battery Threshold to
                                 <span className="snapshot-head"> 
-                                    &nbsp;{userInfo["pred_opt_threshold"]}% 
+                                    &nbsp;{Math.round(userInfo["pred_opt_threshold"] * 100) / 100}% 
                                 </span> 
                                 &nbsp;({Math.round(userInfo["pred_opt_threshold"] * userInfo["battery_size"]) / 100} kWH)
                                 .
