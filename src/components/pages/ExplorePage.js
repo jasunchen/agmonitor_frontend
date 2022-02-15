@@ -40,7 +40,8 @@ function ExplorePage (props) {
     function handleSubmit(e){
         e.preventDefault();
         
-        let t = new Date(searchValue).getTime();
+        let t = new Date(searchValue + 'GMT+00:00').getTime();
+
         if (isNaN(t)) {
             alert("Invalid input!")
         }
@@ -96,7 +97,6 @@ function ExplorePage (props) {
                     let generation = [];
                     let rows = [];
 
-                    console.log("Hello World");
                     for(let i = 0; i < 96; ++i) {
                         rows.push({
                             "time": 0,
@@ -131,8 +131,6 @@ function ExplorePage (props) {
                             })
                         }
                     })
-
-                    console.log(rows);
 
                     setState({
                         ...state,
