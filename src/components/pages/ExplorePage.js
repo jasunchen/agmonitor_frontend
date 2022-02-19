@@ -173,18 +173,6 @@ function ExplorePage (props) {
                 </form>
             </div>
 
-            <h1> Raw Data </h1>
-
-            <div className="row">
-                <div className="explore-datagrid">
-                    <DataGrid 
-                        columns={columns} 
-                        rows={state["rows"]} 
-                        rowKeyGetter={rowKeyGetter}
-                    />
-                </div>
-            </div>
-
             <div className="row">
                 <div className="explore-chart">
                 <Chart 
@@ -210,6 +198,19 @@ function ExplorePage (props) {
                 />
                 </div>
             </div>
+            
+            <h1> Raw Data </h1>
+
+            <div className="row">
+                <div className="explore-datagrid">
+                    <DataGrid 
+                        columns={columns} 
+                        rows={state["rows"]} 
+                        rowKeyGetter={rowKeyGetter}
+                    />
+                </div>
+            </div>
+
         </div>
 
     );
