@@ -66,6 +66,7 @@ function SnapshotPage (props) {
         "netUsage" : 0,
         "battery_size" : 0,
         "good_time_range" : "",
+        "recommendation_message" : "No recommendations",
     })
 
     // configure server URL
@@ -111,7 +112,7 @@ function SnapshotPage (props) {
                 })
 
                 data["pred_baseload"].replace("[", "").replace("]", "").split(", ").map((e, i) => {
-                    baseload.push([(todayTime + intervalDelta * i) * 1000, parseFloat(e) / 1000]);
+                    baseload.push([(todayTime + intervalDelta * i) * 1000, parseFloat(e)]);
                 })
 
                 data["pred_good_time"].replace("[", "").replace("]", "").split(", ").map((e, i) => {
@@ -135,7 +136,7 @@ function SnapshotPage (props) {
                     "battery_size" : data["battery_size"],
                     "alerts" : textDict["alerts"],
                     "good_time_range" : textDict["goodTimesRange"],
-
+                    "recommendation_message" : textDict["recommendationMessage"],
                 })
             }
         })
@@ -405,7 +406,8 @@ function SnapshotPage (props) {
                         :
                         <div>
                             <div className="snapshot-headers"> 
-                                The best times for you to charge tomorrow is from 
+                                {userInfo["pred_should_charge"] ? "You should use your flexible loads tomorrow. T" : "You should avoid using your flexible loads tomorrow. However, t"}
+                                he best times for you to use energy tomorrow is from 
                                 <span className="snapshot-head"> 
                                     &nbsp;{userInfo["good_time_range"]}
                                 </span> 
