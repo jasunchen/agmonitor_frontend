@@ -149,8 +149,10 @@ function SpecificAssetPage() {
                "name" : assetName,
                "description" : assetDescription,
                "type_of_asset": "flexible",
-               "start_charge_time": parseInt(start_charge_time_hr) * 3600 + parseInt(start_charge_time_min) * 60,
-               "end_charge_time" : parseInt(end_charge_time_hr) * 3600 + parseInt(end_charge_time_min) * 60,
+              //  "start_charge_time": parseInt(start_charge_time_hr) * 3600 + parseInt(start_charge_time_min) * 60,
+              //  "end_charge_time" : parseInt(end_charge_time_hr) * 3600 + parseInt(end_charge_time_min) * 60,
+               "start_charge_time": 0,
+               "end_charge_time" : 0,
                "duration": (duration_time_hr * 3600 + duration_time_min * 60).toString(),
                "demand": demand.toString()
                
@@ -232,7 +234,7 @@ function SpecificAssetPage() {
     <div className="overlay">
       {data['type_of_asset'] == 'base' &&
         <div>
-          <div style={{fontWeight: "bold", color: "#E5C922", fontSize: 60}}> 
+          <div style={{fontWeight: "bold", color: "#F6416C", fontSize: 60}}> 
                 {data['asset_name']}
           </div>
 
@@ -270,7 +272,7 @@ function SpecificAssetPage() {
 
       {data['type_of_asset'] == 'generation' &&
         <div>
-          <div style={{fontWeight: "bold", color: "#E5C922", fontSize: 60}}> 
+          <div style={{fontWeight: "bold", color: "#00B8A9", fontSize: 60}}> 
                 {data['asset_name']}
           </div>
 
@@ -376,7 +378,7 @@ function SpecificAssetPage() {
     
       {data['type_of_asset'] == 'flexible' &&
         <div>
-          <div style={{fontWeight: "bold", color: "#E5C922", fontSize: 60}}> 
+          <div style={{fontWeight: "bold", color: "#c4a702", fontSize: 60}}> 
             {data['asset_name']}
           </div>
 
@@ -401,7 +403,7 @@ function SpecificAssetPage() {
               />
             </div>
 
-            <div className="form-item" >
+            {/* <div className="form-item" >
               <label className="form-label"> 
                 <Tooltip 
                     title={<span>Set your charging start time (HH:MM)</span>}
@@ -460,7 +462,7 @@ function SpecificAssetPage() {
                   onChange={onEndChargeTimeMinChange}
                 />
               }
-            </div>
+            </div> */}
 
             <div className="form-item">
               <label className="form-label"> 

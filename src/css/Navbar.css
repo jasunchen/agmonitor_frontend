@@ -12,7 +12,7 @@
   margin: 0 3%;
 }
 
-.nav-item{
+.nav-item {
   display: block;
   float: right;
   padding: 0 3% 0 0;
@@ -25,11 +25,11 @@
   font-variant-caps: all-small-caps;
 }
 
-.nav-item:hover {
-  overflow-y: hidden !important;
+.nav-item a:hover {
+  color: #00b8a9;
 }
 
-.nav-link{
+.nav-link {
 }
 
 .nav-button {
@@ -46,12 +46,12 @@
 }
 
 .nav-button:hover {
-  background: #FFDE7D;
+  background: #ffde7d;
 }
 
 .dropdown-content {
   font-weight: 400;
   font-size: 40px;
   font-variant-caps: all-small-caps;
-  color: #F6416C;
+  color: #f6416c;
 }

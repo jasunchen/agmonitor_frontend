@@ -194,7 +194,6 @@ function SnapshotPage (props) {
                 let hasNext = true;
                 for(let page = 1; page <= 8; page += 1){
                     requestUrl = `${server}/getAssetData?id=${assetId}&start=${currentTime - 7 * dayDelta}&end=${currentTime}&page=${page}`
-
                     fetch(requestUrl, {
                         method: 'GET',
                         headers: {
@@ -206,29 +205,24 @@ function SnapshotPage (props) {
                     .then(data => {
                         let weekProduced = state["weekProduced"];
                         let weekConsumed = state["weekConsumed"];
-
                         data["data"].forEach(element => {
                             weekProduced.push([element["start_time"] * 1000, element["produced_energy"]])
                             weekConsumed.push([element["start_time"] * 1000, element["consumed_energy"]])
                         })
-
                         weekProduced = weekProduced.sort(function(a, b) {
                             if (a[0] == b[0]) {
                             return a[1] - b[1];
                             }
                             return b[0] - a[0];
                         });
-
                         weekConsumed = weekConsumed.sort(function(a, b) {
                             return a[0] - b[0];
                         });
-
                         setState({
                             ...state,
                             "weekProduced" : weekProduced,
                             "weekConsumed" : weekConsumed,
                         })
-
                         if(data["has_next"] == false){
                             hasNext = false;
                             setState({
@@ -278,6 +272,8 @@ function SnapshotPage (props) {
     if(!userInfo["exists"] || !state["hasAsset"]){
         return <Redirect to="/asset" />
     }
+    console.log(
+    userInfo["good_time_range"])
 
     return (
         <div className="overlay">
@@ -358,8 +354,8 @@ function SnapshotPage (props) {
                                 <div className="battery-bottom">
                                     <div className="battery-level" 
                                         style={{
-                                            height: batteryHeight(80),
-                                            marginTop: batteryMargin(80)
+                                            height: batteryHeight(userInfo["pred_opt_threshold"]),
+                                            marginTop: batteryMargin(userInfo["pred_opt_threshold"])
                                             }} />
                                 </div> 
                             </div>
@@ -406,8 +402,8 @@ function SnapshotPage (props) {
                         :
                         <div>
                             <div className="snapshot-headers"> 
-                                {userInfo["pred_should_charge"] ? "You should use your flexible loads tomorrow. T" : "You should avoid using your flexible loads tomorrow. However, t"}
-                                he best times for you to use energy tomorrow is from 
+                                {userInfo["pred_should_charge"] ? "You should use your flexible loads tomorrow. T" : "You should avoid using your flexible loads tomorrow. However, "}
+                                the best times for you to use energy tomorrow is from 
                                 <span className="snapshot-head"> 
                                     &nbsp;{userInfo["good_time_range"]}
                                 </span> 
@@ -428,22 +424,22 @@ function SnapshotPage (props) {
                                             e > 0.2 ? 'time-block d' : 
                                             'time-block e'
                                         }
-                                        placement='right'
+                                        placement='bottom'
                                     />
                                 )}
                             </div>
                             <div className="time-labels">
                                 <div className="time-label">
-                                    00:00
+                                    0AM
                                 </div>
                                 <div className="time-label">
-                                    06:00
+                                    6AM
                                 </div>
                                 <div className="time-label">
-                                    12:00
+                                    12PM
                                 </div>
                                 <div className="time-label">
-                                    18:00
+                                    6PM
                                 </div>
                             </div>
                             <div className="key-labels">
@@ -473,7 +469,6 @@ function SnapshotPage (props) {
 
             {/*
             <h1> Energy Snapshot </h1>
-
             <div className="row">
                 <div className="summary-chart">
                     <Chart
@@ -498,7 +493,6 @@ function SnapshotPage (props) {
                             label: "Peak Hours"
                         }}/>
                 </div>
-
                 <div className="summary-chart">
                     <Chart
                         title="Weekly Snapshot"
@@ -518,7 +512,6 @@ function SnapshotPage (props) {
                     />
                 </div>
             </div>
-
             */}
         </div>
 
