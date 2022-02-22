@@ -82,7 +82,7 @@ function AssetPage(props) {
    )
 
 
-
+console.log(typeof(start_charge_time_hr))
 
     const handleBaseSubmit = (e) => {
       e.preventDefault();
