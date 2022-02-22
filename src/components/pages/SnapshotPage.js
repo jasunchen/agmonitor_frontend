@@ -357,8 +357,8 @@ function SnapshotPage (props) {
                                 <div className="battery-bottom">
                                     <div className="battery-level" 
                                         style={{
-                                            height: batteryHeight(userInfo["pred_opt_threshold"]),
-                                            marginTop: batteryMargin(userInfo["pred_opt_threshold"])
+                                            height: batteryHeight(80),
+                                            marginTop: batteryMargin(80)
                                             }} />
                                 </div> 
                             </div>
