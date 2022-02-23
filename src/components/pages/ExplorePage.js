@@ -5,6 +5,9 @@ import Chart from "../utility/Chart";
 import DataGrid, {Row } from 'react-data-grid';
 import { Redirect } from 'react-router-dom';
 import { withAuth0 } from '@auth0/auth0-react';
+import { DatePicker } from 'antd';
+import moment from 'moment';
+
 
 function ExplorePage (props) {
     const email = props.auth0.user.email;
@@ -20,7 +23,8 @@ function ExplorePage (props) {
     });
 
     const [currentTime, setTime] = useState(1620950400);
-    const [searchValue, setSearchValue] = useState(null);
+    const [searchValue, setSearchValue] = useState(moment.utc([2021, 4, 1]));
+    const m = moment.utc([2021, 4, 1]);
 
     const columns = [
         { key: 'time', name: 'Time' },
@@ -33,14 +37,14 @@ function ExplorePage (props) {
         return row.id;
     }
     
-    function onSearchChange(e) {
-        setSearchValue(e.target.value);
+    function onSearchChange(value) {
+        setSearchValue(value);
     }
 
     function handleSubmit(e){
         e.preventDefault();
         
-        let t = new Date(searchValue + 'GMT+00:00').getTime();
+        let t = new Date(searchValue.format('L') + 'GMT+00:00').getTime();
 
         if (isNaN(t)) {
             alert("Invalid input!")
@@ -160,7 +164,7 @@ function ExplorePage (props) {
     if(!state["hasAsset"]){
         return <Redirect to="/asset" />
     }
-    
+   
 
     return (
         <div className = "overlay">               
@@ -169,7 +173,8 @@ function ExplorePage (props) {
             <div className="date-block">
                 <div className="date-title"> Enter Date: </div>
                 <form className="date-choice" onSubmit={handleSubmit}>
-                <input placeholder="mm/dd/yyyy" value={searchValue} onChange={onSearchChange}/>
+                <DatePicker onChange={onSearchChange} value={searchValue} defaultPickerValue={m}/>
+                <button onSubmit={handleSubmit}> Search </button>
                 </form>
             </div>
 

@@ -10,7 +10,7 @@ function AssetComponent(props){
             return "#F6416C";
         }
 
-        return "#E5C922";
+        return "#c4a702";
     }
 
     function pad(d) {
@@ -20,7 +20,7 @@ function AssetComponent(props){
 
   return (
           <Link to={`/asset/${props.asset['id']}`}>
-              <div className="asset-component">
+              <div className="asset-component" style = {{border: `1px solid ${calculateColor(props.type)}`}}>
                 <div className="asset-name">
                     <div className="name-left">
                         { props.asset["asset_name"]}
@@ -62,7 +62,7 @@ function AssetComponent(props){
                         </div>
                     </div>
                 }
-                { props.asset['start_charge_time'] != null && 
+                {/* { props.asset['start_charge_time'] != null && 
                     <div className="asset-property"> 
                         <div className="property-left">
                             Charging Start Time:
@@ -82,7 +82,7 @@ function AssetComponent(props){
                             { pad(Math.floor(props.asset['end_charge_time']/3600)) } : {pad(Math.floor((props.asset['end_charge_time'] % 3600) / 60))}
                         </div>
                     </div> 
-                } 
+                }  */}
                 { props.asset['duration'] != null && 
                     <div className="asset-property">
                         <div className="property-left">

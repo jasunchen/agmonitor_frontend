@@ -82,7 +82,7 @@ function AssetPage(props) {
    )
 
 
-
+console.log(typeof(start_charge_time_hr))
 
     const handleBaseSubmit = (e) => {
       e.preventDefault();
@@ -122,8 +122,10 @@ function AssetPage(props) {
         "name" : assetName,
         "description" : assetDescription,
         "type_of_asset": "flexible",
-        "start_charge_time": parseInt(start_charge_time_hr) * 3600 + parseInt(start_charge_time_min) * 60,
-        "end_charge_time" : parseInt(end_charge_time_hr) * 3600 + parseInt(end_charge_time_min) * 60,
+        // "start_charge_time": parseInt(start_charge_time_hr) * 3600 + parseInt(start_charge_time_min) * 60,
+        // "end_charge_time" : parseInt(end_charge_time_hr) * 3600 + parseInt(end_charge_time_min) * 60,
+        "start_charge_time": 0,
+             "end_charge_time" : 0,
         "duration": (duration_time_hr * 3600 + duration_time_min * 60).toString(),
         "demand": demand.toString()
       }));
@@ -139,8 +141,10 @@ function AssetPage(props) {
              "name" : assetName,
              "description" : assetDescription,
              "type_of_asset": "flexible",
-             "start_charge_time": parseInt(start_charge_time_hr) * 3600 + parseInt(start_charge_time_min) * 60,
-             "end_charge_time" : parseInt(end_charge_time_hr) * 3600 + parseInt(end_charge_time_min) * 60,
+            //  "start_charge_time": parseInt(start_charge_time_hr) * 3600 + parseInt(start_charge_time_min) * 60,
+            //  "end_charge_time" : parseInt(end_charge_time_hr) * 3600 + parseInt(end_charge_time_min) * 60,
+             "start_charge_time": 0,
+             "end_charge_time" : 0,
              "duration": (duration_time_hr * 3600 + duration_time_min * 60).toString(),
              "demand": demand.toString()
            })
@@ -195,7 +199,6 @@ function AssetPage(props) {
  
     const onStartChargeTimeHrChange = value => {
       setStartChargeTimeHr(value.value)
-      console.log(start_charge_time_hr)
     };
   
     const onStartChargeTimeMinChange = value => {
@@ -369,7 +372,7 @@ function AssetPage(props) {
 
                 
 
-                <div className="form-item">
+                {/* <div className="form-item">
                   <label className="form-label"> 
                     <Tooltip 
                         title={<span>Set your charging start time (HH:MM)</span>}
@@ -423,7 +426,7 @@ function AssetPage(props) {
                     options = {minOptions}
                     onChange={onEndChargeTimeMinChange}
                   />
-                </div>
+                </div> */}
 
                 <div className="form-item">
                   <label className="form-label"> 

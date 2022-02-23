@@ -119,6 +119,11 @@ function UserPreference(props) {
     100: '100'
   }
 
+  const costVsRiskSliderMarks = {
+    0: 'cost (0)',
+    100: 'risk (100)'
+  }
+
   const handlePhoneChange = async value => {
     setPhoneNumber(value)
     console.log(phone_number)
@@ -135,7 +140,7 @@ function UserPreference(props) {
             <Tooltip 
               title={<span>Text notification will be sent to this phone number</span>}
               className = 'form-question-mark'
-              placement='right'> 
+              placement='left'> 
               <QuestionCircleOutlined className="form-pref-question-mark"/>
             </Tooltip>
             Phone Number:
@@ -169,7 +174,7 @@ function UserPreference(props) {
             <Tooltip 
               title={<span>Set your battery size, must be greater than 1 kWH</span>}
               className = 'form-question-mark'
-              placement='right'> 
+              placement='left'> 
               <QuestionCircleOutlined className="form-pref-question-mark"/>
             </Tooltip>
             Battery Size: 
@@ -188,7 +193,7 @@ function UserPreference(props) {
             <Tooltip 
               title={<span>Set your battery threshold lower and upper limit (0~100)</span>}
               className = 'form-question-mark'
-              placement='right'> 
+              placement='left'> 
               <QuestionCircleOutlined className="form-pref-question-mark"/>
             </Tooltip>
             Acceptable Battery Threshold: 
@@ -212,7 +217,7 @@ function UserPreference(props) {
             <Tooltip 
               title={<span>Set hours of backup power (0~100) </span>}
               className = 'form-question-mark'
-              placement='right'> 
+              placement='left'> 
               <QuestionCircleOutlined className="form-pref-question-mark"/>
             </Tooltip>
             Hours of Backup Power: 
@@ -232,20 +237,21 @@ function UserPreference(props) {
             <Tooltip 
               title={<span>Set cost versus Risk Tolerance (0~100)</span>}
               className = 'form-question-mark'
-              placement='right'> 
+              placement='left'> 
               <QuestionCircleOutlined className="form-pref-question-mark"/>
             </Tooltip>
             Cost versus Risk Tolerance: 
           </label>
           
           <Slider
-            marks = {sliderMarks}
+            className='form-context'
+            marks = {costVsRiskSliderMarks}
             min={0}
             max={100}
             value={cost_or_shutoff}
             onChange={(value) => setCostOrShutOff(value)}/>
             
-            <label className = "form-context2">   {cost_or_shutoff} </label>
+            <label className = "form-context2">   {cost_or_shutoff} {cost_or_shutoff <= 50 ? '(cost favor)' : '(risk favor)'} </label>
         </div>
 
         <div className="form-item">
@@ -253,7 +259,7 @@ function UserPreference(props) {
             <Tooltip 
               title={<span>Set your current addresses</span>}
               className = 'form-question-mark'
-              placement='right'> 
+              placement='left'> 
               <QuestionCircleOutlined className="form-pref-question-mark"/>
             </Tooltip>
 
