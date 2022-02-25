@@ -1,11 +1,11 @@
-.explore-chart{
-    float: left;
-    width: 90%;
-    height: 500px;
-    margin: 0 5%;
-  }
-  
-.row{
+.explore-chart {
+  float: left;
+  width: 90%;
+  height: 500px;
+  margin: 0 5%;
+}
+
+.row {
   min-height: 550px;
 }
 

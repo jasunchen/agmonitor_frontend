@@ -121,7 +121,7 @@ function UserPreference(props) {
 
   const costVsRiskSliderMarks = {
     0: 'cost (0)',
-    100: 'risk (100)'
+    100: 'risk(100)'
   }
 
   const handlePhoneChange = async value => {
@@ -244,14 +244,13 @@ function UserPreference(props) {
           </label>
           
           <Slider
-            className='form-context'
             marks = {costVsRiskSliderMarks}
             min={0}
             max={100}
             value={cost_or_shutoff}
             onChange={(value) => setCostOrShutOff(value)}/>
             
-            <label className = "form-context2">   {cost_or_shutoff} {cost_or_shutoff <= 50 ? '(cost favor)' : '(risk favor)'} </label>
+            <label className = "form-context2">   {cost_or_shutoff} {cost_or_shutoff == 50 ? '(equally favor)' : cost_or_shutoff < 50 ? '(cost favor)' : '(risk favor)'} </label>
         </div>
 
         <div className="form-item">

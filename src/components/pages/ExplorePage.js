@@ -9,6 +9,7 @@ import { DatePicker } from 'antd';
 import moment from 'moment';
 
 
+
 function ExplorePage (props) {
     const email = props.auth0.user.email;
     const dayDelta = 86400;
@@ -23,7 +24,7 @@ function ExplorePage (props) {
     });
 
     const [currentTime, setTime] = useState(1620950400);
-    const [searchValue, setSearchValue] = useState(moment.utc([2021, 4, 1]));
+    const [searchValue, setSearchValue] = useState(moment.utc([2021, 4, 14]));
     const m = moment.utc([2021, 4, 1]);
 
     const columns = [
@@ -175,6 +176,7 @@ function ExplorePage (props) {
                 <form className="date-choice" onSubmit={handleSubmit}>
                 <DatePicker onChange={onSearchChange} value={searchValue} defaultPickerValue={m}/>
                 <button onSubmit={handleSubmit}> Search </button>
+                
                 </form>
             </div>
 
