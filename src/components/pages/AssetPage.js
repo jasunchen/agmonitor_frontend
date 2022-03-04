@@ -273,7 +273,7 @@ console.log(typeof(start_charge_time_hr))
         <TabPane className="block" tab="Add a New Asset" key={2}>
           <Tabs defaultActive={1}>
             <TabPane key={1} tab="Add Base Asset">
-              <form className="asset-form" onSubmit={handleBaseSubmit}>
+              <form className="user-preference" onSubmit={handleBaseSubmit}>
                 <div className="form-item">
                   <label className="form-label"> Asset Name: </label>
                   <input type="text" className="form-input" required value={assetName}
@@ -291,7 +291,7 @@ console.log(typeof(start_charge_time_hr))
             </TabPane>
 
             <TabPane key={2} tab="Add Generation Asset">
-              <form className="asset-form" onSubmit = {handleGenerationSubmit}>
+              <form className="user-preference" onSubmit = {handleGenerationSubmit}>
                 <div className="form-item">
                   <label className="form-label">Asset Name:</label> 
                   <input className="form-input" type="text" required value={assetName}
@@ -308,7 +308,7 @@ console.log(typeof(start_charge_time_hr))
                   <label className="form-label"> 
                     <Tooltip 
                         title={<span>See solar panel documentation for declination (0 &deg; ~ 90 &deg;)</span>}
-                        placement='right'> 
+                        placement='left'> 
                         <QuestionCircleOutlined className="form-question-mark"/>
                     </Tooltip>
                     Asset Declination: 
@@ -324,7 +324,7 @@ console.log(typeof(start_charge_time_hr))
                   <label className="form-label"> 
                     <Tooltip 
                         title={<span>See solar panel documentation for azimuth (-180 &deg; ~ 180 &deg;)</span>}
-                        placement='right'> 
+                        placement='left'> 
                         <QuestionCircleOutlined className="form-question-mark"/>
                     </Tooltip>
                     Asset Azimuth: 
@@ -340,7 +340,7 @@ console.log(typeof(start_charge_time_hr))
                   <label className="form-label"> 
                     <Tooltip 
                         title={<span> See solar panel documentation maximum peak power. </span>}
-                        placement='right'> 
+                        placement='left'> 
                         <QuestionCircleOutlined className="form-question-mark"/>
                     </Tooltip>
                     Asset Power: 
@@ -357,7 +357,7 @@ console.log(typeof(start_charge_time_hr))
             </TabPane>
 
             <TabPane key={3} tab='Add Flexible Asset'>
-              <form className="asset-form" onSubmit = {handleFlexibleSubmit}>
+              <form className="user-preference" onSubmit = {handleFlexibleSubmit}>
                 <div className="form-item">
                   <label className="form-label"> Asset Name: </label> 
                   <input required className="form-input" type="text" value={assetName} 
@@ -433,7 +433,7 @@ console.log(typeof(start_charge_time_hr))
                     <Tooltip 
                       title={<span>Set your duration time in number of hours and minutes</span>}
                       className = 'form-question-mark'
-                      placement='right'> 
+                      placement='left'> 
                       <QuestionCircleOutlined className="form-question-mark"/>
                     </Tooltip> 
                     Asset Duration: 
@@ -457,7 +457,7 @@ console.log(typeof(start_charge_time_hr))
                     <Tooltip 
                       title={<span>Set your energy demand in kWH, must be greater than 1 kWH</span>}
                       className = 'form-question-mark'
-                      placement='right'> 
+                      placement='left'> 
                       <QuestionCircleOutlined className="form-question-mark"/>
                     </Tooltip>
                     Energy Demand: 

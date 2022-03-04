@@ -402,7 +402,7 @@ function SnapshotPage (props) {
                         :
                         <div>
                             <div className="snapshot-headers"> 
-                                {userInfo["pred_should_charge"] ? "You should use your flexible loads tomorrow. T" : "You should avoid using your flexible loads tomorrow. However, "}
+                                {userInfo["pred_should_charge"] ? <span><span className = "snapshot-headers"> You </span> <span className = "snapshot-headers-should"> should </span> <span className = "snapshot-headers"> use your flexible loads tomorrow. </span></span>: <span ><span className = "snapshot-headers"> You should </span> <span className = "snapshot-headers-avoid"> avoid </span><span className = "snapshot-headers"> using your flexible loads tomorrow. However, </span></span>}
                                 the best times for you to use energy tomorrow is from 
                                 <span className="snapshot-head"> 
                                     &nbsp;{userInfo["good_time_range"]}
