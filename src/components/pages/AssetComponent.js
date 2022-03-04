@@ -86,7 +86,7 @@ function AssetComponent(props){
                 { typeof props.asset['duration'] !== 'undefined' && 
                     <div className="asset-property">
                         <div className="property-left">
-                            Asset Duration: 
+                            Time to Charge: 
                         </div> 
                         <div className="property-right">
                         { Math.floor(parseInt(props.asset['duration'])/3600) } hr {Math.floor((parseInt(props.asset['duration']) % 3600) / 60)} min

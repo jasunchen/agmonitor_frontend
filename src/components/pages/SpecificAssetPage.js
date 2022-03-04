@@ -472,7 +472,7 @@ function SpecificAssetPage() {
                   placement='right'> 
                   <QuestionCircleOutlined className="form-question-mark"/>
                 </Tooltip>
-                Asset Duration: 
+                Time to Charge: 
               </label>
                    
               <input required className="form-smallinput" type="number" value={duration_time_hr} 
