@@ -418,10 +418,10 @@ function SnapshotPage (props) {
                                              </span>
                                         }
                                         className={
-                                            e > 0.8 ? 'time-block a' : 
-                                            e > 0.6 ? 'time-block b' : 
-                                            e > 0.4 ? 'time-block c' : 
-                                            e > 0.2 ? 'time-block d' : 
+                                            e >= 1 ? 'time-block a' : 
+                                            e >= 0.75 ? 'time-block b' : 
+                                            e >= 0.50 ? 'time-block c' : 
+                                            e >= 0.25 ? 'time-block d' : 
                                             'time-block e'
                                         }
                                         placement='bottom'

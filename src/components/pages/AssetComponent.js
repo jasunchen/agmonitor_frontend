@@ -32,7 +32,7 @@ function AssetComponent(props){
                 <div className="asset-description">
                     { props.asset["description"] }
                 </div>
-                { props.asset['declination'] && 
+                { typeof props.asset['declination'] !== 'undefined' && 
                     <div className="asset-property">
                         <div className="property-left">
                             Asset Declination: 
@@ -42,7 +42,7 @@ function AssetComponent(props){
                         </div>
                     </div>
                 } 
-                { props.asset['azimuth'] && 
+                { typeof props.asset['azimuth'] !== 'undefined'  && 
                     <div className="asset-property">
                         <div className="property-left">
                             Asset Azimuth: 
@@ -52,7 +52,7 @@ function AssetComponent(props){
                         </div>
                     </div>
                 } 
-                { props.asset['modules_power'] && 
+                { typeof props.asset['modules_power'] !== 'undefined'  && 
                     <div className="asset-property">
                         <div className="property-left">
                             Asset Power: 
@@ -83,17 +83,17 @@ function AssetComponent(props){
                         </div>
                     </div> 
                 }  */}
-                { props.asset['duration'] != null && 
+                { typeof props.asset['duration'] !== 'undefined' && 
                     <div className="asset-property">
                         <div className="property-left">
-                            Asset Duration: 
+                            Time to Charge: 
                         </div> 
                         <div className="property-right">
                         { Math.floor(parseInt(props.asset['duration'])/3600) } hr {Math.floor((parseInt(props.asset['duration']) % 3600) / 60)} min
                         </div>
                     </div>
                 }
-                { props.asset['demand'] != null && 
+                { typeof props.asset['demand'] !== 'undefined'  && 
                     <div className="asset-property">
                         <div className="property-left">
                             Asset Demand: 

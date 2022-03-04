@@ -307,7 +307,7 @@ console.log(typeof(start_charge_time_hr))
                 <div className="form-item">
                   <label className="form-label"> 
                     <Tooltip 
-                        title={<span>See solar panel documentation for declination (0 &deg; ~ 90 &deg;)</span>}
+                        title={<span className="tooltip-title"> Solar panel declination angle. Refer to your asset documentation for more details. (Valid Range: 0 to 90&deg;)</span>}
                         placement='left'> 
                         <QuestionCircleOutlined className="form-question-mark"/>
                     </Tooltip>
@@ -323,7 +323,7 @@ console.log(typeof(start_charge_time_hr))
                 <div className="form-item">
                   <label className="form-label"> 
                     <Tooltip 
-                        title={<span>See solar panel documentation for azimuth (-180 &deg; ~ 180 &deg;)</span>}
+                        title={<span className="tooltip-title"> Solar panel azimuth angle. Refer to your asset documentation for more details. (Valid Range: -180 to 180&deg;)</span>}
                         placement='left'> 
                         <QuestionCircleOutlined className="form-question-mark"/>
                     </Tooltip>
@@ -339,7 +339,7 @@ console.log(typeof(start_charge_time_hr))
                 <div className="form-item">
                   <label className="form-label"> 
                     <Tooltip 
-                        title={<span> See solar panel documentation maximum peak power. </span>}
+                        title={<span className="tooltip-title"> Solar panel maximum peak power. Refer to your asset documentation for more details. </span>}
                         placement='left'> 
                         <QuestionCircleOutlined className="form-question-mark"/>
                     </Tooltip>
@@ -431,12 +431,12 @@ console.log(typeof(start_charge_time_hr))
                 <div className="form-item">
                   <label className="form-label"> 
                     <Tooltip 
-                      title={<span>Set your duration time in number of hours and minutes</span>}
+                      title={<span className="tooltip-title"> The duration needed to fully charge your asset. </span>}
                       className = 'form-question-mark'
                       placement='left'> 
                       <QuestionCircleOutlined className="form-question-mark"/>
                     </Tooltip> 
-                    Asset Duration: 
+                    Time to Charge: 
                   </label>
                              
                   <input required className="form-smallinput" type="number" value={duration_time_hr} 
@@ -455,7 +455,7 @@ console.log(typeof(start_charge_time_hr))
                 <div className="form-item">
                   <label className="form-label"> 
                     <Tooltip 
-                      title={<span>Set your energy demand in kWH, must be greater than 1 kWH</span>}
+                      title={<span className="tooltip-title">  The energy consumption of your asset. </span>}
                       className = 'form-question-mark'
                       placement='left'> 
                       <QuestionCircleOutlined className="form-question-mark"/>
