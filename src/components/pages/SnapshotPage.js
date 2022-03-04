@@ -402,8 +402,8 @@ function SnapshotPage (props) {
                         :
                         <div>
                             <div className="snapshot-headers"> 
-                                {userInfo["pred_should_charge"] ? "You should use your flexible loads tomorrow. T" : "You should avoid using your flexible loads tomorrow. However, "}
-                                the best times for you to use energy tomorrow is from 
+                                {userInfo["pred_should_charge"] ? "You should use your flexible loads tomorrow. " : "You should avoid using your flexible loads tomorrow. However, "}
+                                the best times for you to start using energy tomorrow is from 
                                 <span className="snapshot-head"> 
                                     &nbsp;{userInfo["good_time_range"]}
                                 </span> 
@@ -418,10 +418,10 @@ function SnapshotPage (props) {
                                              </span>
                                         }
                                         className={
-                                            e > 0.8 ? 'time-block a' : 
-                                            e > 0.6 ? 'time-block b' : 
-                                            e > 0.4 ? 'time-block c' : 
-                                            e > 0.2 ? 'time-block d' : 
+                                            e >= 1 ? 'time-block a' : 
+                                            e >= 0.75 ? 'time-block b' : 
+                                            e >= 0.50 ? 'time-block c' : 
+                                            e >= 0.25 ? 'time-block d' : 
                                             'time-block e'
                                         }
                                         placement='bottom'

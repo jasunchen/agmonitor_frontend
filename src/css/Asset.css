@@ -22,7 +22,8 @@
   width: 80vw;
   margin: 0 auto;
 }
-form {
+
+.form {
   display: flex;
   flex-direction: column;
 }
@@ -35,6 +36,7 @@ form {
   width: 45%;
   border: 1px solid #aaa;
   border-radius: 5px;
+  min-width: 300px;
 }
 
 .asset-component:hover {
@@ -299,4 +301,13 @@ form {
   font-family: "Barlow Condensed", sans-serif;
   width: 200px !important;
   font-weight: 300 !important;
+}
+
+
+.ant-tooltip-inner {
+  line-height: 1.2;
+}
+
+.tooltip-title {
+  font-size: 16px;
 }
