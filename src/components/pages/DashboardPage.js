@@ -3,6 +3,7 @@ import Navbar from "../shared/Navbar";
 import './dashboard.css'
 import Footer from "../shared/Footer"
 import CollapsiblePanel from "./CollapsiblePanel";
+import DashboardAssets from "./DashboardAssets"
 
 
 function DashboardPage (props) {
@@ -17,20 +18,9 @@ function DashboardPage (props) {
         
         <h1>Variable Control</h1>
         
-        <div className="App container my-2">
- 
-            <CollapsiblePanel title="Tesla" collapse={true}>
-                <span>Settings for Tesla</span>
-            </CollapsiblePanel>
 
-            <CollapsiblePanel title="Pump" collapse={false}>
-                <span>Settings for Pump</span>
-            </CollapsiblePanel>
-
-            <CollapsiblePanel title="AC" collapse={false}>
-                <span>Settings for AC</span>
-            </CollapsiblePanel>
-</div>
+    
+        <DashboardAssets />
 
 
         </div>
