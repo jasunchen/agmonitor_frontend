@@ -273,7 +273,7 @@ console.log(typeof(start_charge_time_hr))
         <TabPane className="block" tab="Add a New Asset" key={2}>
           <Tabs defaultActive={1}>
             <TabPane key={1} tab="Add Base Asset">
-              <form className="asset-form" onSubmit={handleBaseSubmit}>
+              <form className="user-preference" onSubmit={handleBaseSubmit}>
                 <div className="form-item">
                   <label className="form-label"> Asset Name: </label>
                   <input type="text" className="form-input" required value={assetName}
@@ -291,7 +291,7 @@ console.log(typeof(start_charge_time_hr))
             </TabPane>
 
             <TabPane key={2} tab="Add Generation Asset">
-              <form className="asset-form" onSubmit = {handleGenerationSubmit}>
+              <form className="user-preference" onSubmit = {handleGenerationSubmit}>
                 <div className="form-item">
                   <label className="form-label">Asset Name:</label> 
                   <input className="form-input" type="text" required value={assetName}
@@ -357,7 +357,7 @@ console.log(typeof(start_charge_time_hr))
             </TabPane>
 
             <TabPane key={3} tab='Add Flexible Asset'>
-              <form className="asset-form" onSubmit = {handleFlexibleSubmit}>
+              <form className="user-preference" onSubmit = {handleFlexibleSubmit}>
                 <div className="form-item">
                   <label className="form-label"> Asset Name: </label> 
                   <input required className="form-input" type="text" value={assetName} 
