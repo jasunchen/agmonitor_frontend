@@ -1,7 +1,7 @@
 # SmartGrid - Frontend
-Computer Science Capstone
-UC Santa Barbara 
-AgMonitor
+- Computer Science Capstone 
+- UC Santa Barbara 
+- AgMonitor 
 
 ## Summary
 ### Motivation
@@ -35,8 +35,8 @@ See package.json for a full list of libraries.
 
 
 ### Deployment
-START: docker-compose up -d --build
-STOP: docker-compose stop
+- START: docker-compose up -d --build 
+- STOP: docker-compose stop 
 
 ## Specs
 ### Functionality
