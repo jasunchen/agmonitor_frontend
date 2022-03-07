@@ -430,7 +430,7 @@ function SnapshotPage (props) {
                             </div>
                             <div className="time-labels">
                                 <div className="time-label">
-                                    0AM
+                                    12AM
                                 </div>
                                 <div className="time-label">
                                     6AM

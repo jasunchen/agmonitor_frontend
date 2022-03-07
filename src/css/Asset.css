@@ -311,3 +311,21 @@
 .tooltip-title {
   font-size: 16px;
 }
+
+.user-preference {
+  width: 100%;
+  margin: 20px auto;
+  max-width: 800px;
+  min-width: 100px;
+}
+
+.user-preference .red {
+  color: red;
+}
+
+.user-preference .back {
+  color: #4898e5;
+  font-size: 24px;
+  cursor: pointer;
+  margin-bottom: 40px;
+}

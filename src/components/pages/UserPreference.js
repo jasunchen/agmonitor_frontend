@@ -7,7 +7,6 @@ import PhoneInput from 'react-phone-input-2'
 import {QuestionCircleOutlined} from '@ant-design/icons';
 import { Tooltip } from 'antd';
 import 'react-phone-input-2/lib/style.css'
-import './userPreference.css'
 
 function UserPreference(props) {
   const email = props.auth0.user.email;
@@ -120,8 +119,8 @@ function UserPreference(props) {
   }
 
   const costVsRiskSliderMarks = {
-    0: 'cost (0)',
-    100: 'risk(100)'
+    0: '0',
+    100: '100'
   }
 
   const handlePhoneChange = async value => {
@@ -138,7 +137,7 @@ function UserPreference(props) {
         <div className="form-item">
           <label className="form-label"> 
             <Tooltip 
-              title={<span>Text notification will be sent to this phone number</span>}
+              title={<span className="tooltip-title"> Text notifications will be sent to this phone number. </span>}
               className = 'form-question-mark'
               placement='left'> 
               <QuestionCircleOutlined className="form-pref-question-mark"/>
@@ -172,7 +171,7 @@ function UserPreference(props) {
         <div className="form-item">
           <label className="form-label"> 
             <Tooltip 
-              title={<span>Set your battery size, must be greater than 1 kWH</span>}
+              title={<span className="tooltip-title"> The size of your battery, rounded to the nearest kilowatt hour.  </span>}
               className = 'form-question-mark'
               placement='left'> 
               <QuestionCircleOutlined className="form-pref-question-mark"/>
@@ -191,7 +190,7 @@ function UserPreference(props) {
         <div className="form-item">
           <label className="form-label"> 
             <Tooltip 
-              title={<span>Set your battery threshold lower and upper limit (0~100)</span>}
+              title={<span className="tooltip-title"> Set the range of your allowable battery threshold, which is the minimum percentage of reserve energy you will have at all times. (Valid Range: 0 to 100%)</span>}
               className = 'form-question-mark'
               placement='left'> 
               <QuestionCircleOutlined className="form-pref-question-mark"/>
@@ -215,7 +214,7 @@ function UserPreference(props) {
         <div className="form-item">
           <label className="form-label"> 
             <Tooltip 
-              title={<span>Set hours of backup power (0~100) </span>}
+              title={<span className="tooltip-title"> Number of hours of energy reserve requested, computed from your average base load usage. </span>}
               className = 'form-question-mark'
               placement='left'> 
               <QuestionCircleOutlined className="form-pref-question-mark"/>
@@ -235,7 +234,7 @@ function UserPreference(props) {
         <div className="form-item">
           <label className="form-label"> 
             <Tooltip 
-              title={<span>Set cost versus Risk Tolerance (0~100)</span>}
+              title={<span className="tooltip-title"> If you favor cost savings, set this value toward 0. If you favor shutoff resiliency, set this value toward 100. </span>}
               className = 'form-question-mark'
               placement='left'> 
               <QuestionCircleOutlined className="form-pref-question-mark"/>
@@ -256,7 +255,7 @@ function UserPreference(props) {
         <div className="form-item">
           <label className='form-label'> 
             <Tooltip 
-              title={<span>Set your current addresses</span>}
+              title={<span className="tooltip-title"> Your current location. This is used to calculate your latitude and longitude for solar predictions. </span>}
               className = 'form-question-mark'
               placement='left'> 
               <QuestionCircleOutlined className="form-pref-question-mark"/>

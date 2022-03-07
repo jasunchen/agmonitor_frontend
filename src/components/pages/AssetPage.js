@@ -307,7 +307,7 @@ console.log(typeof(start_charge_time_hr))
                 <div className="form-item">
                   <label className="form-label"> 
                     <Tooltip 
-                        title={<span className="tooltip-title"> Solar panel declination angle. Refer to your asset documentation for more details. (Valid Range: 0 to 90&deg;)</span>}
+                        title={<span className="tooltip-title"> The "tilt angle" or "elevation angle" describes the vertical angle of your solar panels.  (Valid Range: 0 to 90&deg;)</span>}
                         placement='left'> 
                         <QuestionCircleOutlined className="form-question-mark"/>
                     </Tooltip>
@@ -323,7 +323,7 @@ console.log(typeof(start_charge_time_hr))
                 <div className="form-item">
                   <label className="form-label"> 
                     <Tooltip 
-                        title={<span className="tooltip-title"> Solar panel azimuth angle. Refer to your asset documentation for more details. (Valid Range: -180 to 180&deg;)</span>}
+                        title={<span className="tooltip-title"> The direction towards which the PV panels face. Due south is 0, due east is -90, due west is 90, and due north is 180. (Valid Range: -180 to 180&deg;)</span>}
                         placement='left'> 
                         <QuestionCircleOutlined className="form-question-mark"/>
                     </Tooltip>
@@ -339,7 +339,7 @@ console.log(typeof(start_charge_time_hr))
                 <div className="form-item">
                   <label className="form-label"> 
                     <Tooltip 
-                        title={<span className="tooltip-title"> Solar panel maximum peak power. Refer to your asset documentation for more details. </span>}
+                        title={<span className="tooltip-title"> The maximum peak power of your solar panel. </span>}
                         placement='left'> 
                         <QuestionCircleOutlined className="form-question-mark"/>
                     </Tooltip>
