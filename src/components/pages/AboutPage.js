@@ -1,14 +1,13 @@
 import React from 'react';
 import "../../css/About.css"
-
+import microgrid from "../../assets/microgrid.png";
 
 function AboutPage (props) {
 
     return (
         <div className = "overlay">   
-           <div className="sr middle">
-           <img src="https://summitsolar.com/wp-content/uploads/2018/09/Summit-Solar-Energy-Blog-2018-09-26-What-Is-the-Difference-Between-a-Solar-Panel-Solar-Array.jpg" alt=""/>
-           </div>
+           <img className="banner" src={microgrid} alt=""/>
+
           <div className="middle-next">
             <br/> <br/>
             <h3> Background</h3>
