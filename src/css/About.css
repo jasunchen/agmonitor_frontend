@@ -1,3 +1,8 @@
 .middle{
     text-align: center;
 }
+
+.banner {
+    margin: 50px calc(50% - 300px);
+    width: 600px;
+}
