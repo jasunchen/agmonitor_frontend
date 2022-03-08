@@ -12,6 +12,7 @@
 .date-title {
   display: inline-block;
   margin: 0 5px;
+  font-weight: 500;
 }
 
 .date-choice {
