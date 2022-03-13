@@ -187,60 +187,6 @@ function SnapshotPage (props) {
                         "hasAsset" : true
                     })
                 })
-                
-
-                // WEEKLY VIEW
-                /*
-                let hasNext = true;
-                for(let page = 1; page <= 8; page += 1){
-                    requestUrl = `${server}/getAssetData?id=${assetId}&start=${currentTime - 7 * dayDelta}&end=${currentTime}&page=${page}`
-                    fetch(requestUrl, {
-                        method: 'GET',
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        },
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        let weekProduced = state["weekProduced"];
-                        let weekConsumed = state["weekConsumed"];
-                        data["data"].forEach(element => {
-                            weekProduced.push([element["start_time"] * 1000, element["produced_energy"]])
-                            weekConsumed.push([element["start_time"] * 1000, element["consumed_energy"]])
-                        })
-                        weekProduced = weekProduced.sort(function(a, b) {
-                            if (a[0] == b[0]) {
-                            return a[1] - b[1];
-                            }
-                            return b[0] - a[0];
-                        });
-                        weekConsumed = weekConsumed.sort(function(a, b) {
-                            return a[0] - b[0];
-                        });
-                        setState({
-                            ...state,
-                            "weekProduced" : weekProduced,
-                            "weekConsumed" : weekConsumed,
-                        })
-                        if(data["has_next"] == false){
-                            hasNext = false;
-                            setState({
-                                ...state,
-                                "loading" : false,
-                                "hasAsset" : true
-                            })
-                        }
-                    })
-                    .catch((error) => {
-                        setState({
-                            ...state,
-                            "loading" : false
-                        })
-                        console.log("Error: " + error)
-                    })
-                }
-                */
             }
             else{
                 setState({
@@ -400,119 +346,67 @@ function SnapshotPage (props) {
                                 />
                             </div>
                         :
-                        <div>
-                            <div className="snapshot-headers"> 
-                                {userInfo["pred_should_charge"] ? <span><span className = "snapshot-headers"> You </span> <span className = "snapshot-headers-should"> should </span> <span className = "snapshot-headers"> use your flexible loads tomorrow. </span></span>: <span ><span className = "snapshot-headers"> You should </span> <span className = "snapshot-headers-avoid"> avoid </span><span className = "snapshot-headers"> using your flexible loads tomorrow. However, </span></span>}
-                                the best times for you to use energy tomorrow is from 
-                                <span className="snapshot-head"> 
-                                    &nbsp;{userInfo["good_time_range"]}
-                                </span> 
-                                .
-                            </div>
-                            <div className="good-time">
-                                {userInfo["pred_good_time"].map((e, i) => 
-                                    <Tooltip 
-                                        title={
-                                            <span> {Math.floor(i / 4) < 10 && "0"}{Math.floor(i / 4)} : 
-                                                   {15 * (i % 4) < 10 && "0"}{15 * (i % 4)}
-                                             </span>
-                                        }
-                                        className={
-                                            e >= 1 ? 'time-block a' : 
-                                            e >= 0.75 ? 'time-block b' : 
-                                            e >= 0.50 ? 'time-block c' : 
-                                            e >= 0.25 ? 'time-block d' : 
-                                            'time-block e'
-                                        }
-                                        placement='bottom'
-                                    />
-                                )}
-                            </div>
-                            <div className="time-labels">
-                                <div className="time-label">
-                                    12AM
+                            <div>
+                                <div className="snapshot-headers"> 
+                                    {userInfo["pred_should_charge"] ? <span><span className = "snapshot-headers"> You </span> <span className = "snapshot-headers-should"> should </span> <span className = "snapshot-headers"> use your flexible loads tomorrow. </span></span>: <span ><span className = "snapshot-headers"> You should </span> <span className = "snapshot-headers-avoid"> avoid </span><span className = "snapshot-headers"> using your flexible loads tomorrow. However, </span></span>}
+                                    the best times for you to use energy tomorrow is from 
+                                    <span className="snapshot-head"> 
+                                        &nbsp;{userInfo["good_time_range"]}
+                                    </span> 
+                                    .
                                 </div>
-                                <div className="time-label">
-                                    6AM
+                                <div className="good-time">
+                                    {userInfo["pred_good_time"].map((e, i) => 
+                                        <Tooltip 
+                                            title={
+                                                <span> {Math.floor(i / 4) < 10 && "0"}{Math.floor(i / 4)} : 
+                                                    {15 * (i % 4) < 10 && "0"}{15 * (i % 4)}
+                                                </span>
+                                            }
+                                            className={
+                                                e >= 1 ? 'time-block a' : 
+                                                e >= 0.75 ? 'time-block b' : 
+                                                e >= 0.50 ? 'time-block c' : 
+                                                e >= 0.25 ? 'time-block d' : 
+                                                'time-block e'
+                                            }
+                                            placement='bottom'
+                                        />
+                                    )}
                                 </div>
-                                <div className="time-label">
-                                    12PM
+                                <div className="time-labels">
+                                    <div className="time-label">
+                                        12AM
+                                    </div>
+                                    <div className="time-label">
+                                        6AM
+                                    </div>
+                                    <div className="time-label">
+                                        12PM
+                                    </div>
+                                    <div className="time-label">
+                                        6PM
+                                    </div>
                                 </div>
-                                <div className="time-label">
-                                    6PM
+                                <div className="key-labels">
+                                    <div className="key-label">
+                                        Worst Time
+                                    </div>   
+                                    <div className="key-label-color e" />   
+                                    <div className="key-label-color d" />   
+                                    <div className="key-label-color c" />  
+                                    <div className="key-label-color b" />  
+                                    <div className="key-label-color a" />  
+                                    <div className="key-label"  style={{textAlign: 'right'}}>
+                                        Best Time
+                                    </div>   
                                 </div>
                             </div>
-                            <div className="key-labels">
-                                <div className="key-label">
-                                    Worst Time
-                                </div>   
-                                <div className="key-label-color e" />   
-                                <div className="key-label-color d" />   
-                                <div className="key-label-color c" />  
-                                <div className="key-label-color b" />  
-                                <div className="key-label-color a" />  
-                                <div className="key-label"  
-                                    style={{
-                                        textAlign: 'right'
-                                    }}
-                                >
-                                    Best Time
-                                </div>   
-                            </div>
-                        </div>
-                            
                         }
                     </div>
 
                 </div>
             </div>
-
-            {/*
-            <h1> Energy Snapshot </h1>
-            <div className="row">
-                <div className="summary-chart">
-                    <Chart
-                        title="Daily Snapshot"
-                        dateformat='%b %d %H:%M'
-                        series={[
-                            {
-                                name: 'Energy Produced',
-                                data: state["dayProduced"],
-                                color: "#00B8A9"
-                            },
-                            {
-                                name: 'Energy Consumed',
-                                data: state["dayConsumed"],
-                                color: "#F6416C"
-                            }
-                        ]}
-                        plotBands={{
-                            from: state["peakStart"],
-                            to: state["peakEnd"],
-                            color: "#FFDE7D",
-                            label: "Peak Hours"
-                        }}/>
-                </div>
-                <div className="summary-chart">
-                    <Chart
-                        title="Weekly Snapshot"
-                        dateformat='%b %d %H:%M'
-                        series={[
-                            {
-                                name: 'Energy Produced',
-                                data: state["weekProduced"],
-                                color: "#00B8A9"
-                            },
-                            {
-                                name: 'Energy Consumed',
-                                data: state["weekConsumed"],
-                                color: "#F6416C"
-                            }
-                        ]}
-                    />
-                </div>
-            </div>
-            */}
         </div>
 
     );
