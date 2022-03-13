@@ -28,7 +28,7 @@ Our system is comprised of the following technologies:
 - Auth0
 
 ### Prerequisites
-None.
+Acquire .env file containing appropriate keys to login.
 
 ### Installation
 See package.json for a full list of libraries.
@@ -62,7 +62,7 @@ See package.json for a full list of libraries.
 20. As a user, I can link my variable assets so its charging/discharging is automatically controlled.
 
 ### Known Issues
-TODO
+- Data needs to be manually uploaded for the snapshot and explore pages to work.
 
 ### License
 Apache 2.0
